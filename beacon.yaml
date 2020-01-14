@@ -9,10 +9,10 @@ info:
     email: beacon@ga4gh.org
   license:
     name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
 externalDocs:
   description: 'Beacon Project'
-  url: 'http://beacon-project.io/'
+  url: http://beacon-project.io/
 paths:
   /:
     get:
