@@ -923,7 +923,9 @@ components:
           description: |
             Precise or fuzzy start coordinate position(s), allele locus (0-based, inclusive).
             * start only:
-              - for single positions, e.g. the start of a specified sequence alteration where the size is given through the specified alternateBases
+              - for single positions, e.g. the start of a specified sequence
+              alteration where the size is given through the specified
+              alternateBases
               - typical use are queries for SNV and small InDels
               - THIS IS NOT TRUE FOR RANGE QUERIES!!!! -> the use of "start" without an "end" parameter requires the use of "referenceBases"
             * `start` and `end`:
@@ -945,7 +947,15 @@ components:
             format: int64
         referenceBases:
           description: |
-            Reference bases for this variant (starting from `start`). Accepted values: [ACGTN]*. N is a wildcard, that denotes the position of any base, and can be used as a standalone base of any type or within a partially known sequence. For example a sequence where the first and last bases are known, but the middle portion can exhibit countless variations of [ACGT], or the bases are unknown: ANNT the Ns can take take any form of [ACGT], which makes both ACCT and ATGT (or any other combination) viable sequences.
+            Reference bases for this variant (starting from `start`).
+            Accepted values: [ACGTN]*.
+            N is a wildcard, that denotes the position of any base, and can be
+            used as a standalone base of any type or within a partially known
+            sequence. For example, a sequence where the first and last bases are
+            known, but the middle portion can exhibit countless variations of
+            [ACGT], or the bases are unknown: `ANNT`
+            The Ns can take take any form of [ACGT], which makes both ACCT and
+            ATGT (or any other combination) viable sequences.
           type: string
           pattern: '^([ACGTN]+)$'
         alternateBases:
