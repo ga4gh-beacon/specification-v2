@@ -19,4 +19,3 @@ script:
 
   # check if the validation output is an empty array, i.e. no errors
   - VALIDATION_ERROR_COUNT=`echo "$VALIDATION_OUTPUT" |jq -c '.schemaValidationMessages // [] | map(select(.level != "warning"))' |jq length`
-  - test "$VALIDATION_OUTPUT" == "[]"
