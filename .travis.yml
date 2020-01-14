@@ -4,7 +4,11 @@ sudo: false
 jdk:
   - oraclejdk8
 env:
-  - FILE_TO_VALIDATE=beacon.yaml GH_URL=https://raw.githubusercontent.com VALIDATOR_URL=http://validator.swagger.io/validator/debug?url URL_TO_VALIDATE=$GH_URL/$TRAVIS_REPO_SLUG/${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}/$FILE_TO_VALIDATE
+  global:
+    - FILE_TO_VALIDATE=beacon.yaml
+    - GH_URL=https://raw.githubusercontent.com
+    - VALIDATOR_URL=http://validator.swagger.io/validator/debug?url
+    - URL_TO_VALIDATE=$GH_URL/$TRAVIS_REPO_SLUG/${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}/$FILE_TO_VALIDATE
 script:
   # validate
   - echo "Validating $URL_TO_VALIDATE:"
