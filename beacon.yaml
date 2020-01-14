@@ -259,7 +259,9 @@ paths:
         required: true
   /individuals:
     post:
-      description: Gets response to a beacon query for individual information.
+      description: >-
+        Gets response to a beacon query for information about an individual /
+        subject.
       operationId: postIndividualResponse
       tags:
         - Endpoints
@@ -307,7 +309,9 @@ paths:
                 $ref: '#/components/schemas/IndividualResponse'
   /samples:
     post:
-      description: Gets response to a beacon query for individual information.
+      description: >-
+        Gets response to a beacon query for information about a sample /
+        specimen.
       operationId: postSampleResponse
       tags:
         - Endpoints
@@ -566,13 +570,17 @@ components:
       type: string
       example: GRCh38
     ReferenceBases:
-      description: 'Reference bases for this variant (starting from `start`). Accepted values: [ACGT]*.'
+      description: >-
+        Reference bases for this variant (starting from `start`).
+        Accepted values: [ACGT]*.
       type: string
-      pattern: '^([ACGT]+)$'
+      pattern: '^([ACGTN]+)$'
     AlternateBases:
-      description: 'The bases that appear instead of the reference bases. Accepted values: [ACGT]*.'
+      description: >-
+        The bases that appear instead of the reference bases.
+        Accepted values: [ACGTN]*.
       type: string
-      pattern: '^([ACGT]+)$'
+      pattern: '^([ACGTN]+)$'
     Filters:
       description: Ontology based filters. CURIE syntax is encouraged to be used.
       type: array
@@ -726,9 +734,11 @@ components:
           $ref: '#/components/schemas/AlternateBases'
         start:
           description: |
-            Precise start coordinate position, allele locus (0-based, inclusive).
+            Precise start coordinate position, allele locus (0-based, inclusive)
             * start only:
-              - for single positions, e.g. the start of a specified sequence alteration where the size is given through the specified alternateBases
+              - for single positions, e.g. the start of a specified sequence 
+              alteration where the size is given through the specified 
+              alternateBases
               - typical use are queries for SNV and small InDels
           type: integer
           format: int64
@@ -834,8 +844,12 @@ components:
         meta:
           type: object
           example: >-
-            Individual: [ga4gh-phenopacket-individual-v0.1,ga4gh-schemablocks-individual-v0.1],
-            Variant: ["ga4gh-variant-representation-v0.1", "ga4gh-schemablocks-beacon-variant-v0.1"]
+            Individual:
+              - ga4gh-phenopacket-individual-v0.1
+              - ga4gh-schemablocks-individual-v0.1
+            Variant:
+              - ga4gh-variant-representation-v0.1
+              - ga4gh-schemablocks-beacon-variant-v0.1
         value:
           $ref: '#/components/schemas/GenomicRegionResponseValue'
     GenomicRegionResponseValue:
@@ -861,13 +875,16 @@ components:
             $ref: '#/components/schemas/GenomicResponseResults'
     
     GenomicCNVRequest:
-      description: Search for a genomic CNV
+      description: >-
+        Search for a genomic CNV
       type: object
     GenomicCNVResponse:
-      description: Response of a genomic CNV query
+      description: >-
+        Response of a genomic CNV query
     
     GenomicVariantRequest:
-      description: Search for a genomic region
+      description:  >-
+        Search for a genomic region
       type: object
       required:
         - query
