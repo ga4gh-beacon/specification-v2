@@ -4,50 +4,60 @@ info:
   version: "2.0"
   title: GA4GH Beacon API Specification
   description: >-
-    A Beacon is a web service for genetic data sharing that can be queried for information about variants, individuals or samples.
+    A Beacon is a web service for genetic data sharing that can be queried for 
+    information about variants, individuals or samples.
   contact:
     email: beacon@ga4gh.org
   license:
     name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 externalDocs:
-  description: 'Beacon Project'
-  url: http://beacon-project.io/
+  description: |
+    'Beacon Project'
+  url: 'http://beacon-project.io/'
 paths:
   /:
     get:
-      description: Get information about the beacon
+      description: |
+        Get information about the beacon
       operationId: getBeacon
       tags:
         - Endpoints
       responses:
         '200':
-          description: successful operation
+          description: |
+            Successful operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Beacon'
   /query:
     get:
-      description: Get response to a beacon query for allele information.
+      description: |
+        Get response to a beacon query for allele information.
       operationId: getBeaconAlleleResponse
       tags:
         - v1
       parameters:
         - name: referenceName
-          description: 'Reference name (chromosome). Accepting values 1-22, X, Y, MT.'
+          description: |
+            Reference name (chromosome). Accepting values 1-22, X, Y, MT.
           in: query
           required: true
           schema:
             $ref: '#/components/schemas/Chromosome'
         - name: start
           description: |
-            Precise start coordinate position, allele locus (0-based, inclusive).
-            * start only:
-              - for single positions, e.g. the start of a specified sequence alteration where the size is given through the specified alternateBases
+            Precise start coordinate position, allele locus (0-based, 
+            inclusive).
+            * `start` only:
+              - for single positions, e.g. the start of a specified sequence 
+              alteration where the size is given through the specified 
+              `alternateBases`
               - typical use are queries for SNV and small InDels
-              - the use of "start" without an "end" parameter requires the use of "referenceBases"
-            * start and end:
+              - the use of `start` without an `end` parameter requires the use 
+              of `referenceBases`
+            * `start` and `end`:
               - special use case for exactly determined structural changes
           in: query
           required: false
@@ -59,8 +69,11 @@ paths:
           description: |
             Minimum start coordinate
             * startMin + startMax + endMin + endMax
-              - for querying imprecise positions (e.g. identifying all structural variants starting anywhere between startMin <-> startMax, and ending anywhere between endMin <-> endMax)
-              - single or double sided precise matches can be achieved by setting startMin = startMax XOR endMin = endMax
+              - for querying imprecise positions (e.g. identifying all 
+              structural variants starting anywhere between `startMin` <-> 
+              `startMax`, and ending anywhere between `endMin` <-> `endMax`)
+              - single or double sided precise matches can be achieved by 
+              setting `startMin` = `startMax` XOR `endMin` = `endMax`
           in: query
           schema:
             type: integer
@@ -68,7 +81,7 @@ paths:
             minimum: 0
         - name: startMax
           description: |
-            Maximum start coordinate. See startMin.
+            Maximum start coordinate. See `startMin`.
           in: query
           schema:
             type: integer
@@ -76,7 +89,7 @@ paths:
             minimum: 0
         - name: end
           description: |
-            Precise end coordinate (0-based, exclusive). See start.
+            Precise end coordinate (0-based, exclusive). See `start`.
           in: query
           schema:
             type: integer
@@ -84,7 +97,7 @@ paths:
             minimum: 0
         - name: endMin
           description: |
-            Minimum end coordinate. See startMin.
+            Minimum end coordinate. See `startMin`.
           in: query
           schema:
             type: integer
@@ -92,7 +105,7 @@ paths:
             minimum: 0
         - name: endMax
           description: |
-            Maximum end coordinate. See startMin.
+            Maximum end coordinate. See `startMin`.
           in: query
           schema:
             type: integer
@@ -100,15 +113,33 @@ paths:
             minimum: 0
         - name: referenceBases
           description: |
-            Reference bases for this variant (starting from `start`). Accepted values: [ACGTN]*. N is a wildcard, that denotes the position of any base, and can be used as a standalone base of any type or within a partially known sequence. For example a sequence where the first and last bases are known, but the middle portion can exhibit countless variations of [ACGT], or the bases are unknown: ANNT the Ns can take take any form of [ACGT], which makes both ACCT and ATGT (or any other combination) viable sequences.
+            Reference bases for this variant (starting from `start`). Accepted 
+            values: [ACGTN]*. 
+
+            N is a wildcard, that denotes the position of any base, and can be 
+            used as a standalone base of any type or within a partially known 
+            sequence. For example a sequence where the first and last bases are 
+            known, but the middle portion can exhibit countless variations of 
+            [ACGT], or the bases are unknown: ANNT the Ns can take take any form 
+            of [ACGT], which makes both ACCT and ATGT (or any other combination) 
+            viable sequences.
           in: query
           required: true
           schema:
             type: string
             pattern: '^([ACGTN]+)$'
         - name: alternateBases
-          description: >
-            The bases that appear instead of the reference bases. Accepted values: [ACGTN]*. N is a wildcard, that denotes the position of any base, and can be used as a standalone base of any type or within a partially known sequence. For example a sequence where the first and last bases are known, but the middle portion can exhibit countless variations of [ACGT], or the bases are unknown: ANNT the Ns can take take any form of [ACGT], which makes both ACCT and ATGT (or any other combination) viable sequences.
+          description: |
+            The bases that appear instead of the reference bases. Accepted 
+            values: [ACGTN]*. 
+
+            N is a wildcard, that denotes the position of any 
+            base, and can be used as a standalone base of any type or within a 
+            partially known sequence. For example a sequence where the first and 
+            last bases are known, but the middle portion can exhibit countless 
+            variations of [ACGT], or the bases are unknown: ANNT the Ns can take 
+            take any form of [ACGT], which makes both ACCT and ATGT (or any 
+            other combination) viable sequences.
 
             Symbolic ALT alleles (DEL, INS, DUP, INV, CNV, DUP:TANDEM, DEL:ME,
             INS:ME) will be represented in `variantType`.
@@ -139,12 +170,15 @@ paths:
           examples:
             dup:
               value: DUP
-              summary: duplication of sequence following `start`; not necessarily in
+              summary: |
+                duplication of sequence following `start`; not necessarily in
             del:
               value: DEL
-              summary: deletion of sequence following `start`
+              summary: |
+                deletion of sequence following `start`
         - name: assemblyId
-          description: 'Assembly identifier (GRC notation, e.g. GRCh37).'
+          description: |
+            Assembly identifier (GRC notation, e.g. GRCh37).
           in: query
           required: true
           schema:
@@ -188,14 +222,16 @@ paths:
               - NONE
       responses:
         '200':
-          description: successful operation
+          description: |
+            Successful operation
           content:
             application/json:
               schema:
                 items:
                   $ref: '#/components/schemas/BeaconAlleleResponse'
         '400':
-          description: Bad request (e.g. missing mandatory parameter)
+          description: |
+            Bad request (e.g. missing mandatory parameter)
           content:
             application/json:
               schema:
@@ -217,20 +253,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/BeaconAlleleResponse'
     post:
-      description: Gets response to a beacon query for allele information.
+      description: |
+        Gets response to a beacon query for allele information.
       operationId: postBeaconAlleleResponse
       tags:
         - v1
       responses:
         '200':
-          description: successful operation
+          description: |
+            Successful operation
           content:
             application/json:
               schema:
                 items:
                   $ref: '#/components/schemas/BeaconAlleleResponse'
         '400':
-          description: Bad request (e.g. missing mandatory parameter)
+          description: |
+            Bad request (e.g. missing mandatory parameter)
           content:
             application/json:
               schema:
@@ -259,9 +298,8 @@ paths:
         required: true
   /individuals:
     post:
-      description: >-
-        Gets response to a beacon query for information about an individual /
-        subject.
+      description: |
+        Gets response to a beacon query for individual information.
       operationId: postIndividualResponse
       tags:
         - Endpoints
@@ -276,7 +314,8 @@ paths:
         required: true
       responses:
         '200':
-          description: successful operation
+          description: |
+            Successful operation
           content:
             application/json:
               schema:
@@ -286,7 +325,8 @@ paths:
                 IndividualResponse:
                   $ref: '#/components/examples/IndividualResponse'
         '400':
-          description: Bad request (e.g. missing mandatory parameter)
+          description: |
+            Bad request (e.g. missing mandatory parameter)
           content:
             application/json:
               schema:
@@ -309,9 +349,8 @@ paths:
                 $ref: '#/components/schemas/IndividualResponse'
   /samples:
     post:
-      description: >-
-        Gets response to a beacon query for information about a sample /
-        specimen.
+      description: |
+        Gets response to a beacon query for individual information.
       operationId: postSampleResponse
       tags:
         - Endpoints
@@ -326,7 +365,8 @@ paths:
         required: true
       responses:
         '200':
-          description: successful operation
+          description: |
+            Successful operation
           content:
             application/json:
               schema:
@@ -336,7 +376,8 @@ paths:
                 IndividualResponse:
                   $ref: '#/components/examples/SampleResponse'
         '400':
-          description: Bad request (e.g. missing mandatory parameter)
+          description: |
+            Bad request (e.g. missing mandatory parameter)
           content:
             application/json:
               schema:
@@ -359,7 +400,8 @@ paths:
                 $ref: '#/components/schemas/SampleResponse'
   /g_variant:
     post:
-      description: Any kind of genomic query that wants to query variants.
+      description: |
+        Any kind of genomic query that wants to query variants.
       operationId: postGenomicVariant
       tags:
         - Endpoints
@@ -371,14 +413,16 @@ paths:
         required: true
       responses:
         '200':
-          description: successful operation
+          description: |
+            Successful operation
           content:
             application/json:
               schema:
                 items:
                   $ref: '#/components/schemas/GenomicVariantResponse'
         '400':
-          description: Bad request (e.g. missing mandatory parameter)
+          description: |
+            Bad request (e.g. missing mandatory parameter)
           content:
             application/json:
               schema:
@@ -401,7 +445,8 @@ paths:
                 $ref: '#/components/schemas/GenomicVariantResponse'
   /genomic_snp_request:
     post:
-      description: Description pending
+      description: |
+        Description pending
       operationId: postGenomicSnpRequest
       tags:
         - Endpoints
@@ -416,7 +461,8 @@ paths:
         required: true
       responses:
         '200':
-          description: successful operation
+          description: |
+            Successful operation
           content:
             application/json:
               schema:
@@ -426,7 +472,8 @@ paths:
                 snpResponse:
                   $ref: '#/components/examples/SnpResponse'
         '400':
-          description: Bad request (e.g. missing mandatory parameter)
+          description: |
+            Bad request (e.g. missing mandatory parameter)
           content:
             application/json:
               schema:
@@ -449,7 +496,8 @@ paths:
                 $ref: '#/components/schemas/GenomicSnpResponse'
   /genomic_region_request:
     post:
-      description: Description pending
+      description: |
+        Description pending
       operationId: postGenomicRegionRequest
       tags:
         - Endpoints
@@ -464,14 +512,16 @@ paths:
         required: true
       responses:
         '200':
-          description: successful operation
+          description: |
+            Successful operation
           content:
             application/json:
               schema:
                 items:
                   $ref: '#/components/schemas/GenomicRegionResponse'
         '400':
-          description: Bad request (e.g. missing mandatory parameter)
+          description: |
+            Bad request (e.g. missing mandatory parameter)
           content:
             application/json:
               schema:
@@ -494,7 +544,8 @@ paths:
                 $ref: '#/components/schemas/GenomicRegionResponse'
   /genomic_cnv_request:
     post:
-      description: Description pending
+      description: |
+        Description pending
       operationId: genomicCnvRequest
       tags:
         - Endpoints
@@ -506,14 +557,16 @@ paths:
         required: true
       responses:
         '200':
-          description: successful operation
+          description: |
+            Successful operation
           content:
             application/json:
               schema:
                 items:
                   $ref: '#/components/schemas/GenomicCNVResponse'
         '400':
-          description: Bad request (e.g. missing mandatory parameter)
+          description: |
+            Bad request (e.g. missing mandatory parameter)
           content:
             application/json:
               schema:
@@ -537,7 +590,8 @@ paths:
 components:
   schemas:
     Chromosome:
-      description: 'Reference name (chromosome). Accepting values 1-22, X, Y, MT.'
+      description: |
+        Reference name (chromosome). Accepting values 1-22, X, Y, MT.
       type: string
       enum:
         - '1'
@@ -566,35 +620,36 @@ components:
         - 'Y'
         - 'MT'
     Assembly:
-      description: 'Assembly identifier (GRC notation, e.g. GRCh37).'
+      description: |
+        Assembly identifier (GRC notation, e.g. GRCh37).
       type: string
       example: GRCh38
     ReferenceBases:
-      description: >-
-        Reference bases for this variant (starting from `start`).
-        Accepted values: [ACGT]*.
+      description: |
+        Reference bases for this variant (starting from `start`). Accepted 
+        values: [ACGT]*.
       type: string
-      pattern: '^([ACGTN]+)$'
+      pattern: '^([ACGT]+)$'
     AlternateBases:
-      description: >-
-        The bases that appear instead of the reference bases.
-        Accepted values: [ACGTN]*.
+      description: |
+        The bases that appear instead of the reference bases. Accepted values: 
+        [ACGT]*.
       type: string
-      pattern: '^([ACGTN]+)$'
+      pattern: '^([ACGT]+)$'
     Filters:
-      description: Ontology based filters. CURIE syntax is encouraged to be used.
+      description: |
+        Ontology based filters. CURIE syntax is encouraged to be used.
       type: array
       items:
         type: string
-      example: 
-        'BTO:0000199'
+      example: 'BTO:0000199'
     CustomFilters:
-      description: Custom filters defined by this Beacon.
+      description: |
+        Custom filters defined by this Beacon.
       type: array
       items:
         type: string
-      example:
-        'mydict.aterm:avalue,mydict.aterm2:avalue2'
+      example: 'mydict.aterm:avalue,mydict.aterm2:avalue2'
     
     RequestDatasets:
       description: >-
@@ -611,8 +666,8 @@ components:
         includeDatasetResponses:
           description: >-
             Indicator of whether responses for individual datasets
-            (datasetAlleleResponses) should be included in the response
-            (BeaconAlleleResponse) to this request or not. If null (not
+            (`DatasetAlleleResponses`) should be included in the response
+            (`BeaconAlleleResponse`) to this request or not. If null (not
             specified), the default value of NONE is assumed.
           type: string
           enum:
@@ -621,14 +676,16 @@ components:
             - MISS
             - NONE
     RequestMeta:
-      description: Format of the responses and version of the Beacon handling this request.
+      description: |
+        Format of the responses and version of the Beacon handling this request.
       type: object
       required:
         - request
         - apiVersion
       properties:
         request:
-          description: 'Schema version(s) to be used for the components specified'
+          description: |
+            Schema version(s) to be used for the components specified
           type: object
           example: 
             Individual: 
@@ -638,13 +695,14 @@ components:
               - ga4gh-variant-representation-v0.1
               - ga4gh-schemablocks-beacon-variant-v0.1
         apiVersion:
-          description: 'Version of the Beacon to be used to answer the query'
+          description: |
+            Version of the Beacon to be used to answer the query
           type: string
-          example:
-            'v2.0'
+          example: 'v2.0'
     
     ResponseBasicStructure:
-      description: Description pending
+      description: |
+        Description pending
       type: object
       required:
         - version
@@ -656,7 +714,8 @@ components:
         value:
           type: object
     ResponseResult:
-      description: Description pending
+      description: |
+        Description pending
       properties:
         default:
           $ref: '#/components/schemas/ResponseBasicStructure'
@@ -666,7 +725,8 @@ components:
             $ref: '#/components/schemas/ResponseBasicStructure'
     
     VariantsFoundResponse:
-      description: Description pending
+      description: |
+        Description pending
       properties:
         variant:
           $ref: '#/components/schemas/ResponseResult'
@@ -681,7 +741,8 @@ components:
           items:
             $ref: '#/components/schemas/BeaconDatasetAlleleResponse'
     GenomicResponseResults:
-      description: Description pending
+      description: |
+        Description pending
       type: object
       required:
         - VariantsFoundResponse
@@ -692,7 +753,8 @@ components:
             $ref: '#/components/schemas/VariantsFoundResponse'
             
     GenomicSnpRequest:
-      description: Search for a genomic SNP
+      description: |
+        Search for a genomic SNP
       type: object
       required:
         - query
@@ -702,7 +764,8 @@ components:
         query:
           $ref: '#/components/schemas/GenomicSnpQuery'
     GenomicSnpQuery:
-      description: Fields available in a SNP query.
+      description: |
+        Fields available in a SNP query.
       required:
         - variant
       properties:
@@ -715,7 +778,8 @@ components:
         customFilters:
           $ref: '#/components/schemas/CustomFilters'
     GenomicSnpFields:
-      description: Description pending
+      description: |
+        SNP request made against the Beacon.
       type: object
       required:
         - assemblyId
@@ -734,17 +798,19 @@ components:
           $ref: '#/components/schemas/AlternateBases'
         start:
           description: |
-            Precise start coordinate position, allele locus (0-based, inclusive)
-            * start only:
+            Precise start coordinate position, allele locus (0-based, 
+            inclusive).
+            * `start` only:
               - for single positions, e.g. the start of a specified sequence 
               alteration where the size is given through the specified 
-              alternateBases
+              `alternateBases`
               - typical use are queries for SNV and small InDels
           type: integer
           format: int64
           minimum: 0
     GenomicSnpResponse:
-      description: Response of a genomic SNP query
+      description: |
+        Response of a genomic SNP query
       type: object
       properties:
         meta:
@@ -759,7 +825,8 @@ components:
         value:
           $ref: '#/components/schemas/GenomicSnpResponseValue'
     GenomicSnpResponseValue:
-      description: Description pending
+      description: |
+        Description pending
       type: object
       required:
         - beaconId
@@ -781,7 +848,8 @@ components:
             $ref: '#/components/schemas/GenomicResponseResults'
     
     GenomicRegionRequest:
-      description: Search for a genomic region
+      description: |
+        Search for a genomic region
       type: object
       required:
         - query
@@ -791,7 +859,8 @@ components:
         query:
           $ref: '#/components/schemas/GenomicRegionQuery'
     GenomicRegionQuery:
-      description: Fields available in a region query.
+      description: |
+        Fields available in a region query.
       required:
         - variant
       properties:
@@ -800,21 +869,22 @@ components:
         datasets:
           $ref: '#/components/schemas/RequestDatasets'
         filters:
-          description: Description pending
+          description: |
+            Description pending
           type: array
           items:
             type: string
-          example: 
-            'BTO:0000199'
+          example: 'BTO:0000199'
         customFilters:
-          description: Description pending
+          description: |
+            Description pending
           type: array
           items:
             type: string
-          example:
-            'mydict.aterm:avalue,mydict.aterm2:avalue2'
+          example: 'mydict.aterm:avalue,mydict.aterm2:avalue2'
     GenomicRegionFields:
-      description: Region request made against the Beacon. 
+      description: |
+        Region request made against the Beacon. 
       type: object
       required:
         - assemblyId
@@ -830,30 +900,34 @@ components:
           $ref: '#/components/schemas/ReferenceBases'
         start:
           description: |
-            Precise `start` coordinate position, allele locus (0-based, inclusive).
+            Precise `start` coordinate position, allele locus (0-based, 
+            inclusive).
           type: integer
           format: int64
           minimum: 0
         end:
-          description: Precise `end` coordinate (0-based, exclusive). See `start`.
+          description: |
+            Precise `end` coordinate (0-based, exclusive). See `start`.
           type: integer
     GenomicRegionResponse:
-      description: Response of a genomic region query
+      description: |
+        Response of a genomic region query
       type: object
       properties:
         meta:
           type: object
-          example: >-
+          example: 
             Individual:
-              - ga4gh-phenopacket-individual-v0.1
-              - ga4gh-schemablocks-individual-v0.1
+              - "ga4gh-phenopacket-individual-v0.1"
+              - "ga4gh-schemablocks-individual-v0.1"
             Variant:
-              - ga4gh-variant-representation-v0.1
-              - ga4gh-schemablocks-beacon-variant-v0.1
+              - "ga4gh-variant-representation-v0.1"
+              - "ga4gh-schemablocks-beacon-variant-v0.1"
         value:
           $ref: '#/components/schemas/GenomicRegionResponseValue'
     GenomicRegionResponseValue:
-      description: Description pending
+      description: |
+        Variant information of a geomic region request.
       type: object
       required:
         - beaconId
@@ -875,15 +949,15 @@ components:
             $ref: '#/components/schemas/GenomicResponseResults'
     
     GenomicCNVRequest:
-      description: >-
-        Search for a genomic CNV
+      description: |
+        Search for a genomic CNV. Fields to be defined.
       type: object
     GenomicCNVResponse:
-      description: >-
-        Response of a genomic CNV query
+      description: |
+        Response of a genomic CNV query. Fields to be defined.
     
     GenomicVariantRequest:
-      description:  >-
+      description: |
         Search for a genomic region
       type: object
       required:
@@ -894,7 +968,8 @@ components:
         query:
           $ref: '#/components/schemas/GenomicVariantQuery'
     GenomicVariantQuery:
-      description: Description pending
+      description: |
+        Description pending
       type: object
       required:
         - query
@@ -908,7 +983,9 @@ components:
         customFilters:
           $ref: '#/components/schemas/CustomFilters'
     GenomicVariantFields:
-      description: All the required fields to query any kind of variant (e.g. SNP, DUP, etc.).
+      description: |
+        All the required fields to query any kind of variant (e.g. SNP, DUP, 
+        etc.).
       type: object
       required:
         - assemblyId
@@ -921,17 +998,23 @@ components:
           $ref: '#/components/schemas/Chromosome'
         start:
           description: |
-            Precise or fuzzy start coordinate position(s), allele locus (0-based, inclusive).
+            Precise or fuzzy start coordinate position(s), allele locus 
+            (0-based, inclusive).
             * start only:
-              - for single positions, e.g. the start of a specified sequence
-              alteration where the size is given through the specified
-              alternateBases
+              - for single positions, e.g. the start of a specified sequence 
+              alteration where the size is given through the specified 
+              `alternateBases`
               - typical use are queries for SNV and small InDels
-              - THIS IS NOT TRUE FOR RANGE QUERIES!!!! -> the use of "start" without an "end" parameter requires the use of "referenceBases"
+              - THIS IS NOT TRUE FOR RANGE QUERIES!!!! -> the use of "start" 
+              without an "end" parameter requires the use of "referenceBases"
             * `start` and `end`:
               - special use case for exactly determined structural changes
-            * use 2 values for querying imprecise positions (e.g. identifying all structural variants starting anywhere between `start[0]` <-> `start[1]`, and ending anywhere between `end[0]` <-> `end[1]`)
-            * IS THIS NECESSARY???? -> single or double sided precise matches can be achieved by setting `start[0]` = `start[1]` XOR `end[0]` = `end[1]`
+            * use 2 values for querying imprecise positions (e.g. identifying 
+            all structural variants starting anywhere between `start[0]` <-> 
+            `start[1]`, and ending anywhere between `end[0]` <-> `end[1]`)
+            * IS THIS NECESSARY???? -> single or double sided precise matches 
+            can be achieved by setting `start[0]` = `start[1]` XOR `end[0]` = 
+            `end[1]`
           type: array
           items:
             type: integer
@@ -947,20 +1030,26 @@ components:
             format: int64
         referenceBases:
           description: |
-            Reference bases for this variant (starting from `start`).
-            Accepted values: [ACGTN]*.
-            N is a wildcard, that denotes the position of any base, and can be
-            used as a standalone base of any type or within a partially known
-            sequence. For example, a sequence where the first and last bases are
-            known, but the middle portion can exhibit countless variations of
-            [ACGT], or the bases are unknown: `ANNT`
-            The Ns can take take any form of [ACGT], which makes both ACCT and
-            ATGT (or any other combination) viable sequences.
+            Reference bases for this variant (starting from `start`). 
+            Accepted values: [ACGTN]*. N is a wildcard, that denotes the 
+            position of any base, and can be used as a standalone base of any 
+            type or within a partially known sequence. For example a sequence 
+            where the first and last bases are known, but the middle portion can 
+            exhibit countless variations of [ACGT], or the bases are unknown: 
+            ANNT the Ns can take take any form of [ACGT], which makes both ACCT 
+            and ATGT (or any other combination) viable sequences.
           type: string
           pattern: '^([ACGTN]+)$'
         alternateBases:
           description: |
-            The bases that appear instead of the reference bases. Accepted values: [ACGTN]*. N is a wildcard, that denotes the position of any base, and can be used as a standalone base of any type or within a partially known sequence. For example a sequence where the first and last bases are known, but the middle portion can exhibit countless variations of [ACGT], or the bases are unknown: ANNT the Ns can take take any form of [ACGT], which makes both ACCT and ATGT (or any other combination) viable sequences.
+            The bases that appear instead of the reference bases. Accepted 
+            values: [ACGTN]*. N is a wildcard, that denotes the position of any 
+            base, and can be used as a standalone base of any type or within a 
+            partially known sequence. For example a sequence where the first and 
+            last bases are known, but the middle portion can exhibit countless 
+            variations of [ACGT], or the bases are unknown: ANNT the Ns can take 
+            take any form of [ACGT], which makes both ACCT and ATGT (or any 
+            other combination) viable sequences.
             Symbolic ALT alleles (DEL, INS, DUP, INV, CNV, DUP:TANDEM, DEL:ME,
             INS:ME) will be represented in `variantType`.
             Optional: either `alternateBases` or `variantType` is required.
@@ -981,18 +1070,24 @@ components:
         mateName:
           $ref: '#/components/schemas/Chromosome'
     GenomicVariantResponse:
-      description: Response of a genomic variant query
+      description: |
+        Response of a genomic variant query
       type: object
       properties:
         meta:
           type: object
-          example: >-
-            Individual: [ga4gh-phenopacket-individual-v0.1,ga4gh-schemablocks-individual-v0.1],
-            Variant: ["ga4gh-variant-representation-v0.1", "ga4gh-schemablocks-beacon-variant-v0.1"]
+          example:
+            Individual: 
+              - ga4gh-phenopacket-individual-v0.1
+              - ga4gh-schemablocks-individual-v0.1
+            Variant: 
+              - ga4gh-variant-representation-v0.1
+              - ga4gh-schemablocks-beacon-variant-v0.1
         value:
           $ref: '#/components/schemas/GenomicVariantResponseValue'
     GenomicVariantResponseValue:
-      description: Description pending
+      description: |
+        Description pending
       type: object
       required:
         - beaconId
@@ -1014,7 +1109,8 @@ components:
             $ref: '#/components/schemas/GenomicResponseResults'
     
     IndividualRequest:
-      description: Description pending
+      description: |
+        Description pending
       type: object
       required:
         - query
@@ -1024,22 +1120,24 @@ components:
         query:
           $ref: '#/components/schemas/GenomicVariantQuery'
     IndividualResponse:
-      description: Description pending
+      description: |
+        Description pending
       type: object
       properties:
         meta:
           type: object
           example:
             Individual: 
-              - "ga4gh-phenopacket-individual-v0.1"
-              - "ga4gh-schemablocks-individual-v0.1"
+              - ga4gh-phenopacket-individual-v0.1
+              - ga4gh-schemablocks-individual-v0.1
             Variant: 
-              - "ga4gh-variant-representation-v0.1"
-              - "ga4gh-schemablocks-beacon-variant-v0.1"
+              - ga4gh-variant-representation-v0.1
+              - ga4gh-schemablocks-beacon-variant-v0.1
         value:
           $ref: '#/components/schemas/IndividualResponseValue'
     IndividualResponseValue:
-      description: Description pending
+      description: |
+        Description pending
       type: object
       required:
         - beaconId
@@ -1060,7 +1158,8 @@ components:
           items:
             $ref: '#/components/schemas/IndividualResponseResults'
     IndividualResponseResults:
-      description: Description pending
+      description: |
+        Description pending
       type: object
       required:
         - individual
@@ -1079,7 +1178,8 @@ components:
             $ref: '#/components/schemas/VariantsFoundResponse'
     
     SampleRequest:
-      description: Description pending
+      description: |
+        Description pending
       type: object
       required:
         - query
@@ -1089,18 +1189,24 @@ components:
         query:
           $ref: '#/components/schemas/GenomicVariantQuery'
     SampleResponse:
-      description: Description pending
+      description: |
+        Description pending
       type: object
       properties:
         meta:
           type: object
-          example: >-
-            Individual: [ga4gh-phenopacket-individual-v0.1, ga4gh-schemablocks-individual-v0.1],
-            Variant: ["ga4gh-variant-representation-v0.1", "ga4gh-schemablocks-beacon-variant-v0.1"]
+          example:
+            Individual: 
+              - ga4gh-phenopacket-individual-v0.1
+              - ga4gh-schemablocks-individual-v0.1
+            Variant: 
+              - ga4gh-variant-representation-v0.1
+              - ga4gh-schemablocks-beacon-variant-v0.1
         value:
           $ref: '#/components/schemas/SampleResponseValue'
     SampleResponseValue:
-      description: Description pending
+      description: |
+        Description pending
       type: object
       required:
         - beaconId
@@ -1121,7 +1227,8 @@ components:
           items:
             $ref: '#/components/schemas/SampleResponseResults'
     SampleResponseResults:
-      description: Description pending
+      description: |
+        Description pending
       type: object
       required:
         - individual
@@ -1140,7 +1247,8 @@ components:
             $ref: '#/components/schemas/VariantsFoundResponse'
     
     Beacon:
-      description: Metadata describing a beacon instance.
+      description: |
+        Metadata describing a beacon instance.
       type: object
       required:
         - id
@@ -1151,11 +1259,13 @@ components:
       properties:
         id:
           type: string
-          description: Unique identifier of the beacon. Use reverse domain name notation.
+          description: |
+            Unique identifier of the beacon. Use reverse domain name notation.
           example: org.ga4gh.beacon
         name:
           type: string
-          description: Name of the beacon.
+          description: |
+            Name of the beacon.
         apiVersion:
           type: string
           description: Version of the API provided by the beacon.
@@ -1164,14 +1274,17 @@ components:
           $ref: '#/components/schemas/BeaconOrganization'
         description:
           type: string
-          description: Description of the beacon.
+          description: |
+            Description of the beacon.
         version:
           type: string
-          description: Version of the beacon.
+          description: |
+            Version of the beacon.
           example: v0.1
         welcomeUrl:
           type: string
-          description: URL to the welcome page for this beacon (RFC 3986 format).
+          description: |
+            URL to the welcome page for this beacon (RFC 3986 format).
           example: 'http://example.org/wiki/Main_Page'
         alternativeUrl:
           type: string
@@ -1181,11 +1294,13 @@ components:
           example: 'http://example.org/wiki/Main_Page'
         createDateTime:
           type: string
-          description: The time the beacon was created (ISO 8601 format).
+          description: |
+            The time the beacon was created (ISO 8601 format).
           example: '2012-07-19 or 2017-01-17T20:33:40Z'
         updateDateTime:
           type: string
-          description: The time the beacon was updated in (ISO 8601 format).
+          description: |
+            The time the beacon was updated in (ISO 8601 format).
           example: '2012-07-19 or 2017-01-17T20:33:40Z'
         datasets:
           description: >-
@@ -1202,13 +1317,18 @@ components:
           items:
             $ref: '#/components/schemas/BeaconAlleleRequest'
         info:
-          description: 'Additional unspecified metadata about the Beacon service.'
+          description: |
+            Additional unspecified metadata about the Beacon service.
           type: object
           example:
             additionalInfoKey1: additionalInfoValue1
-            additionalInfoKey2: [ additionalInfoValue2, additionalInfoValue3]
+            additionalInfoKey2: 
+                - additionalInfoValue2
+                - additionalInfoValue3
     BeaconAlleleRequest:
-      description: Allele request made against the beacon. The allele must be mapped against a sequence in a genome, and a range can be optionally specified.
+      description: |
+        Allele request made against the beacon. The allele must be mapped 
+        against a sequence in a genome, and a range can be optionally specified.
       type: object
       required:
         - referenceName
@@ -1221,9 +1341,12 @@ components:
           description: |
             Precise start coordinate position, allele locus (0-based, inclusive).
             * start only:
-              - for single positions, e.g. the start of a specified sequence alteration where the size is given through the specified alternateBases
+              - for single positions, e.g. the start of a specified sequence 
+              alteration where the size is given through the specified 
+              `alternateBases`
               - typical use are queries for SNV and small InDels
-              - the use of "start" without an "end" parameter requires the use of "referenceBases"
+              - the use of "start" without an "end" parameter requires the use 
+              of "referenceBases"
             * start and end:
               - special use case for exactly determined structural changes
           type: integer
@@ -1236,26 +1359,46 @@ components:
           description: |
             Minimum start coordinate
             * startMin + startMax + endMin + endMax
-              - for querying imprecise positions (e.g. identifying all structural variants starting anywhere between startMin <-> startMax, and ending anywhere between endMin <-> endMax)
-              - single or double sided precise matches can be achieved by setting startMin = startMax XOR endMin = endMax
+              - for querying imprecise positions (e.g. identifying all 
+              structural variants starting anywhere between `startMin` <-> 
+              `startMax`, and ending anywhere between endMin <-> endMax)
+              - single or double sided precise matches can be achieved by 
+              setting `startMin` = `startMax` XOR `endMin` = `endMax`
           type: integer
         startMax:
-          description: Maximum start coordinate. See startMin.
+          description: |
+            Maximum start coordinate. See `startMin`.
           type: integer
         endMin:
-          description: Minimum end coordinate. See startMin.
+          description: |
+            Minimum end coordinate. See `startMin`.
           type: integer
         endMax:
-          description: Maximum end coordinate. See startMin.
+          description: |
+            Maximum end coordinate. See `startMin`.
           type: integer
         referenceBases:
           description: |
-            Reference bases for this variant (starting from `start`). Accepted values: [ACGTN]*. N is a wildcard, that denotes the position of any base, and can be used as a standalone base of any type or within a partially known sequence. For example a sequence where the first and last bases are known, but the middle portion can exhibit countless variations of [ACGT], or the bases are unknown: ANNT the Ns can take take any form of [ACGT], which makes both ACCT and ATGT (or any other combination) viable sequences.
+            Reference bases for this variant (starting from `start`). Accepted 
+            values: [ACGTN]*. N is a wildcard, that denotes the position of any 
+            base, and can be used as a standalone base of any type or within a 
+            partially known sequence. For example a sequence where the first and 
+            last bases are known, but the middle portion can exhibit countless 
+            variations of [ACGT], or the bases are unknown: ANNT the Ns can take 
+            any form of [ACGT], which makes both ACCT and ATGT (or any 
+            other combination) viable sequences.
           type: string
           pattern: '^([ACGTN]+)$'
         alternateBases:
           description: |
-            The bases that appear instead of the reference bases. Accepted values: [ACGTN]*. N is a wildcard, that denotes the position of any base, and can be used as a standalone base of any type or within a partially known sequence. For example a sequence where the first and last bases are known, but the middle portion can exhibit countless variations of [ACGT], or the bases are unknown: ANNT the Ns can take take any form of [ACGT], which makes both ACCT and ATGT (or any other combination) viable sequences.
+            The bases that appear instead of the reference bases. Accepted 
+            values: [ACGTN]*. N is a wildcard, that denotes the position of any 
+            base, and can be used as a standalone base of any type or within a 
+            partially known sequence. For example a sequence where the first and 
+            last bases are known, but the middle portion can exhibit countless 
+            variations of [ACGT], or the bases are unknown: ANNT the Ns can take 
+            any form of [ACGT], which makes both ACCT and ATGT (or any other 
+            combination) viable sequences.
 
             Symbolic ALT alleles (DEL, INS, DUP, INV, CNV, DUP:TANDEM, DEL:ME,
             INS:ME) will be represented in `variantType`.
@@ -1281,7 +1424,8 @@ components:
         mateName:
           $ref: '#/components/schemas/Chromosome'
         assemblyId:
-          description: 'Assembly identifier (GRC notation, e.g. `GRCh37`).'
+          description: |
+            Assembly identifier (GRC notation, e.g. `GRCh37`).
           type: string
           example: GRCh38
         datasetIds:
@@ -1304,13 +1448,16 @@ components:
             - MISS
             - NONE
     BeaconAlleleResponse:
-      description: Response to a query for information about an allele, made against the beacon.
+      description: |
+        Response to a query for information about an allele, made against the 
+        beacon.
       type: object
       required:
         - beaconId
       properties:
         beaconId:
-          description: 'Identifier of the beacon, as defined in `Beacon`.'
+          description: |
+            Identifier of the beacon, as defined in `Beacon`.
           type: string
         apiVersion:
           description: >-
@@ -1336,7 +1483,8 @@ components:
         error:
           $ref: '#/components/schemas/BeaconError'
         info:
-          description: 'Additional unspecified metadata about the response or its content.'
+          description: |
+            Additional unspecified metadata about the response or its content.
           type: object
           example:
             additionalInfoKey: additionalInfoValue
@@ -1345,7 +1493,8 @@ components:
           items:
             $ref: '#/components/schemas/Handover'
     BeaconOrganization:
-      description: Organization owning the beacon.
+      description: |
+        Organization owning the beacon.
       type: object
       required:
         - id
@@ -1353,19 +1502,24 @@ components:
       properties:
         id:
           type: string
-          description: Unique identifier of the organization.
+          description: |
+            Unique identifier of the organization.
         name:
           type: string
-          description: Name of the organization.
+          description: |
+            Name of the organization.
         description:
           type: string
-          description: Description of the organization.
+          description: |
+            Description of the organization.
         address:
           type: string
-          description: Address of the organization.
+          description: |
+            Address of the organization.
         welcomeUrl:
           type: string
-          description: URL of the website of the organization (RFC 3986 format).
+          description: |
+            URL of the website of the organization (RFC 3986 format).
         contactUrl:
           type: string
           description: >-
@@ -1377,12 +1531,14 @@ components:
             URL to the logo (PNG/JPG/SVG format) of the organization (RFC 3986
             format).
         info:
-          description: 'Additional unspecified metadata about the host Organization.'
+          description: |
+            Additional unspecified metadata about the host Organization.
           type: object
           example:
             additionalInfoKey: additionalInfoValue
     BeaconDataset:
-      description: A dataset available in the beacon.
+      description: |
+        A dataset available in the beacon.
       type: object
       required:
         - id
@@ -1393,42 +1549,52 @@ components:
       properties:
         id:
           type: string
-          description: Unique identifier of the dataset.
+          description: |
+            Unique identifier of the dataset.
         name:
           type: string
-          description: Name of the dataset.
+          description: |
+            Name of the dataset.
         description:
           type: string
-          description: Description of the dataset.
+          description: |
+            Description of the dataset.
         assemblyId:
-          description: 'Assembly identifier (GRC notation, e.g. `GRCh37`).'
+          description: |
+            Assembly identifier (GRC notation, e.g. `GRCh37`).
           type: string
           example: GRCh38
         createDateTime:
           type: string
-          description: The time the dataset was created (ISO 8601 format).
+          description: |
+            The time the dataset was created (ISO 8601 format).
           example: '2012-07-29 or 2017-01-17T20:33:40Z'
         updateDateTime:
           type: string
-          description: The time the dataset was updated in (ISO 8601 format).
+          description: |
+            The time the dataset was updated in (ISO 8601 format).
           example: '2012-07-19 or 2017-01-17T20:33:40Z'
         version:
           type: string
-          description: Version of the dataset.
+          description: |
+            Version of the dataset.
         variantCount:
           type: integer
           format: int64
-          description: Total number of variants in the dataset.
+          description: |
+            Total number of variants in the dataset.
           minimum: 0
         callCount:
           type: integer
           format: int64
-          description: Total number of calls in the dataset.
+          description: |
+            Total number of calls in the dataset.
           minimum: 0
         sampleCount:
           type: integer
           format: int64
-          description: Total number of samples in the dataset.
+          description: |
+            Total number of samples in the dataset.
           minimum: 0
         externalUrl:
           type: string
@@ -1437,22 +1603,27 @@ components:
             3986 format).
           example: 'http://example.org/wiki/Main_Page'
         info:
-          description: 'Additional unspecified metadata about the dataset.'
+          description: |
+            Additional unspecified metadata about the dataset.
           type: object
           example:
-            additionalInfoKey1: [ additionalInfoValue1, additionalInfoValue2]
+            additionalInfoKey1: 
+              - additionalInfoValue1
+              - additionalInfoValue2]
             additionalInfoKey2: additionalInfoValue3
         dataUseConditions:
           $ref: '#/components/schemas/DataUseConditions'
     BeaconDatasetAlleleResponse:
-      description: Response containing information about an allele in a particular dataset.
+      description: |
+        Response containing information about an allele in a particular dataset.
       type: object
       required:
         - datasetId
       properties:
         datasetId:
           type: string
-          description: not provided
+          description: |
+            not provided
         exists:
           description: >-
             Indicator of whether the given allele was observed in the dataset.
@@ -1463,36 +1634,50 @@ components:
           $ref: '#/components/schemas/BeaconError'
         frequency:
           type: number
-          description: 'Frequency of this allele in the dataset. Between 0 and 1, inclusive.'
+          description: |
+            Frequency of this allele in the dataset. Between 0 and 1, inclusive.
           minimum: 0
           maximum: 1
         variantCount:
           type: integer
           format: int64
-          description: Number of times the requested allele has been observed in the dataset.
+          description: |
+            Number of times the requested allele has been observed in the 
+            dataset.
           minimum: 0
         callCount:
           type: integer
           format: int64
-          description: Total number of calls in the dataset. Missing calls are not included.
+          description: |
+            Total number of calls in the dataset. Missing calls are not 
+            included.
           minimum: 0
         sampleCount:
           type: integer
           format: int64
-          description: Number of samples in the dataset where the requested allele is found.
+          description: |
+            Number of samples in the dataset where the requested allele is 
+            found.
           minimum: 0
         note:
           type: string
-          description: Additional note or description of the response.
+          description: |
+            Additional note or description of the response.
         externalUrl:
           type: string
           description: >-
             URL to an external system, such as a secured beacon or a system
             providing more information about a given allele (RFC 3986 format).
         info:
-          description: 'Additional unspecified metadata about the dataset response or its content.'
+          description: |
+            Additional unspecified metadata about the dataset response or its 
+            content.
           type: object
           example:
+            additionalInfoKey1: 
+              - additionalInfoValue1
+              - additionalInfoValue2]
+            additionalInfoKey2: additionalInfoValue3
         datasetHandover:
           type: array
           items:
@@ -1516,7 +1701,8 @@ components:
       required:
         - consentCodeDataUse
         - adamDataUse
-      description: Data use conditions ruling this dataset.
+      description: |
+        Data use conditions ruling this dataset.
       properties:
         consentCodeDataUse:
           $ref: >-
@@ -1534,23 +1720,32 @@ components:
           $ref: '#/components/schemas/HandoverType'
         note:
           type: string
-          description: An optional text including considerations on the handover link provided.
-          example: "This handover link provides access to a summarized VCF. To access the VCF containing the details for each sample filling an application is required. See Beacon contact information details."
+          description: |
+            An optional text including considerations on the handover link 
+            provided.
+          example: |
+            This handover link provides access to a summarized VCF. To access 
+            the VCF containing the details for each sample filling an 
+            application is required. See Beacon contact information details.
         url:
           type: string
-          description: URL endpoint to where the handover process could progress (in RFC 3986 format).
-          example: "https://api.mygenomeservice.org/handover/9dcc48d7-fc88-11e8-9110-b0c592dbf8c0/"
+          description: |
+            URL endpoint to where the handover process could progress (in RFC 
+            3986 format).
+          example: |
+            "https://api.mygenomeservice.org/handover/9dcc48d7-fc88-11e8-9110-b0c592dbf8c0/"
     HandoverType:
       type: object
       required:
         - id
       description: |
-            Handover type, as an Ontology_term object with CURIE syntax for the "id" value. 
+            Handover type, as an Ontology_term object with CURIE syntax for the 
+            `id` value. 
       properties:
         id:
           type: string
           description: >-
-            Use “CUSTOM” for the "id" when no ontology is available.
+            Use `CUSTOM` for the `id` when no ontology is available.
           default: CUSTOM
           example: "EFO:0004157"
         label:
@@ -1566,8 +1761,8 @@ components:
           - ga4gh-phenopacket-individual-v0.1
           - ga4gh-schemablocks-individual-v0.1
         Variant:
-          - "ga4gh-variant-representation-v0.1"
-          - "ga4gh-schemablocks-beacon-variant-v0.1"
+          - ga4gh-variant-representation-v0.1
+          - ga4gh-schemablocks-beacon-variant-v0.1
     SnpQuery:
       summary: Query a SNP
       value:
