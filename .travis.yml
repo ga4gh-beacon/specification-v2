@@ -4,15 +4,18 @@ sudo: false
 jdk:
   - oraclejdk8
 env:
-  - GH_URL=https://raw.githubusercontent.com VALIDATOR_URL=http://validator.swagger.io/validator/debug?url FILE_TO_VALIDATE=beacon.yaml URL_TO_VALIDATE=$GH_URL/$TRAVIS_REPO_SLUG/${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}/$FILE_TO_VALIDATE
+  - GH_URL=https://raw.githubusercontent.com 
+  - VALIDATOR_URL=http://validator.swagger.io/validator/debug?url
+  - FILE_TO_VALIDATE=beacon.yaml 
+  - URL_TO_VALIDATE=$GH_URL/$TRAVIS_REPO_SLUG/${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}/$FILE_TO_VALIDATE
 script:
-# validate
-- echo "Validating $URL_TO_VALIDATE:"
-- VALIDATION_OUTPUT=`curl -sS "$VALIDATOR_URL=$URL_TO_VALIDATE"`
+  # validate
+  - echo "Validating $URL_TO_VALIDATE:"
+  - VALIDATION_OUTPUT=`curl -sS "$VALIDATOR_URL=$URL_TO_VALIDATE"`
 
-# print validation errors
-- echo $VALIDATION_OUTPUT
+  # print validation errors
+  - echo $VALIDATION_OUTPUT
 
-# check if the validation output is an empty array, i.e. no errors
-- VALIDATION_ERROR_COUNT=`echo "$VALIDATION_OUTPUT" |jq -c '.schemaValidationMessages // [] | map(select(.level != "warning"))' |jq length`
-- test "$VALIDATION_OUTPUT" == "[]"
+  # check if the validation output is an empty array, i.e. no errors
+  - VALIDATION_ERROR_COUNT=`echo "$VALIDATION_OUTPUT" |jq -c '.schemaValidationMessages // [] | map(select(.level != "warning"))' |jq length`
+  - test "$VALIDATION_OUTPUT" == "[]"
