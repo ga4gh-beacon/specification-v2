@@ -3,6 +3,6 @@
 
 The Beacon protocol defines an open standard for genomics data discovery, developed by members of the Global Alliance for Genomics & Health. It provides a framework for public web services responding to queries against genomic data collections, for instance from population based or disease specific genome repositories.
 
-This repository contains the specification for the major version "v2" version of the Beacon API. This version is now (2020) under active development and has not seen a stable code release.
+This repository contains the specification for the "v2" major version upgrade of the Beacon API. It is now (2020) under active development and has _not_ seen a _stable_ code release.
 
 For further information, please follow the work here and consult the [Beacon Project website](http://bacon-project.io).
