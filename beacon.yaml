@@ -398,7 +398,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SampleResponse'
-  /g_variant:
+  /g_variants:
     post:
       description: |
         Any kind of genomic query that wants to query variants.
