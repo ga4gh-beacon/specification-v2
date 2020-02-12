@@ -347,7 +347,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/IndividualResponse'
-  /samples:
+  /biosamples:
     post:
       description: |
         Gets response to a beacon query for individual information.
