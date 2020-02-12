@@ -443,7 +443,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenomicVariantResponse'
-  /genomic_snp_request:
+  /genomic_snp:
     post:
       description: |
         Description pending
@@ -494,7 +494,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenomicSnpResponse'
-  /genomic_region_request:
+  /genomic_region:
     post:
       description: |
         Description pending
@@ -542,7 +542,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenomicRegionResponse'
-  /genomic_cnv_request:
+  /genomic_cnv:
     post:
       description: |
         Description pending
