@@ -745,6 +745,27 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ResponseBasicStructure'
+    VariantAnnotationDefault:
+      description: |
+        Default schema for variant annotation
+      properties:
+        version:
+          description: |
+            Version of the schema
+          type: string
+          example: beacon-variant-annotation-v0.1
+        value:
+          $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/master/default_schemas.yaml#/components/schemas/VariantAnnotations'
+    VariantAnnotation:
+      description: |
+        Default schema for variant annotation
+      properties:
+        default:
+          $ref: '#/components/schemas/VariantAnnotationDefault'
+        alternativeSchemas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResponseBasicStructure'
     VariantsFoundResponse:
       description: |
         Description pending
@@ -752,7 +773,7 @@ components:
         variant:
           $ref: '#/components/schemas/Variant'
         variantAnnotations:
-          $ref: '#/components/schemas/ResponseResult'
+          $ref: '#/components/schemas/VariantAnnotation'
         variantHandover:
           type: array
           items:
@@ -761,17 +782,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BeaconDatasetAlleleResponse'
-    GenomicResponseResults:
-      description: |
-        Description pending
-      type: object
-      required:
-        - VariantsFoundResponse
-      properties:
-        VariantsFoundResponse:
-          type: array
-          items:
-            $ref: '#/components/schemas/VariantsFoundResponse'
+    # GenomicResponseResults:
+    #   description: |
+    #     Description pending
+    #   type: object
+    #   required:
+    #     - VariantsFoundResponse
+    #   properties:
+    #     VariantsFoundResponse:
+    #       type: array
+    #       items:
+    #         $ref: '#/components/schemas/VariantsFoundResponse'
             
     GenomicSnpRequest:
       description: |
@@ -1127,7 +1148,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/GenomicResponseResults'
+            $ref: '#/components/schemas/VariantsFoundResponse'
     
     IndividualRequest:
       description: |
@@ -1242,7 +1263,7 @@ components:
         error:
           $ref: '#/components/schemas/BeaconError'
         request:
-          $ref: '#/components/schemas/IndividualRequest'
+          $ref: '#/components/schemas/SampleRequest'
         results:
           type: array
           items:
