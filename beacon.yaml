@@ -702,12 +702,23 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ResponseBasicStructure'
+    VariantDefault:
+      description: |
+        Default schema for variant
+      properties:
+        version:
+          description: |
+            Version of the schema
+          type: string
+          example: beacon-variant-v0.1
+        value:
+          $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/master/default_schemas.yaml#/components/schemas/VariantDetails'
     Variant:
       description: |
         Default schema for variant
       properties:
         default:
-          $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/master/default_schemas.yaml#/components/schemas/VariantDetails'
+          $ref: '#/components/schemas/VariantDefault'
         alternativeSchemas:
           type: array
           items:
