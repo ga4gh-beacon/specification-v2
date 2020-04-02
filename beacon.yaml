@@ -654,31 +654,50 @@ components:
             - HIT
             - MISS
             - NONE
-    RequestMeta:
+    RequestedSchema:
       description: |
         Format of the responses and version of the Beacon handling this request.
       type: object
-      required:
-        - request
-        - apiVersion
       properties:
-        request:
-          description: |
-            Schema version(s) to be used for the components specified
-          type: object
+        Variant:
+          type: array
+          items:
+            type: string
+          example:
+            - ga4gh-variant-representation-v0.1
+            - ga4gh-schemablocks-beacon-variant-v0.1
+        VariantAnnotation:
+          type: array
+          items:
+            type: string
+          example:
+            - beacon-variant-annotation-v0.1
+        Individual:
+          type: array
+          items:
+            type: string
           example: 
-            Individual: 
               - ga4gh-phenopacket-individual-v0.1
               - ga4gh-schemablocks-individual-v0.1
-            Variant: 
-              - ga4gh-variant-representation-v0.1
-              - ga4gh-schemablocks-beacon-variant-v0.1
+        Biosample:
+          type: array
+          items:
+            type: string
+          example:
+            - ga4gh-phenopacket-biosample-v0.1
+            - ga4gh-schemablocks-biosample-v0.1
+    RequestMeta:
+      description: |
+        Requested schemas and versions to be used in the response.
+      type: object
+      properties:
+        requestedSchemas:
+          $ref: '#/components/schemas/RequestedSchema'
         apiVersion:
           description: |
-            Version of the Beacon to be used to answer the query
+            Schemas & versions default for this Beacon version will be used to format the response.
           type: string
           example: 'v2.0'
-    
     ResponseBasicStructure:
       description: |
         Description pending
@@ -695,6 +714,9 @@ components:
     ResponseResult:
       description: |
         Description pending
+      required:
+        - default
+        - alternativeSchemas
       properties:
         default:
           $ref: '#/components/schemas/ResponseBasicStructure'
@@ -705,6 +727,9 @@ components:
     VariantDefault:
       description: |
         Default schema for variant
+      required:
+        - version
+        - value
       properties:
         version:
           description: |
@@ -716,6 +741,9 @@ components:
     Variant:
       description: |
         Default schema for variant
+      required:
+        - default
+        - alternativeSchemas
       properties:
         default:
           $ref: '#/components/schemas/VariantDefault'
@@ -726,6 +754,9 @@ components:
     VariantAnnotationDefault:
       description: |
         Default schema for variant annotation
+      required:
+        - version
+        - value
       properties:
         version:
           description: |
@@ -737,6 +768,9 @@ components:
     VariantAnnotation:
       description: |
         Default schema for variant annotation
+      required:
+        - default
+        - alternativeSchemas
       properties:
         default:
           $ref: '#/components/schemas/VariantAnnotationDefault'
@@ -760,23 +794,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BeaconDatasetAlleleResponse'
-    # GenomicResponseResults:
-    #   description: |
-    #     Description pending
-    #   type: object
-    #   required:
-    #     - VariantsFoundResponse
-    #   properties:
-    #     VariantsFoundResponse:
-    #       type: array
-    #       items:
-    #         $ref: '#/components/schemas/VariantsFoundResponse'
-            
     GenomicSnpRequest:
       description: |
         Search for a genomic SNP
       type: object
       required:
+        - meta
         - query
       properties:
         meta:
@@ -832,16 +855,12 @@ components:
       description: |
         Response of a genomic SNP query
       type: object
+      required:
+        - meta
+        - query
       properties:
         meta:
           type: object
-          example: 
-            Individual: 
-              - ga4gh-phenopacket-individual-v0.1
-              - ga4gh-schemablocks-individual-v0.1
-            Variant: 
-              - ga4gh-variant-representation-v0.1
-              - ga4gh-schemablocks-beacon-variant-v0.1
         value:
           $ref: '#/components/schemas/GenomicSnpResponseValue'
     GenomicSnpResponseValue:
@@ -865,13 +884,14 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/GenomicResponseResults'
+            $ref: '#/components/schemas/VariantsFoundResponse'
     
     GenomicRegionRequest:
       description: |
         Search for a genomic region
       type: object
       required:
+        - meta
         - query
       properties:
         meta:
@@ -966,7 +986,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/GenomicResponseResults'
+            $ref: '#/components/schemas/VariantsFoundResponse'
     
     GenomicCNVRequest:
       description: |
@@ -981,6 +1001,7 @@ components:
         Search for a genomic region
       type: object
       required:
+        - meta
         - query
       properties:
         meta:
@@ -1133,6 +1154,7 @@ components:
         Description pending
       type: object
       required:
+        - meta
         - query
       properties:
         meta:
@@ -1202,6 +1224,7 @@ components:
         Description pending
       type: object
       required:
+        - meta
         - query
       properties:
         meta:
