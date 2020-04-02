@@ -308,9 +308,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/IndividualRequest'
-            examples:
-              individualQuery:
-                $ref: '#/components/examples/IndividualQuery'
         required: true
       responses:
         '200':
@@ -321,9 +318,6 @@ paths:
               schema:
                 items:
                   $ref: '#/components/schemas/IndividualResponse'
-              examples:
-                IndividualResponse:
-                  $ref: '#/components/examples/IndividualResponse'
         '400':
           description: |
             Bad request (e.g. missing mandatory parameter)
@@ -359,9 +353,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/SampleRequest'
-            examples:
-              individualQuery:
-                $ref: '#/components/examples/SampleQuery'
         required: true
       responses:
         '200':
@@ -372,9 +363,6 @@ paths:
               schema:
                 items:
                   $ref: '#/components/schemas/SampleResponse'
-              examples:
-                IndividualResponse:
-                  $ref: '#/components/examples/SampleResponse'
         '400':
           description: |
             Bad request (e.g. missing mandatory parameter)
@@ -455,9 +443,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/GenomicSnpRequest'
-            examples:
-              snpQuery:
-                $ref: '#/components/examples/SnpQuery'
         required: true
       responses:
         '200':
@@ -468,9 +453,6 @@ paths:
               schema:
                 items:
                   $ref: '#/components/schemas/GenomicSnpResponse'
-              examples:
-                snpResponse:
-                  $ref: '#/components/examples/SnpResponse'
         '400':
           description: |
             Bad request (e.g. missing mandatory parameter)
@@ -506,9 +488,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/GenomicRegionRequest'
-            examples:
-              regionQuery:
-                $ref: '#/components/examples/RegionQuery'
         required: true
       responses:
         '200':
@@ -1796,441 +1775,3 @@ components:
             This would be the "preferred Label" in the case of an ontology term.
           default: null
           example: "BAM format"
-  examples:
-    MetaContent:
-      value:
-        Individual: 
-          - ga4gh-phenopacket-individual-v0.1
-          - ga4gh-schemablocks-individual-v0.1
-        Variant:
-          - ga4gh-variant-representation-v0.1
-          - ga4gh-schemablocks-beacon-variant-v0.1
-    SnpQuery:
-      summary: Query a SNP
-      value:
-        meta:
-          request: 
-            Variant: 
-              - "beacon-variant-v0.1"
-            VariantAnnotation: 
-              - "beacon-variant-annotation-v1.0"
-            VariantMetadata: 
-              - "beacon-variant-metadata-v1.0"
-          apiVersion: v2.0
-        query:
-          variant:
-            referenceBases: "C"
-            alternateBases: "T"
-            referenceName: "10"
-            start: 1111
-            assemblyId: "GRCh37"
-        datasets:
-          datasetIds: 
-            - 1
-          includeDatasetResponses: HIT
-        filters: 
-          - 'BTO:0000199'
-        customFilters: 
-          - 'mydict.aterm:avalue'
-    SnpResponse:
-      summary: Example of SNP response
-      
-    RegionQuery:
-      summary: Query a region
-      value:
-        meta:
-          request: 
-          apiVersion: v2.0
-        query:
-          variant:
-            referenceName: "10"
-            start: 1111
-            end: 2222
-            assemblyId: "GRCh37"
-        datasets:
-          datasetIds: 
-            - 1
-          includeDatasetResponses: HIT
-        filters: 
-        customFilters: 
-          - 'mydict.aterm:avalue'
-    
-    IndividualQuery:
-      summary: Search individuals
-      value:
-        meta:
-          request: 
-            Individual: 
-              - "ga4gh-phenopacket-individual-v0.1"
-              - "ga4gh-schemablocks-individual-v0.1"
-            Variant: 
-              - "ga4gh-variant-representation-v0.1"
-              - "ga4gh-schemablocks-beacon-variant-v0.1"
-            Sample: 
-              - "ga4gh-schemablocks-biosample-v0.1"
-          apiVersion: v2.0
-        query:
-          variant:
-            referenceName: "17"
-            start: 41228505
-            end: 41228507
-            assemblyId: "GRCh37"
-        datasets:
-          datasetIds: 
-          includeDatasetResponses: HIT
-        filters: 
-          - 'BTO:0000199'
-        customFilters: 
-          - 'mydict.aterm:avalue'
-    IndividualResponse:
-      value:
-        meta:
-          Individual:
-          - "beacon-individual-v1.0"
-          - "ga4gh-phenopacket-individual-v0.1"
-          - "ga4gh-schemablocks-individual-v0.1"
-          Variant:
-          - "beacon-variant-v0.1"
-          - "ga4gh-variant-representation-v0.1"
-          - "ga4gh-schemablocks-beacon-variant-v0.1"
-          VariantAnnotation:
-          - "beacon-variant-annotation-v1.0"
-          VariaintMetadata:
-          - "beacon-variant-metadata-v1.0"
-          Sample:
-          - "beacon-sample-v1.0"
-          - "ga4gh-schemablocks-biosample-v0.1"
-        value:
-          beaconId: "org.ega-archive.ega-beacon"
-          apiVersion: "v2.0"
-          exists: true
-          error: 
-          request: 
-            meta:
-              request: 
-              apiVersion: "v2.0"
-            query: 
-              variant: 
-                referenceName: "17"
-                start: 41228505
-                end: 41228507
-                assemblyId: "GRCh37"
-              datasets: 
-                datasetIds:
-                  - 1
-                includeDatasetResponses: "NONE"
-              filters: 
-                - "BTO:0000199"
-              customFilters: 
-                - "mydict.aterm:avalue"
-          results:
-          - individual:
-              default:
-                version: beacon-individual-v1.0
-                value:
-                  id: P001890267
-                  sex: PATO:0020000
-                  dateOfBirth: '1965-06-23'
-                  ethnicity: caucasian
-                  info: {}
-              alternativeSchemas:
-              - version: ga4gh-phenopacket-individual-v0.1
-                value:
-                  id: patient:0
-                  alternate_ids: []
-                  dateOfBirth: '1998-01-01T00:00:00Z'
-                  age: P21
-                  sex: MALE
-                  karyotypic_sex: XY
-                  taxonomy:
-                    id: NCBITaxon:9606
-                    label: Human
-              - version: ga4gh-schemablocks-individual-v0.1
-                value:
-                  biocharacteristics:
-                  - description: Patient with Down syndrome
-                    type:
-                      id: HP:0003745
-                      label: Genetic anticipation
-                  created: '2017-10-25T07:06:03Z'
-                  data_use_conditions:
-                    id: DUO:0000004
-                    label: no restriction
-                  description: patient with lung cancer, male smoker
-                  external_references:
-                  - description: Cellosaurus cell line identifier
-                    relation: provenance
-                    type:
-                      id: cellosaurus:CVCL_0312
-                      label: HOS
-                  geo_provenance:
-                    altitude: 94
-                    city: Timisoara
-                    country: Romania
-                    label: Str Marasesti 5, 300077 Timisoara, Romania
-                    latitude: 45.75
-                    longitude: 21.23
-                  id: AM_BS__NCBISKYCGH-1993
-                  info:
-                    first_name:
-                      type: string
-                      value: Ion
-                    last_name:
-                      type: string
-                      value: Tichy
-                  name: Ion Tichy, space explorer
-                  organism:
-                    id: NCBITaxon:9606
-                    label: Homo sapiens
-                  sex:
-                    id: PATO:0020000
-                    label: female genetic sex
-                  updated: '2017-10-25T07:06:03Z'
-            samples:
-            - default:
-                version: beacon-sample-v1.0
-                value:
-                  id: EGAN00043728
-                  tissue:
-                    id: BTO:0000199
-                    label: cardiac muscle
-                  description: Cancer
-                  ageAtCollection: '56'
-              alternativeSchemas:
-              - version: ga4gh-schemablocks-biosample-v0.1
-                value:
-                  age_at_collection:
-                    age: P56Y
-                    age_class:
-                      id: HP:0003621
-                      label: Juvenile onset
-                  biocharacteristics:
-                  - description: Lobular Breast Carcinoma In Situ, study sample
-                    type:
-                      id: ncit:C4018
-                      label: Lobular Breast Carcinoma In Situ
-                  data_use_conditions:
-                    id: DUO:0000004
-                    label: no restriction
-                  description: Burkitt lymphoma, cell line Namalwa
-                  external_references:
-                  - description: Cellosaurus cell line identifier
-                    relation: provenance
-                    type:
-                      id: cellosaurus:CVCL_0312
-                      label: HOS
-                  geo_provenance:
-                    altitude: '94'
-                    city: Timisoara
-                    country: Romania
-                    label: Str Marasesti 5, 300077 Timisoara, Romania
-                    latitude: '45.75'
-                    longitude: '21.23'
-                  id: AM_BS__NCBISKYCGH-1993
-                  individual_id: ind-cnhl-1293347-004
-                  info:
-                    death: '1'
-                    followup_time: P14M
-                  name: Sample BRCA-00429, 2nd replicate
-                  project_id: ind-cnhl-1293347-004
-            variantsFound:
-            - variant:
-                default:
-                  version: beacon-variant-v1.0
-                  value:
-                    variantDetails:
-                      chromosome: '17'
-                      referenceBases: C
-                      alternateBases: A
-                      variantType: SNP
-                      start: 41228505
-                      end: 41228506
-                    info: {}
-                alternativeSchemas:
-                - version: ga4gh-variant-representation-v0.1
-                  value:
-                    location:
-                      interval:
-                        end: 41228506
-                        start: 41228505
-                        type: SimpleInterval
-                      sequence_id: ga4gh:SQ.IIB53T8CNeJJdUqzn9V_JnRtQadwWCbl
-                      type: SequenceLocation
-                    state:
-                      sequence: A
-                      type: SequenceState
-                    type: Allele
-                - version: ga4gh-schemablocks-beacon-variant-v0.1
-                  value:
-                    alternate_bases:
-                    - AC
-                    - ACC
-                    callset_id: DIPG_CS_0290
-                    digest: 2:203420136:A>AC,ACC
-                    genotype:
-                    - '2'
-                    - '1'
-                    id: 5be1840772798347f0ed9e8b
-                    reference_bases: A
-                    reference_name: '2'
-                    start:
-                    - '41228505'
-              variantAnnotations:
-                default:
-                  version: beacon-variant-annotation-v1.0
-                  value:
-                    variantMetadata:
-                      default:
-                        version: beacon-variant-metadata-v1.0
-                        value:
-                          geneId: BRCA1
-                          HGVSId: chr17:g.41228505C>A
-                          transcriptId: ENST00000357654.3
-                          alleleId: CA002876
-                          variantClassification: somatic
-                          variantType: Missense Variant
-                          disease: Breast Cancer
-                          proteinChange: NA
-                          clinVarId: '37598'
-                          pubmedId: NA
-                          timestamp: NA
-                          info: {}
-                      alternativeSchemas: {}
-                    info:
-                      cellBase: {}
-                      dbSNP: {}
-                      clinVar: {}
-                alternativeSchemas: []
-              variantHandover:
-              datasetAlleleResponses:
-          info:
-          resultsHandover: []
-          beaconHandover: []
-    
-    SampleQuery:
-      summary: Search samples
-      value:
-        meta:
-          request: 
-          apiVersion: "v2.0"
-        query:
-          variant:
-            referenceName: "17"
-            start: 41228505
-            end: 41228507
-            assemblyId: "GRCh37"
-        datasets:
-          datasetIds: 
-            - 1
-          includeDatasetResponses: "NONE"
-        filters: 
-          - 'BTO:0000199'
-        customFilters: 
-          - 'mydict.aterm:avalue'
-    SampleResponse:
-      summary: Sample Response
-      value:
-        meta:
-          Sample:
-            - "beacon-sample-v1.0"
-          Individual:
-            - "beacon-individual-v1.0"
-          Variant: 
-            - "beacon-variant-v1.0"
-          VariantMetadata:
-            - "beacon-variant-metadata-v1.0"
-        value:
-          beaconId: "org.ega-archive.ega-beacon"
-          apiVersion: "v2.0"
-          exists: true
-          error: null
-          request:
-            meta:
-              request: 
-              apiVersion: "v2.0"
-            query: 
-              variant: 
-                referenceName: "17"
-                start: 41228505
-                end: 41228507
-                assemblyId: "GRCh37"
-              datasets: 
-                datasetIds:
-                  - 1
-                includeDatasetResponses: "NONE"
-              filters: 
-                - "BTO:0000199"
-              customFilters: 
-                - "mydict.aterm:avalue"
-          results:
-            - sample:  
-                default: 
-                  version: "beacon-sample-v1.0"
-                  value:
-                    id: "EGAN00043728"
-                    tissue: 
-                      id: "BTO:0000199"
-                      label: "cardiac muscle"
-                    description: "Cancer"
-                    ageAtCollection: "56"
-                alternativeSchemas:
-              individuals:
-                - default: 
-                    version: "beacon-individual-v1.0"
-                    value: 
-                      id: "P001890267"
-                      sex: "PATO:0020000"
-                      dateOfBirth: "1965-06-23"
-                      ethnicity: "caucasian"
-                      info: 
-                  alternativeSchemas:
-              variantsFound: 
-                - variant: 
-                    default: 
-                      version: "beacon-variant-v1.0"
-                      value: 
-                        variantDetails: 
-                          chromosome: "17"
-                          referenceBases: "C"
-                          alternateBases: "A"
-                          variantType: "SNP"
-                          start: 41228505
-                          end: 41228506
-                          info:
-                    alternativeSchemas:
-                  variantAnnotations:
-                    default: 
-                      version: "beacon-variant-annotation-v1.0"
-                      value: 
-                        variantMetadata: 
-                          default: 
-                            version: "beacon-variant-metadata-v1.0"
-                            value: 
-                              geneId: "BRCA1"
-                              HGVSId: "chr17:g.41228505C>A"
-                              transcriptId: "ENST00000357654.3"
-                              alleleId: "CA002876"
-                              variantClassification: "somatic"
-                              variantType: "Missense Variant"
-                              disease: "Breast Cancer"
-                              proteinChange: "NA"
-                              clinVarId: "37598"
-                              pubmedId: "NA"
-                              timestamp: "NA"
-                              info:
-                          alternativeSchemas:
-                        info: 
-                          cellBase: 
-                          dbSNP: 
-                          clinVar: 
-                    alternativeSchemas: 
-                  variantHandover:
-                    handoverType:
-                      id: "CUSTOM"
-                      label: "Detailed information about the variant"
-                    note: "External service with more information about the variant"
-                    url: "https://api.mygenomeservice.org/handover/9dcc48d7-fc88-11e8-9110-b0c592dbf8c0/"
-                  datasetAlleleResponses:
-              info: 
-              resultsHandover:
-              beaconHandover:
