@@ -352,7 +352,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SampleRequest'
+              $ref: '#/components/schemas/BiosampleRequest'
         required: true
       responses:
         '200':
@@ -362,14 +362,14 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/SampleResponse'
+                  $ref: '#/components/schemas/BiosampleResponse'
         '400':
           description: |
             Bad request (e.g. missing mandatory parameter)
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SampleResponse'
+                $ref: '#/components/schemas/BiosampleResponse'
         '401':
           description: >-
             Unauthorised (e.g. when an unauthenticated user tries to access a
@@ -377,7 +377,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SampleResponse'
+                $ref: '#/components/schemas/BiosampleResponse'
         '403':
           description: >-
             Forbidden (e.g. the resource is protected for all users or the user
@@ -385,7 +385,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SampleResponse'
+                $ref: '#/components/schemas/BiosampleResponse'
   /g_variants:
     post:
       description: |
@@ -712,19 +712,18 @@ components:
           example: 'beacon-individual-v1.0'
         value:
           type: object
-    ResponseResult:
-      description: |
-        Description pending
-      required:
-        - default
-        - alternativeSchemas
-      properties:
-        default:
-          $ref: '#/components/schemas/ResponseBasicStructure'
-        alternativeSchemas:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResponseBasicStructure'
+    # ResponseResult:
+    #   description: |
+    #     Description pending
+    #   required:
+    #     - defaultSchema
+    #   properties:
+    #     defaultSchema:
+    #       $ref: '#/components/schemas/ResponseBasicStructure'
+    #     alternativeSchemas:
+    #       type: array
+    #       items:
+    #         $ref: '#/components/schemas/ResponseBasicStructure'
     
     VariantDefault:
       description: |
@@ -744,10 +743,10 @@ components:
       description: |
         Default schema for variant
       required:
-        - default
+        - defaultSchema
         - alternativeSchemas
       properties:
-        default:
+        defaultSchema:
           $ref: '#/components/schemas/VariantDefault'
         alternativeSchemas:
           type: array
@@ -771,16 +770,16 @@ components:
       description: |
         Default schema for variant annotation
       required:
-        - default
+        - defaultSchema
         - alternativeSchemas
       properties:
-        default:
+        defaultSchema:
           $ref: '#/components/schemas/VariantAnnotationDefault'
         alternativeSchemas:
           type: array
           items:
             $ref: '#/components/schemas/ResponseBasicStructure'
-    VariantsFoundResponse:
+    VariantReponseResults:
       description: |
         Description pending
       properties:
@@ -904,7 +903,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/VariantsFoundResponse'
+            $ref: '#/components/schemas/VariantReponseResults'
         info:
           type: object
         resultsHandover:
@@ -1014,7 +1013,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/VariantsFoundResponse'
+            $ref: '#/components/schemas/VariantReponseResults'
         info:
           type: object
         resultsHandover:
@@ -1193,7 +1192,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/VariantsFoundResponse'
+            $ref: '#/components/schemas/VariantReponseResults'
         info:
           type: object
         resultsHandover:
@@ -1215,7 +1214,7 @@ components:
           $ref: '#/components/schemas/GenomicVariantQuery'
     IndividualResponse:
       description: |
-        Response of a genomic variant query
+        Response of a query over individuals.
       type: object
       required:
         - meta
@@ -1235,7 +1234,7 @@ components:
       properties:
         exists:
           description: |
-            Indicator of whether any variant was observed in any of the
+            Indicator of whether any individual was observed in any of the
             datasets queried. This should be non-null, unless there was an
             error, in which case `error` has to be non-null.
           type: boolean
@@ -1244,21 +1243,20 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/IndividualResults'
+            $ref: '#/components/schemas/IndividualResponseResults'
         info:
           type: object
         resultsHandover:
           $ref: '#/components/schemas/Handover'
         beaconHandover:
           $ref: '#/components/schemas/Handover'
-    IndividualResults:
+    IndividualResponseResults:
       description: |
-        Default schema for variant annotation
+        Default schema for describing invididuals.
       required:
-        - default
-        - alternativeSchemas
+        - defaultSchema
       properties:
-        default:
+        defaultSchema:
           $ref: '#/components/schemas/IndividualDefault'
         alternativeSchemas:
           type: array
@@ -1275,10 +1273,11 @@ components:
           description: |
             Version of the schema
           type: string
-          example: beacon-variant-annotation-v0.1
+          example: beacon-individual-v0.1
         value:
           $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/master/default_schemas.yaml#/components/schemas/Individual'
-    SampleRequest:
+    
+    BiosampleRequest:
       description: |
         Description pending
       type: object
@@ -1290,57 +1289,66 @@ components:
           $ref: '#/components/schemas/RequestMeta'
         query:
           $ref: '#/components/schemas/GenomicVariantQuery'
-    SampleResponse:
+    BiosampleResponse:
       description: |
-        Description pending
+        Response of a query over biosamples.
       type: object
+      required:
+        - meta
+        - value
       properties:
         meta:
-          type: object
-          example:
-            Individual: 
-              - ga4gh-phenopacket-individual-v0.1
-              - ga4gh-schemablocks-individual-v0.1
-            Variant: 
-              - ga4gh-variant-representation-v0.1
-              - ga4gh-schemablocks-beacon-variant-v0.1
+          $ref: '#/components/schemas/GenomicVariantResponseMeta'
         value:
-          $ref: '#/components/schemas/SampleResponseValue'
-    SampleResponseValue:
+          $ref: '#/components/schemas/BiosampleResponseValue'
+    BiosampleResponseValue:
       description: |
         Description pending
       type: object
       required:
-        - request
+        - exists
         - results
       properties:
+        exists:
+          description: |
+            Indicator of whether any biosample was observed in any of the
+            datasets queried. This should be non-null, unless there was an
+            error, in which case `error` has to be non-null.
+          type: boolean
         error:
           $ref: '#/components/schemas/BeaconError'
-        request:
-          $ref: '#/components/schemas/SampleRequest'
         results:
           type: array
           items:
-            $ref: '#/components/schemas/SampleResponseResults'
-    SampleResponseResults:
+            $ref: '#/components/schemas/BiosampleResponseResults'
+    BiosampleResponseResults:
       description: |
-        Description pending
-      type: object
+        Default schema for describing biosamples.
       required:
-        - individual
-        - samples
-        - VariantsFoundResponse
+        - defaultSchema
       properties:
-        sample:
-          $ref: '#/components/schemas/ResponseResult'
-        individuals:
+        defaultSchema:
+          $ref: '#/components/schemas/BiosampleDefault'
+        alternativeSchemas:
+          description: |
+            Other schemas to represent biosample data. It can be empty.
           type: array
           items:
-            $ref: '#/components/schemas/ResponseResult'
-        VariantsFoundResponse:
-          type: array
-          items:
-            $ref: '#/components/schemas/VariantsFoundResponse'
+            $ref: '#/components/schemas/ResponseBasicStructure'
+    BiosampleDefault:
+      description: |
+        Default schema for variant annotation
+      required:
+        - version
+        - value
+      properties:
+        version:
+          description: |
+            Version of the schema
+          type: string
+          example: beacon-biosample-v0.1
+        value:
+          $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/master/default_schemas.yaml#/components/schemas/Biosample'
     
     Beacon:
       description: |
