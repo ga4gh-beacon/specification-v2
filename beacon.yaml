@@ -654,7 +654,7 @@ components:
             - HIT
             - MISS
             - NONE
-    RequestedSchema:
+    RequestedSchemas:
       description: |
         Format of the responses and version of the Beacon handling this request.
       type: object
@@ -692,12 +692,13 @@ components:
       type: object
       properties:
         requestedSchemas:
-          $ref: '#/components/schemas/RequestedSchema'
+          $ref: '#/components/schemas/RequestedSchemas'
         apiVersion:
           description: |
             Schemas & versions default for this Beacon version will be used to format the response.
           type: string
           example: 'v2.0'
+    
     ResponseBasicStructure:
       description: |
         Description pending
@@ -724,6 +725,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ResponseBasicStructure'
+    
     VariantDefault:
       description: |
         Default schema for variant
@@ -794,6 +796,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BeaconDatasetAlleleResponse'
+    
     GenomicSnpRequest:
       description: |
         Search for a genomic SNP
@@ -860,31 +863,54 @@ components:
         - query
       properties:
         meta:
-          type: object
+          $ref: '#/components/schemas/GenomicSnpResponseMeta'
         value:
           $ref: '#/components/schemas/GenomicSnpResponseValue'
+    GenomicSnpResponseMeta:
+      description: |
+        Blabla
+      type: object
+      properties:
+        beaconId:
+          description: |
+            Identifier of the beacon, as defined in `Beacon`.
+          type: string
+        apiVersion:
+          description: >-
+            Version of the API. If specified, the value must match `apiVersion`
+            in Beacon
+          type: string
+        receivedRequest:
+          $ref: '#/components/schemas/GenomicSnpRequest'
+        returnedSchemas:
+          $ref: '#/components/schemas/RequestedSchemas'
     GenomicSnpResponseValue:
       description: |
         Description pending
       type: object
       required:
-        - beaconId
-        - apiVersion
+        - exists
         - request
         - results
       properties:
-        beaconId:
-          type: string
-        apiVersion:
-          type: string
+        exists:
+          description: |
+            Indicator of whether the given allele was observed in any of the
+            datasets queried. This should be non-null, unless there was an
+            error, in which case `error` has to be non-null.
+          type: boolean
         error:
           $ref: '#/components/schemas/BeaconError'
-        request:
-          $ref: '#/components/schemas/GenomicSnpRequest'
         results:
           type: array
           items:
             $ref: '#/components/schemas/VariantsFoundResponse'
+        info:
+          type: object
+        resultsHandover:
+          $ref: '#/components/schemas/Handover'
+        beaconHandover:
+          $ref: '#/components/schemas/Handover'
     
     GenomicRegionRequest:
       description: |
@@ -909,19 +935,9 @@ components:
         datasets:
           $ref: '#/components/schemas/RequestDatasets'
         filters:
-          description: |
-            Description pending
-          type: array
-          items:
-            type: string
-          example: 'BTO:0000199'
+          $ref: '#/components/schemas/Filters'
         customFilters:
-          description: |
-            Description pending
-          type: array
-          items:
-            type: string
-          example: 'mydict.aterm:avalue,mydict.aterm2:avalue2'
+          $ref: '#/components/schemas/CustomFilters'
     GenomicRegionFields:
       description: |
         Region request made against the Beacon. 
@@ -953,40 +969,58 @@ components:
       description: |
         Response of a genomic region query
       type: object
+      required:
+        - meta
+        - value
       properties:
         meta:
-          type: object
-          example: 
-            Individual:
-              - "ga4gh-phenopacket-individual-v0.1"
-              - "ga4gh-schemablocks-individual-v0.1"
-            Variant:
-              - "ga4gh-variant-representation-v0.1"
-              - "ga4gh-schemablocks-beacon-variant-v0.1"
+          $ref: '#/components/schemas/GenomicRegionResponseMeta'
         value:
           $ref: '#/components/schemas/GenomicRegionResponseValue'
+    GenomicRegionResponseMeta:
+      description: |
+        Blabla
+      type: object
+      properties:
+        beaconId:
+          description: |
+            Identifier of the beacon, as defined in `Beacon`.
+          type: string
+        apiVersion:
+          description: >-
+            Version of the API. If specified, the value must match `apiVersion`
+            in Beacon
+          type: string
+        receivedRequest:
+          $ref: '#/components/schemas/GenomicRegionRequest'
+        returnedSchemas:
+          $ref: '#/components/schemas/RequestedSchemas'
     GenomicRegionResponseValue:
       description: |
         Variant information of a geomic region request.
       type: object
       required:
-        - beaconId
-        - apiVersion
-        - request
+        - exists
         - results
       properties:
-        beaconId:
-          type: string
-        apiVersion:
-          type: string
+        exists:
+          description: |
+            Indicator of whether any variant was observed in any of the
+            datasets queried. This should be non-null, unless there was an
+            error, in which case `error` has to be non-null.
+          type: boolean
         error:
           $ref: '#/components/schemas/BeaconError'
-        request:
-          $ref: '#/components/schemas/GenomicRegionRequest'
         results:
           type: array
           items:
             $ref: '#/components/schemas/VariantsFoundResponse'
+        info:
+          type: object
+        resultsHandover:
+          $ref: '#/components/schemas/Handover'
+        beaconHandover:
+          $ref: '#/components/schemas/Handover'
     
     GenomicCNVRequest:
       description: |
@@ -1114,40 +1148,58 @@ components:
       description: |
         Response of a genomic variant query
       type: object
+      required:
+        - meta
+        - value
       properties:
         meta:
-          type: object
-          example:
-            Individual: 
-              - ga4gh-phenopacket-individual-v0.1
-              - ga4gh-schemablocks-individual-v0.1
-            Variant: 
-              - ga4gh-variant-representation-v0.1
-              - ga4gh-schemablocks-beacon-variant-v0.1
+          $ref: '#/components/schemas/GenomicVariantResponseMeta'
         value:
           $ref: '#/components/schemas/GenomicVariantResponseValue'
+    GenomicVariantResponseMeta:
+      description: |
+        Meta information about a genomic variant reponse.
+      type: object
+      properties:
+        beaconId:
+          description: |
+            Identifier of the beacon, as defined in `Beacon`.
+          type: string
+        apiVersion:
+          description: >-
+            Version of the API. If specified, the value must match `apiVersion`
+            in Beacon
+          type: string
+        receivedRequest:
+          $ref: '#/components/schemas/GenomicVariantRequest'
+        returnedSchemas:
+          $ref: '#/components/schemas/RequestedSchemas'
     GenomicVariantResponseValue:
       description: |
         Description pending
       type: object
       required:
-        - beaconId
-        - apiVersion
-        - request
+        - exists
         - results
       properties:
-        beaconId:
-          type: string
-        apiVersion:
-          type: string
+        exists:
+          description: |
+            Indicator of whether any variant was observed in any of the
+            datasets queried. This should be non-null, unless there was an
+            error, in which case `error` has to be non-null.
+          type: boolean
         error:
           $ref: '#/components/schemas/BeaconError'
-        request:
-          $ref: '#/components/schemas/GenomicVariantRequest'
         results:
           type: array
           items:
             $ref: '#/components/schemas/VariantsFoundResponse'
+        info:
+          type: object
+        resultsHandover:
+          $ref: '#/components/schemas/Handover'
+        beaconHandover:
+          $ref: '#/components/schemas/Handover'
     
     IndividualRequest:
       description: |
@@ -1163,18 +1215,14 @@ components:
           $ref: '#/components/schemas/GenomicVariantQuery'
     IndividualResponse:
       description: |
-        Description pending
+        Response of a genomic variant query
       type: object
+      required:
+        - meta
+        - value
       properties:
         meta:
-          type: object
-          example:
-            Individual: 
-              - ga4gh-phenopacket-individual-v0.1
-              - ga4gh-schemablocks-individual-v0.1
-            Variant: 
-              - ga4gh-variant-representation-v0.1
-              - ga4gh-schemablocks-beacon-variant-v0.1
+          $ref: '#/components/schemas/GenomicVariantResponseMeta'
         value:
           $ref: '#/components/schemas/IndividualResponseValue'
     IndividualResponseValue:
@@ -1182,43 +1230,54 @@ components:
         Description pending
       type: object
       required:
-        - beaconId
-        - apiVersion
-        - request
+        - exists
         - results
       properties:
-        beaconId:
-          type: string
-        apiVersion:
-          type: string
+        exists:
+          description: |
+            Indicator of whether any variant was observed in any of the
+            datasets queried. This should be non-null, unless there was an
+            error, in which case `error` has to be non-null.
+          type: boolean
         error:
           $ref: '#/components/schemas/BeaconError'
-        request:
-          $ref: '#/components/schemas/IndividualRequest'
         results:
           type: array
           items:
-            $ref: '#/components/schemas/IndividualResponseResults'
-    IndividualResponseResults:
+            $ref: '#/components/schemas/IndividualResults'
+        info:
+          type: object
+        resultsHandover:
+          $ref: '#/components/schemas/Handover'
+        beaconHandover:
+          $ref: '#/components/schemas/Handover'
+    IndividualResults:
       description: |
-        Description pending
-      type: object
+        Default schema for variant annotation
       required:
-        - individual
-        - samples
-        - VariantsFoundResponse
+        - default
+        - alternativeSchemas
       properties:
-        individual:
-          $ref: '#/components/schemas/ResponseResult'
-        samples:
+        default:
+          $ref: '#/components/schemas/IndividualDefault'
+        alternativeSchemas:
           type: array
           items:
-            $ref: '#/components/schemas/ResponseResult'
-        VariantsFoundResponse:
-          type: array
-          items:
-            $ref: '#/components/schemas/VariantsFoundResponse'
-    
+            $ref: '#/components/schemas/ResponseBasicStructure'
+    IndividualDefault:
+      description: |
+        Default schema for variant annotation
+      required:
+        - version
+        - value
+      properties:
+        version:
+          description: |
+            Version of the schema
+          type: string
+          example: beacon-variant-annotation-v0.1
+        value:
+          $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/master/default_schemas.yaml#/components/schemas/Individual'
     SampleRequest:
       description: |
         Description pending
@@ -1252,15 +1311,9 @@ components:
         Description pending
       type: object
       required:
-        - beaconId
-        - apiVersion
         - request
         - results
       properties:
-        beaconId:
-          type: string
-        apiVersion:
-          type: string
         error:
           $ref: '#/components/schemas/BeaconError'
         request:
@@ -1498,15 +1551,6 @@ components:
       required:
         - beaconId
       properties:
-        beaconId:
-          description: |
-            Identifier of the beacon, as defined in `Beacon`.
-          type: string
-        apiVersion:
-          description: >-
-            Version of the API. If specified, the value must match `apiVersion`
-            in Beacon
-          type: string
         exists:
           description: >-
             Indicator of whether the given allele was observed in any of the
