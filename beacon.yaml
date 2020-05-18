@@ -1273,9 +1273,13 @@ components:
         info:
           type: object
         resultsHandover:
-          $ref: '#/components/schemas/Handover'
+          type: array
+          items:
+            $ref: '#/components/schemas/Handover'
         beaconHandover:
-          $ref: '#/components/schemas/Handover'
+          type: array
+          items:
+            $ref: '#/components/schemas/Handover'
     
     IndividualRequest:
       description: |
@@ -1398,6 +1402,16 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BiosampleResponseResults'
+        info:
+          type: object
+        resultsHandover:
+          type: array
+          items:
+            $ref: '#/components/schemas/Handover'
+        beaconHandover:
+          type: array
+          items:
+            $ref: '#/components/schemas/Handover'
     BiosampleResponseResults:
       description: |
         Default schema for describing biosamples.
