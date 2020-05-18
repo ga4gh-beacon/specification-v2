@@ -316,8 +316,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/IndividualResponse'
+                $ref: '#/components/schemas/IndividualResponse'
         '400':
           description: |
             Bad request (e.g. missing mandatory parameter)
@@ -368,8 +367,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/IndividualResponse'
+                $ref: '#/components/schemas/IndividualResponse'
         '400':
           description: |
             Bad request (e.g. missing mandatory parameter)
@@ -420,8 +418,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/BiosampleResponse'
+                $ref: '#/components/schemas/BiosampleResponse'
         '400':
           description: |
             Bad request (e.g. missing mandatory parameter)
@@ -472,8 +469,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/GenomicVariantResponse'
+                $ref: '#/components/schemas/GenomicVariantResponse'
         '400':
           description: |
             Bad request (e.g. missing mandatory parameter)
@@ -517,8 +513,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/BiosampleResponse'
+                $ref: '#/components/schemas/BiosampleResponse'
         '400':
           description: |
             Bad request (e.g. missing mandatory parameter)
@@ -569,8 +564,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/BiosampleResponse'
+                $ref: '#/components/schemas/BiosampleResponse'
         '400':
           description: |
             Bad request (e.g. missing mandatory parameter)
@@ -621,8 +615,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/IndividualResponse'
+                $ref: '#/components/schemas/IndividualResponse'
         '400':
           description: |
             Bad request (e.g. missing mandatory parameter)
@@ -673,8 +666,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/GenomicVariantResponse'
+                $ref: '#/components/schemas/GenomicVariantResponse'
         '400':
           description: |
             Bad request (e.g. missing mandatory parameter)
