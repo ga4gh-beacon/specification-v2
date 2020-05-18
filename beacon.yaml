@@ -406,8 +406,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/GenomicVariantResponse'
+                $ref: '#/components/schemas/GenomicVariantResponse'
         '400':
           description: |
             Bad request (e.g. missing mandatory parameter)
@@ -431,141 +430,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenomicVariantResponse'
-  /genomic_snp:
-    post:
-      description: |
-        Description pending
-      operationId: postGenomicSnpRequest
-      tags:
-        - Endpoints
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GenomicSnpRequest'
-        required: true
-      responses:
-        '200':
-          description: |
-            Successful operation
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/GenomicSnpResponse'
-        '400':
-          description: |
-            Bad request (e.g. missing mandatory parameter)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenomicSnpResponse'
-        '401':
-          description: >-
-            Unauthorised (e.g. when an unauthenticated user tries to access a
-            protected resource)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenomicSnpResponse'
-        '403':
-          description: >-
-            Forbidden (e.g. the resource is protected for all users or the user
-            is authenticated but s/he is not granted for this resource)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenomicSnpResponse'
-  /genomic_region:
-    post:
-      description: |
-        Description pending
-      operationId: postGenomicRegionRequest
-      tags:
-        - Endpoints
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GenomicRegionRequest'
-        required: true
-      responses:
-        '200':
-          description: |
-            Successful operation
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/GenomicRegionResponse'
-        '400':
-          description: |
-            Bad request (e.g. missing mandatory parameter)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenomicRegionResponse'
-        '401':
-          description: >-
-            Unauthorised (e.g. when an unauthenticated user tries to access a
-            protected resource)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenomicRegionResponse'
-        '403':
-          description: >-
-            Forbidden (e.g. the resource is protected for all users or the user
-            is authenticated but s/he is not granted for this resource)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenomicRegionResponse'
-  /genomic_cnv:
-    post:
-      description: |
-        Description pending
-      operationId: genomicCnvRequest
-      tags:
-        - Endpoints
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GenomicCNVRequest'
-        required: true
-      responses:
-        '200':
-          description: |
-            Successful operation
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/GenomicCNVResponse'
-        '400':
-          description: |
-            Bad request (e.g. missing mandatory parameter)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenomicCNVResponse'
-        '401':
-          description: >-
-            Unauthorised (e.g. when an unauthenticated user tries to access a
-            protected resource)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenomicCNVResponse'
-        '403':
-          description: >-
-            Forbidden (e.g. the resource is protected for all users or the user
-            is authenticated but s/he is not granted for this resource)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenomicCNVResponse'
 components:
   schemas:
     Chromosome:
@@ -605,16 +469,31 @@ components:
       example: GRCh38
     ReferenceBases:
       description: |
-        Reference bases for this variant (starting from `start`). Accepted 
-        values: [ACGT]*.
+        Reference bases for this variant (starting from `start`). 
+        Accepted values: [ACGTN]*. N is a wildcard, that denotes the 
+        position of any base, and can be used as a standalone base of any 
+        type or within a partially known sequence. For example a sequence 
+        where the first and last bases are known, but the middle portion can 
+        exhibit countless variations of [ACGT], or the bases are unknown: 
+        ANNT the Ns can take take any form of [ACGT], which makes both ACCT 
+        and ATGT (or any other combination) viable sequences.
       type: string
-      pattern: '^([ACGT]+)$'
+      pattern: '^([ACGTN]+)$'
     AlternateBases:
       description: |
-        The bases that appear instead of the reference bases. Accepted values: 
-        [ACGT]*.
+        The bases that appear instead of the reference bases. Accepted 
+        values: [ACGTN]*. N is a wildcard, that denotes the position of any 
+        base, and can be used as a standalone base of any type or within a 
+        partially known sequence. For example a sequence where the first and 
+        last bases are known, but the middle portion can exhibit countless 
+        variations of [ACGT], or the bases are unknown: ANNT the Ns can take 
+        take any form of [ACGT], which makes both ACCT and ATGT (or any 
+        other combination) viable sequences.
+        Symbolic ALT alleles (DEL, INS, DUP, INV, CNV, DUP:TANDEM, DEL:ME,
+        INS:ME) will be represented in `variantType`.
+        Optional: either `alternateBases` or `variantType` is required.
       type: string
-      pattern: '^([ACGT]+)$'
+      pattern: '^([ACGTN]+)$'
     Filters:
       description: |
         Ontology based filters. CURIE syntax is encouraged to be used.
@@ -796,239 +675,6 @@ components:
           items:
             $ref: '#/components/schemas/BeaconDatasetAlleleResponse'
     
-    GenomicSnpRequest:
-      description: |
-        Search for a genomic SNP
-      type: object
-      required:
-        - meta
-        - query
-      properties:
-        meta:
-          $ref: '#/components/schemas/RequestMeta'
-        query:
-          $ref: '#/components/schemas/GenomicSnpQuery'
-    GenomicSnpQuery:
-      description: |
-        Fields available in a SNP query.
-      required:
-        - variant
-      properties:
-        variant:
-          $ref: '#/components/schemas/GenomicSnpFields'
-        datasets:
-          $ref: '#/components/schemas/RequestDatasets'
-        filters:
-          $ref: '#/components/schemas/Filters'
-        customFilters:
-          $ref: '#/components/schemas/CustomFilters'
-    GenomicSnpFields:
-      description: |
-        SNP request made against the Beacon.
-      type: object
-      required:
-        - assemblyId
-        - referenceName
-        - start
-        - referenceBases
-        - alternateBases
-      properties: 
-        assemblyId:
-          $ref: '#/components/schemas/Assembly'
-        referenceName:
-          $ref: '#/components/schemas/Chromosome'
-        referenceBases:
-          $ref: '#/components/schemas/ReferenceBases'
-        alternateBases:
-          $ref: '#/components/schemas/AlternateBases'
-        start:
-          description: |
-            Precise start coordinate position, allele locus (0-based, 
-            inclusive).
-            * `start` only:
-              - for single positions, e.g. the start of a specified sequence 
-              alteration where the size is given through the specified 
-              `alternateBases`
-              - typical use are queries for SNV and small InDels
-          type: integer
-          format: int64
-          minimum: 0
-    GenomicSnpResponse:
-      description: |
-        Response of a genomic SNP query
-      type: object
-      required:
-        - meta
-        - query
-      properties:
-        meta:
-          $ref: '#/components/schemas/GenomicSnpResponseMeta'
-        value:
-          $ref: '#/components/schemas/GenomicSnpResponseValue'
-    GenomicSnpResponseMeta:
-      description: |
-        Blabla
-      type: object
-      properties:
-        beaconId:
-          description: |
-            Identifier of the beacon, as defined in `Beacon`.
-          type: string
-        apiVersion:
-          description: >-
-            Version of the API. If specified, the value must match `apiVersion`
-            in Beacon
-          type: string
-        receivedRequest:
-          $ref: '#/components/schemas/GenomicSnpRequest'
-        returnedSchemas:
-          $ref: '#/components/schemas/RequestedSchemas'
-    GenomicSnpResponseValue:
-      description: |
-        Description pending
-      type: object
-      required:
-        - exists
-        - request
-        - results
-      properties:
-        exists:
-          description: |
-            Indicator of whether the given allele was observed in any of the
-            datasets queried. This should be non-null, unless there was an
-            error, in which case `error` has to be non-null.
-          type: boolean
-        error:
-          $ref: '#/components/schemas/BeaconError'
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/VariantReponseResults'
-        info:
-          type: object
-        resultsHandover:
-          $ref: '#/components/schemas/Handover'
-        beaconHandover:
-          $ref: '#/components/schemas/Handover'
-    
-    GenomicRegionRequest:
-      description: |
-        Search for a genomic region
-      type: object
-      required:
-        - meta
-        - query
-      properties:
-        meta:
-          $ref: '#/components/schemas/RequestMeta'
-        query:
-          $ref: '#/components/schemas/GenomicRegionQuery'
-    GenomicRegionQuery:
-      description: |
-        Fields available in a region query.
-      required:
-        - variant
-      properties:
-        variant:
-          $ref: '#/components/schemas/GenomicRegionFields'
-        datasets:
-          $ref: '#/components/schemas/RequestDatasets'
-        filters:
-          $ref: '#/components/schemas/Filters'
-        customFilters:
-          $ref: '#/components/schemas/CustomFilters'
-    GenomicRegionFields:
-      description: |
-        Region request made against the Beacon. 
-      type: object
-      required:
-        - assemblyId
-        - referenceName
-        - start
-        - end
-      properties: 
-        assemblyId:
-          $ref: '#/components/schemas/Assembly'
-        referenceName:
-          $ref: '#/components/schemas/Chromosome'
-        referenceBases: 
-          $ref: '#/components/schemas/ReferenceBases'
-        start:
-          description: |
-            Precise `start` coordinate position, allele locus (0-based, 
-            inclusive).
-          type: integer
-          format: int64
-          minimum: 0
-        end:
-          description: |
-            Precise `end` coordinate (0-based, exclusive). See `start`.
-          type: integer
-    GenomicRegionResponse:
-      description: |
-        Response of a genomic region query
-      type: object
-      required:
-        - meta
-        - value
-      properties:
-        meta:
-          $ref: '#/components/schemas/GenomicRegionResponseMeta'
-        value:
-          $ref: '#/components/schemas/GenomicRegionResponseValue'
-    GenomicRegionResponseMeta:
-      description: |
-        Blabla
-      type: object
-      properties:
-        beaconId:
-          description: |
-            Identifier of the beacon, as defined in `Beacon`.
-          type: string
-        apiVersion:
-          description: >-
-            Version of the API. If specified, the value must match `apiVersion`
-            in Beacon
-          type: string
-        receivedRequest:
-          $ref: '#/components/schemas/GenomicRegionRequest'
-        returnedSchemas:
-          $ref: '#/components/schemas/RequestedSchemas'
-    GenomicRegionResponseValue:
-      description: |
-        Variant information of a geomic region request.
-      type: object
-      required:
-        - exists
-        - results
-      properties:
-        exists:
-          description: |
-            Indicator of whether any variant was observed in any of the
-            datasets queried. This should be non-null, unless there was an
-            error, in which case `error` has to be non-null.
-          type: boolean
-        error:
-          $ref: '#/components/schemas/BeaconError'
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/VariantReponseResults'
-        info:
-          type: object
-        resultsHandover:
-          $ref: '#/components/schemas/Handover'
-        beaconHandover:
-          $ref: '#/components/schemas/Handover'
-    
-    GenomicCNVRequest:
-      description: |
-        Search for a genomic CNV. Fields to be defined.
-      type: object
-    GenomicCNVResponse:
-      description: |
-        Response of a genomic CNV query. Fields to be defined.
-    
     GenomicVariantRequest:
       description: |
         Search for a genomic region
@@ -1103,32 +749,9 @@ components:
             type: integer
             format: int64
         referenceBases:
-          description: |
-            Reference bases for this variant (starting from `start`). 
-            Accepted values: [ACGTN]*. N is a wildcard, that denotes the 
-            position of any base, and can be used as a standalone base of any 
-            type or within a partially known sequence. For example a sequence 
-            where the first and last bases are known, but the middle portion can 
-            exhibit countless variations of [ACGT], or the bases are unknown: 
-            ANNT the Ns can take take any form of [ACGT], which makes both ACCT 
-            and ATGT (or any other combination) viable sequences.
-          type: string
-          pattern: '^([ACGTN]+)$'
+          $ref: '#/components/schemas/ReferenceBases'
         alternateBases:
-          description: |
-            The bases that appear instead of the reference bases. Accepted 
-            values: [ACGTN]*. N is a wildcard, that denotes the position of any 
-            base, and can be used as a standalone base of any type or within a 
-            partially known sequence. For example a sequence where the first and 
-            last bases are known, but the middle portion can exhibit countless 
-            variations of [ACGT], or the bases are unknown: ANNT the Ns can take 
-            take any form of [ACGT], which makes both ACCT and ATGT (or any 
-            other combination) viable sequences.
-            Symbolic ALT alleles (DEL, INS, DUP, INV, CNV, DUP:TANDEM, DEL:ME,
-            INS:ME) will be represented in `variantType`.
-            Optional: either `alternateBases` or `variantType` is required.
-          type: string
-          pattern: '^([ACGTN]+)$'
+          $ref: '#/components/schemas/AlternateBases'
         variantType:
           description: |
             The `variantType` is used to denote e.g. structural variants.
@@ -1482,34 +1105,9 @@ components:
             Maximum end coordinate. See `startMin`.
           type: integer
         referenceBases:
-          description: |
-            Reference bases for this variant (starting from `start`). Accepted 
-            values: [ACGTN]*. N is a wildcard, that denotes the position of any 
-            base, and can be used as a standalone base of any type or within a 
-            partially known sequence. For example a sequence where the first and 
-            last bases are known, but the middle portion can exhibit countless 
-            variations of [ACGT], or the bases are unknown: ANNT the Ns can take 
-            any form of [ACGT], which makes both ACCT and ATGT (or any 
-            other combination) viable sequences.
-          type: string
-          pattern: '^([ACGTN]+)$'
+          $ref: '#/components/schemas/ReferenceBases'
         alternateBases:
-          description: |
-            The bases that appear instead of the reference bases. Accepted 
-            values: [ACGTN]*. N is a wildcard, that denotes the position of any 
-            base, and can be used as a standalone base of any type or within a 
-            partially known sequence. For example a sequence where the first and 
-            last bases are known, but the middle portion can exhibit countless 
-            variations of [ACGT], or the bases are unknown: ANNT the Ns can take 
-            any form of [ACGT], which makes both ACCT and ATGT (or any other 
-            combination) viable sequences.
-
-            Symbolic ALT alleles (DEL, INS, DUP, INV, CNV, DUP:TANDEM, DEL:ME,
-            INS:ME) will be represented in `variantType`.
-
-            Optional: either `alternateBases` or `variantType` is required.
-          type: string
-          pattern: '^([ACGTN]+)$'
+          $ref: '#/components/schemas/AlternateBases'
         variantType:
           description: |
             The `variantType` is used to denote e.g. structural variants.
