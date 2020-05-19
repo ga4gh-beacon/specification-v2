@@ -307,7 +307,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/IndividualRequest'
+              $ref: '#/components/schemas/Request'
         required: true
       responses:
         '200':
@@ -358,7 +358,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/IndividualRequest'
+              $ref: '#/components/schemas/Request'
         required: true
       responses:
         '200':
@@ -409,7 +409,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BiosampleRequest'
+              $ref: '#/components/schemas/Request'
         required: true
       responses:
         '200':
@@ -460,7 +460,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GenomicVariantRequest'
+              $ref: '#/components/schemas/Request'
         required: true
       responses:
         '200':
@@ -504,7 +504,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BiosampleRequest'
+              $ref: '#/components/schemas/Request'
         required: true
       responses:
         '200':
@@ -555,7 +555,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BiosampleRequest'
+              $ref: '#/components/schemas/Request'
         required: true
       responses:
         '200':
@@ -606,7 +606,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BiosampleRequest'
+              $ref: '#/components/schemas/Request'
         required: true
       responses:
         '200':
@@ -657,7 +657,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GenomicVariantRequest'
+              $ref: '#/components/schemas/Request'
         required: true
       responses:
         '200':
@@ -701,7 +701,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GenomicVariantRequest'
+              $ref: '#/components/schemas/Request'
         required: true
       responses:
         '200':
@@ -752,7 +752,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GenomicVariantRequest'
+              $ref: '#/components/schemas/Request'
       responses:
         '200':
           description: |
@@ -802,7 +802,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BiosampleRequest'
+              $ref: '#/components/schemas/Request'
       responses:
         '200':
           description: |
@@ -852,7 +852,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/IndividualRequest'
+              $ref: '#/components/schemas/Request'
       responses:
         '200':
           description: |
@@ -1129,7 +1129,25 @@ components:
           items:
             $ref: '#/components/schemas/BeaconDatasetAlleleResponse'
     
-    GenomicVariantRequest:
+    Pagination:
+      description: |
+        Pagination to apply on the results.
+      type: object
+      properties:
+        skip:
+          description: |
+            Number of pages to skip.
+          type: integer
+          default: 0
+          example: 0
+        limit:
+          description: |
+            Size of the page.
+          type: integer
+          default: 10
+          example: 10
+    
+    Request:
       description: |
         Search for a genomic region
       type: object
@@ -1140,15 +1158,19 @@ components:
         meta:
           $ref: '#/components/schemas/RequestMeta'
         query:
-          $ref: '#/components/schemas/GenomicVariantQuery'
-    GenomicVariantQuery:
+          $ref: '#/components/schemas/RequestQuery'
+    RequestQuery:
       description: |
         Description pending
       type: object
       required:
         - query
       properties:
-        variant:
+        individual:
+          $ref: '#/components/schemas/IndividualFields'
+        biosample:
+          $ref: '#/components/schemas/BiosampleFields'
+        g_variant:
           $ref: '#/components/schemas/GenomicVariantFields'
         datasets:
           $ref: '#/components/schemas/RequestDatasets'
@@ -1156,16 +1178,18 @@ components:
          $ref: '#/components/schemas/Filters'
         customFilters:
           $ref: '#/components/schemas/CustomFilters'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
     GenomicVariantFields:
       description: |
         All the required fields to query any kind of variant (e.g. SNP, DUP, 
         etc.).
       type: object
-      required:
-        - assemblyId
-        - referenceName
-        - start
       properties:
+        id:
+          description: |
+            Id of the variant to display.
+          type: string
         assemblyId:
           $ref: '#/components/schemas/Assembly'
         referenceName:
@@ -1220,19 +1244,25 @@ components:
           type: string
         mateName:
           $ref: '#/components/schemas/Chromosome'
-    GenomicVariantResponse:
+    IndividualFields:
       description: |
-        Response of a genomic variant query
+        Fields to filter by individual.
       type: object
-      required:
-        - meta
-        - value
       properties:
-        meta:
-          $ref: '#/components/schemas/GenomicVariantResponseMeta'
-        value:
-          $ref: '#/components/schemas/GenomicVariantResponseValue'
-    GenomicVariantResponseMeta:
+        id:
+          description: |
+            Id of the individual to display.
+          type: string
+    BiosampleFields:
+      description: |
+        Fields to filter by biosample.
+      type: object
+      properties:
+        id:
+          description: |
+            Id of the biosample to display.
+          type: string
+    ResponseMeta:
       description: |
         Meta information about a genomic variant reponse.
       type: object
@@ -1247,9 +1277,23 @@ components:
             in Beacon
           type: string
         receivedRequest:
-          $ref: '#/components/schemas/GenomicVariantRequest'
+          $ref: '#/components/schemas/Request'
         returnedSchemas:
           $ref: '#/components/schemas/RequestedSchemas'
+          
+    GenomicVariantResponse:
+      description: |
+        Response of a genomic variant query
+      type: object
+      required:
+        - meta
+        - value
+      properties:
+        meta:
+          $ref: '#/components/schemas/ResponseMeta'
+        value:
+          $ref: '#/components/schemas/GenomicVariantResponseValue'
+
     GenomicVariantResponseValue:
       description: |
         Description pending
@@ -1281,18 +1325,18 @@ components:
           items:
             $ref: '#/components/schemas/Handover'
     
-    IndividualRequest:
-      description: |
-        Description pending
-      type: object
-      required:
-        - meta
-        - query
-      properties:
-        meta:
-          $ref: '#/components/schemas/RequestMeta'
-        query:
-          $ref: '#/components/schemas/GenomicVariantQuery'
+    # IndividualRequest:
+    #   description: |
+    #     Description pending
+    #   type: object
+    #   required:
+    #     - meta
+    #     - query
+    #   properties:
+    #     meta:
+    #       $ref: '#/components/schemas/RequestMeta'
+    #     query:
+    #       $ref: '#/components/schemas/RequestQuery'
     IndividualResponse:
       description: |
         Response of a query over individuals.
@@ -1302,7 +1346,7 @@ components:
         - value
       properties:
         meta:
-          $ref: '#/components/schemas/GenomicVariantResponseMeta'
+          $ref: '#/components/schemas/ResponseMeta'
         value:
           $ref: '#/components/schemas/IndividualResponseValue'
     IndividualResponseValue:
@@ -1358,18 +1402,18 @@ components:
         value:
           $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/master/default_schemas.yaml#/components/schemas/Individual'
     
-    BiosampleRequest:
-      description: |
-        Description pending
-      type: object
-      required:
-        - meta
-        - query
-      properties:
-        meta:
-          $ref: '#/components/schemas/RequestMeta'
-        query:
-          $ref: '#/components/schemas/GenomicVariantQuery'
+    # BiosampleRequest:
+    #   description: |
+    #     Description pending
+    #   type: object
+    #   required:
+    #     - meta
+    #     - query
+    #   properties:
+    #     meta:
+    #       $ref: '#/components/schemas/RequestMeta'
+    #     query:
+    #       $ref: '#/components/schemas/RequestQuery'
     BiosampleResponse:
       description: |
         Response of a query over biosamples.
@@ -1379,7 +1423,7 @@ components:
         - value
       properties:
         meta:
-          $ref: '#/components/schemas/GenomicVariantResponseMeta'
+          $ref: '#/components/schemas/ResponseMeta'
         value:
           $ref: '#/components/schemas/BiosampleResponseValue'
     BiosampleResponseValue:
