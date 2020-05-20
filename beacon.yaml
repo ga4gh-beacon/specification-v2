@@ -1228,6 +1228,7 @@ components:
         - id
         - name
         - apiVersion
+        - environment
         - organization
         - datasets
       properties:
@@ -1244,6 +1245,17 @@ components:
           type: string
           description: Version of the API provided by the beacon.
           example: v0.3
+        environment:
+          type: string
+          description: |
+            Environment the service is running in. Use this to distinguish 
+            between production, development and testing/staging deployments.
+          enum:
+          - prod
+          - test
+          - dev
+          - staging
+          example: dev
         organization:
           $ref: '#/components/schemas/BeaconOrganization'
         description:
