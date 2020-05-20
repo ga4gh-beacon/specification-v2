@@ -1408,42 +1408,6 @@ components:
             - HIT
             - MISS
             - NONE
-    BeaconAlleleResponse:
-      description: |
-        Response to a query for information about an allele, made against the 
-        beacon.
-      type: object
-      required:
-        - beaconId
-      properties:
-        exists:
-          description: >-
-            Indicator of whether the given allele was observed in any of the
-            datasets queried. This should be non-null, unless there was an
-            error, in which case `error` has to be non-null.
-          type: boolean
-        alleleRequest:
-          $ref: '#/components/schemas/BeaconAlleleRequest'
-        datasetAlleleResponses:
-          description: >-
-            Indicator of whether the given allele was  observed in individual
-            datasets. This should be non-null if `includeDatasetResponses` in
-            the corresponding `BeaconAlleleRequest` is true, and null otherwise.
-          type: array
-          items:
-            $ref: '#/components/schemas/BeaconDatasetAlleleResponse'
-        error:
-          $ref: '#/components/schemas/BeaconError'
-        info:
-          description: |
-            Additional unspecified metadata about the response or its content.
-          type: object
-          example:
-            additionalInfoKey: additionalInfoValue
-        beaconHandover:
-          type: array
-          items:
-            $ref: '#/components/schemas/Handover'
     BeaconOrganization:
       description: |
         Organization owning the beacon.
@@ -1582,8 +1546,6 @@ components:
             This should be non-null, unless there was an error, in which case
             `error` has to be non-null.
           type: boolean
-        error:
-          $ref: '#/components/schemas/BeaconError'
         frequency:
           type: number
           description: |
