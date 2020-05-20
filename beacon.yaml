@@ -1022,14 +1022,14 @@ components:
       type: object
       required:
         - meta
-        - value
+        - response
       properties:
         meta:
           $ref: '#/components/schemas/ResponseMeta'
-        value:
-          $ref: '#/components/schemas/GenomicVariantResponseValue'
+        response:
+          $ref: '#/components/schemas/GenomicVariantResponseContent'
 
-    GenomicVariantResponseValue:
+    GenomicVariantResponseContent:
       description: |
         Description pending
       type: object
@@ -1078,13 +1078,13 @@ components:
       type: object
       required:
         - meta
-        - value
+        - response
       properties:
         meta:
           $ref: '#/components/schemas/ResponseMeta'
-        value:
-          $ref: '#/components/schemas/IndividualResponseValue'
-    IndividualResponseValue:
+        response:
+          $ref: '#/components/schemas/IndividualResponseContent'
+    IndividualResponseContent:
       description: |
         Description pending
       type: object
@@ -1155,13 +1155,13 @@ components:
       type: object
       required:
         - meta
-        - value
+        - response
       properties:
         meta:
           $ref: '#/components/schemas/ResponseMeta'
-        value:
-          $ref: '#/components/schemas/BiosampleResponseValue'
-    BiosampleResponseValue:
+        response:
+          $ref: '#/components/schemas/BiosampleResponseContent'
+    BiosampleResponseContent:
       description: |
         Description pending
       type: object
