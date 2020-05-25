@@ -180,7 +180,7 @@ paths:
   /individuals/{id}/g_variants:
     post:
       description: |
-        Get variants found in this individual.
+        Get variants that have been stored for  this individual.
       operationId: postVariantsByIndividualId
       tags:
         - Endpoints
@@ -231,7 +231,7 @@ paths:
   /biosamples:
     post:
       description: |
-        Get response to a beacon query for individual information.
+        Get response to a beacon query for biosample information.
       operationId: postSampleResponse
       tags:
         - Endpoints
@@ -267,7 +267,7 @@ paths:
         '403':
           description: >-
             Forbidden (e.g. the resource is protected for all users or the user
-            is authenticated but s/he is not granted for this resource)
+            is authenticated but they are not granted for this resource)
           content:
             application/json:
               schema:
@@ -318,7 +318,7 @@ paths:
         '403':
           description: >-
             Forbidden (e.g. the resource is protected for all users or the user
-            is authenticated but s/he is not granted for this resource)
+            is authenticated but they are not granted for this resource)
           content:
             application/json:
               schema:
@@ -377,7 +377,7 @@ paths:
   /biosamples/{id}/g_variants:
     post:
       description: |
-        Get the variants that are found in this biosample.
+        Get the variants that have been stored for this biosample.
       operationId: postVariantsByBiosampleId
       tags:
         - Endpoints
@@ -572,7 +572,7 @@ paths:
   /g_variants/{id}/individuals:  
     post:
       description: |
-        Get the individuals where this variant is found.
+        Get the individuals in which this variant is found.
       operationId: getIndividualsByVariantId
       tags:
         - Endpoints
@@ -614,7 +614,7 @@ paths:
         '403':
           description: >-
             Forbidden (e.g. the resource is protected for all users or the user
-            is authenticated but s/he is not granted for this resource)
+            is authenticated but they are not granted for this resource)
           content:
             application/json:
               schema:
