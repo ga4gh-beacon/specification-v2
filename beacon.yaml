@@ -898,8 +898,6 @@ components:
       description: |
         Description pending
       type: object
-      required:
-        - query
       properties:
         individual:
           $ref: '#/components/schemas/IndividualFields'
