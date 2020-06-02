@@ -75,7 +75,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/IndividualResponse'
-  /individuals/{id}:
+  /individual/{id}:
     post:
       description: |
         Get an individual by its Id.
@@ -126,7 +126,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/IndividualResponse'
-  /individuals/{id}/biosamples:
+  /individual/{id}/biosamples:
     post:
       description: |
         Get biosamples found in this individual.
@@ -177,7 +177,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BiosampleResponse'
-  /individuals/{id}/g_variants:
+  /individual/{id}/g_variants:
     post:
       description: |
         Get variants that have been stored for  this individual.
@@ -272,7 +272,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BiosampleResponse'
-  /biosamples/{id}:
+  /biosample/{id}:
     post:
       description: |
         Get a biosample by its Id.
@@ -323,7 +323,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BiosampleResponse'
-  /biosamples/{id}/individuals:
+  /biosample/{id}/individuals:
     post:
       description: |
         Get the individual to whom this biosample belongs to.
@@ -374,7 +374,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/IndividualResponse'
-  /biosamples/{id}/g_variants:
+  /biosample/{id}/g_variants:
     post:
       description: |
         Get the variants that have been stored for this biosample.
@@ -469,7 +469,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenomicVariantResponse'
-  /g_variants/{id}:  
+  /g_variant/{id}:  
     post:
       description: |
         Get a variant by its Id.
@@ -519,7 +519,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenomicVariantResponse'
-  /g_variants/{id}/biosamples:  
+  /g_variant/{id}/biosamples:  
     post:
       description: |
         Get the biosamples where this variant is found.
@@ -569,7 +569,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BiosampleResponse'
-  /g_variants/{id}/individuals:  
+  /g_variant/{id}/individuals:  
     post:
       description: |
         Get the individuals in which this variant is found.
