@@ -806,7 +806,7 @@ components:
           type: string
           example: beacon-variant-v0.1
         value:
-          $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/master/default_schemas.yaml#/components/schemas/VariantDetails'
+          $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/master/default_variant_schema.yaml#/components/schemas/VariantDetails'
     Variant:
       description: |
         Default schema for variant
@@ -833,7 +833,7 @@ components:
           type: string
           example: beacon-variant-annotation-v0.1
         value:
-          $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/master/default_schemas.yaml#/components/schemas/VariantAnnotations'
+          $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/master/default_variant_annotations_schema.yaml#/components/schemas/VariantAnnotations'
     VariantAnnotation:
       description: |
         Default schema for variant annotation
@@ -1133,7 +1133,7 @@ components:
           type: string
           example: beacon-individual-v0.1
         value:
-          $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/master/default_schemas.yaml#/components/schemas/Individual'
+          $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/master/default_individual_schema.yaml#/components/schemas/Individual'
     
     # BiosampleRequest:
     #   description: |
@@ -1216,7 +1216,7 @@ components:
           type: string
           example: beacon-biosample-v0.1
         value:
-          $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/master/default_schemas.yaml#/components/schemas/Biosample'
+          $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/master/default_biosample_schema.yaml#/components/schemas/Biosample'
     
     Beacon:
       description: |
