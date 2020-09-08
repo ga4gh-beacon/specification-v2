@@ -755,87 +755,26 @@ components:
             format the response.
           type: string
           example: 'v2.0'
-    
-    ResponseBasicStructure:
+          
+    AlternativeSchema:
       description: |
-        Description pending
+        Alternative schema for describing this object.
       type: object
-      required:
-        - version
-        - value
-      properties:
-        version:
-          type: string
-          example: 'beacon-individual-v1.0'
-        value:
-          type: object
-    # ResponseResult:
-    #   description: |
-    #     Description pending
-    #   required:
-    #     - defaultSchema
-    #   properties:
-    #     defaultSchema:
-    #       $ref: '#/components/schemas/ResponseBasicStructure'
-    #     alternativeSchemas:
-    #       type: array
-    #       items:
-    #         $ref: '#/components/schemas/ResponseBasicStructure'
     
-    VariantDefault:
-      description: |
-        Default schema for variant
-      required:
-        - version
-        - value
-      properties:
-        version:
-          description: |
-            Version of the schema
-          type: string
-          example: beacon-variant-v0.1
-        value:
-          $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/master/default_variant_schema.yaml#/components/schemas/VariantDetails'
     Variant:
       description: |
-        Default schema for variant
-      required:
-        - defaultSchema
-        - alternativeSchemas
-      properties:
-        defaultSchema:
-          $ref: '#/components/schemas/VariantDefault'
-        alternativeSchemas:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResponseBasicStructure'
-    VariantAnnotationDefault:
-      description: |
-        Default schema for variant annotation
-      required:
-        - version
-        - value
-      properties:
-        version:
-          description: |
-            Version of the schema
-          type: string
-          example: beacon-variant-annotation-v0.1
-        value:
-          $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/master/default_variant_annotations_schema.yaml#/components/schemas/VariantAnnotations'
+        Variant description using either the default or an alternative schema.
+      type: object
+      oneOf:
+        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/master/default_variant_schema.yaml#/components/schemas/VariantDetails'
+        - $ref: '#/components/schemas/AlternativeSchema'
     VariantAnnotation:
       description: |
         Default schema for variant annotation
-      required:
-        - defaultSchema
-        - alternativeSchemas
-      properties:
-        defaultSchema:
-          $ref: '#/components/schemas/VariantAnnotationDefault'
-        alternativeSchemas:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResponseBasicStructure'
+      type: object
+      oneOf:
+        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/master/default_variant_annotations_schema.yaml#/components/schemas/VariantAnnotations'
+        - $ref: '#/components/schemas/AlternativeSchema'
     VariantReponseResults:
       description: |
         Description pending
@@ -1108,30 +1047,11 @@ components:
     IndividualResponseResults:
       description: |
         Default schema for describing invididuals.
-      required:
-        - defaultSchema
-      properties:
-        defaultSchema:
-          $ref: '#/components/schemas/IndividualDefault'
-        alternativeSchemas:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResponseBasicStructure'
-    IndividualDefault:
-      description: |
-        Default schema for variant annotation
-      required:
-        - version
-        - value
-      properties:
-        version:
-          description: |
-            Version of the schema
-          type: string
-          example: beacon-individual-v0.1
-        value:
-          $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/master/default_individual_schema.yaml#/components/schemas/Individual'
-    
+      type: object
+      oneOf:
+        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/master/default_individual_schema.yaml#/components/schemas/Individual'
+        - $ref: '#/components/schemas/AlternativeSchema'
+
     # BiosampleRequest:
     #   description: |
     #     Description pending
@@ -1189,31 +1109,10 @@ components:
     BiosampleResponseResults:
       description: |
         Default schema for describing biosamples.
-      required:
-        - defaultSchema
-      properties:
-        defaultSchema:
-          $ref: '#/components/schemas/BiosampleDefault'
-        alternativeSchemas:
-          description: |
-            Other schemas to represent biosample data. It can be empty.
-          type: array
-          items:
-            $ref: '#/components/schemas/ResponseBasicStructure'
-    BiosampleDefault:
-      description: |
-        Default schema for variant annotation
-      required:
-        - version
-        - value
-      properties:
-        version:
-          description: |
-            Version of the schema
-          type: string
-          example: beacon-biosample-v0.1
-        value:
-          $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/master/default_biosample_schema.yaml#/components/schemas/Biosample'
+      type: object
+      oneOf:
+        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/master/default_biosample_schema.yaml#/components/schemas/Biosample'
+        - $ref: '#/components/schemas/AlternativeSchema'
     
     Beacon:
       description: |
