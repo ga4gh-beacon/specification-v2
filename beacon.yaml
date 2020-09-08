@@ -1,7 +1,7 @@
 openapi: 3.0.2
 servers: []
 info:
-  version: "2.0.0-draft.1"
+  version: "2.0.0-draft.2"
   title: GA4GH Beacon API Specification
   description: >-
     A Beacon is a web service for genetic data sharing that can be queried for 
@@ -678,8 +678,10 @@ components:
         variations of [ACGT], or the bases are unknown: ANNT the Ns can take 
         take any form of [ACGT], which makes both ACCT and ATGT (or any 
         other combination) viable sequences.
-        Symbolic ALT alleles (DEL, INS, DUP, INV, CNV, DUP:TANDEM, DEL:ME,
-        INS:ME) will be represented in `variantType`.
+        
+        Categorical variant queries, e.g. such *not* being represented through 
+        sequence & position,  make use of the `variantType` parameter.
+        
         Optional: either `alternateBases` or `variantType` is required.
       type: string
       pattern: '^([ACGTN]+)$'
@@ -728,32 +730,18 @@ components:
       type: object
       properties:
         Variant:
-          type: array
-          items:
-            type: string
+          type: string
           example:
-            - ga4gh-variant-representation-v0.1
-            - ga4gh-schemablocks-beacon-variant-v0.1
+            ga4gh-variant-representation-v0.1
         VariantAnnotation:
-          type: array
-          items:
-            type: string
-          example:
-            - beacon-variant-annotation-v0.1
+          type: string
+          example: beacon-variant-annotation-v0.1
         Individual:
-          type: array
-          items:
-            type: string
-          example: 
-              - ga4gh-phenopacket-individual-v0.1
-              - ga4gh-schemablocks-individual-v0.1
+          type: string
+          example: ga4gh-phenopacket-individual-v0.1
         Biosample:
-          type: array
-          items:
-            type: string
-          example:
-            - ga4gh-phenopacket-biosample-v0.1
-            - ga4gh-schemablocks-biosample-v0.1
+          type: string
+          example: ga4gh-schemablocks-biosample-v0.1
     RequestMeta:
       description: |
         Requested schemas and versions to be used in the response.
@@ -763,7 +751,8 @@ components:
           $ref: '#/components/schemas/RequestedSchemas'
         apiVersion:
           description: |
-            Schemas & versions default for this Beacon version will be used to format the response.
+            Schemas & versions default for this Beacon version will be used to 
+            format the response.
           type: string
           example: 'v2.0'
     
@@ -931,34 +920,42 @@ components:
           description: |
             Precise or fuzzy start coordinate position(s), allele locus 
             (0-based, inclusive).
-            * start only:
+            * `start` only:
               - for single positions, e.g. the start of a specified sequence 
               alteration where the size is given through the specified 
               `alternateBases`
               - typical use are queries for SNV and small InDels
-              - THIS IS NOT TRUE FOR RANGE QUERIES!!!! -> the use of "start" 
-              without an "end" parameter requires the use of "referenceBases"
+              - the use of `start` without an `end` parameter requires the use 
+              of `referenceBases`
             * `start` and `end`:
-              - special use case for exactly determined structural changes
+              - if used with `variantType`, for special use case for exactly 
+              determined structural changes
+              - without `variantType`, for searching any variant falling within 
+              this range (a.k.a. range query)
             * use 2 values for querying imprecise positions (e.g. identifying 
             all structural variants starting anywhere between `start[0]` <-> 
             `start[1]`, and ending anywhere between `end[0]` <-> `end[1]`)
-            * IS THIS NECESSARY???? -> single or double sided precise matches 
-            can be achieved by setting `start[0]` = `start[1]` XOR `end[0]` = 
-            `end[1]`
+            * single or double sided precise matches 
+            can be achieved by setting `start[1]=start[0]+1` and `end[1]=end[0]+1`
           type: array
           items:
             type: integer
             format: int64
           minimum: 0
+          minItems: 1
+          maxItems: 2
         end:
           description: |
-            Precise or fuzzy end coordinate(s) (0-based, exclusive). See start. 
+            Precise or fuzzy end coordinate(s) (0-based, exclusive). See `start`. 
+            
             For fuzzy matches, provide 2 values in the array (e.g. [111,222]).
           type: array
           items:
             type: integer
             format: int64
+          minimum: 0
+          minItems: 0
+          maxItems: 2
         referenceBases:
           $ref: '#/components/schemas/ReferenceBases'
         alternateBases:
