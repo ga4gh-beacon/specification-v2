@@ -1282,13 +1282,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BeaconDataset'
-        sampleAlleleRequests:
-          description: >-
-            Examples of interesting queries, e.g. a few queries demonstrating
-            different responses.
-          type: array
-          items:
-            $ref: '#/components/schemas/BeaconAlleleRequest'
         info:
           description: |
             Additional unspecified metadata about the Beacon service.
@@ -1298,103 +1291,6 @@ components:
             additionalInfoKey2: 
                 - additionalInfoValue2
                 - additionalInfoValue3
-    BeaconAlleleRequest:
-      description: |
-        Allele request made against the beacon. The allele must be mapped 
-        against a sequence in a genome, and a range can be optionally specified.
-      type: object
-      required:
-        - referenceName
-        - referenceBases
-        - assemblyId
-      properties:
-        referenceName:
-          $ref: '#/components/schemas/Chromosome'
-        start:
-          description: |
-            Precise start coordinate position, allele locus (0-based, inclusive).
-            * start only:
-              - for single positions, e.g. the start of a specified sequence 
-              alteration where the size is given through the specified 
-              `alternateBases`
-              - typical use are queries for SNV and small InDels
-              - the use of "start" without an "end" parameter requires the use 
-              of "referenceBases"
-            * start and end:
-              - special use case for exactly determined structural changes
-          type: integer
-          format: int64
-          minimum: 0
-        end:
-          description: Precise end coordinate (0-based, exclusive). See start.
-          type: integer
-        startMin:
-          description: |
-            Minimum start coordinate
-            * startMin + startMax + endMin + endMax
-              - for querying imprecise positions (e.g. identifying all 
-              structural variants starting anywhere between `startMin` <-> 
-              `startMax`, and ending anywhere between endMin <-> endMax)
-              - single or double sided precise matches can be achieved by 
-              setting `startMin` = `startMax` XOR `endMin` = `endMax`
-          type: integer
-        startMax:
-          description: |
-            Maximum start coordinate. See `startMin`.
-          type: integer
-        endMin:
-          description: |
-            Minimum end coordinate. See `startMin`.
-          type: integer
-        endMax:
-          description: |
-            Maximum end coordinate. See `startMin`.
-          type: integer
-        referenceBases:
-          $ref: '#/components/schemas/ReferenceBases'
-        alternateBases:
-          $ref: '#/components/schemas/AlternateBases'
-        variantType:
-          description: |
-            The `variantType` is used to denote e.g. structural variants.
-
-            Examples:
-            * DUP: duplication of sequence following `start`; not necessarily in
-            situ
-            * DEL: deletion of sequence following `start`
-            * BND: breakend, i.e. termination of the allele at position
-                  `start` or in the `startMin` => `startMax` interval, or fusion
-                  of the sequence to distant partner
-
-
-            Optional: either `alternateBases` or `variantType` is required.
-          type: string
-        mateName:
-          $ref: '#/components/schemas/Chromosome'
-        assemblyId:
-          description: |
-            Assembly identifier (GRC notation, e.g. `GRCh37`).
-          type: string
-          example: GRCh38
-        datasetIds:
-          description: >-
-            Identifiers of datasets, as defined in `BeaconDataset`. If this
-            field is null/not specified, all datasets should be queried.
-          type: array
-          items:
-            type: string
-        includeDatasetResponses:
-          description: >-
-            Indicator of whether responses for individual datasets
-            (datasetAlleleResponses) should be included in the response
-            (BeaconAlleleResponse) to this request or not. If null (not
-            specified), the default value of NONE is assumed.
-          type: string
-          enum:
-            - ALL
-            - HIT
-            - MISS
-            - NONE
     BeaconOrganization:
       description: |
         Organization owning the beacon.
