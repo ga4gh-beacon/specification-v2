@@ -17,12 +17,18 @@ externalDocs:
   url: 'http://beacon-project.io/'
 paths:
   /:
-    get:
+    post:
       description: |
         Get information about the beacon
       operationId: getBeacon
       tags:
         - Endpoints
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InfoRequest'
+        required: true
       responses:
         '200':
           description: |
@@ -30,7 +36,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Beacon'
+                $ref: '#/components/schemas/InfoResponse'
   /individuals:
     post:
       description: |
@@ -724,6 +730,15 @@ components:
             - HIT
             - MISS
             - NONE
+    InfoRequestedSchemas:
+      description: |
+        Format of the responses and version of the Beacon handling this request.
+      type: object
+      properties:
+        Info:
+          type: string
+          example:
+            beacon-info-v2.0.0-draft.2
     RequestedSchemas:
       description: |
         Format of the responses and version of the Beacon handling this request.
@@ -742,6 +757,20 @@ components:
         Biosample:
           type: string
           example: ga4gh-schemablocks-biosample-v0.1
+    
+    InfoRequestMeta:
+      description: |
+        Requested schemas and versions to be used in the response.
+      type: object
+      properties:
+        requestedSchemas:
+          $ref: '#/components/schemas/InfoRequestedSchemas'
+        apiVersion:
+          description: |
+            Schemas & versions default for this Beacon version will be used to 
+            format the response.
+          type: string
+          example: 'v2.0'
     RequestMeta:
       description: |
         Requested schemas and versions to be used in the response.
@@ -810,6 +839,15 @@ components:
           default: 10
           example: 10
     
+    InfoRequest:
+      description: |
+        Search for a genomic region
+      type: object
+      required:
+        - meta
+      properties:
+        meta:
+          $ref: '#/components/schemas/InfoRequestMeta'
     Request:
       description: |
         Search for a genomic region
@@ -931,9 +969,10 @@ components:
           description: |
             Id of the biosample to display.
           type: string
+    
     ResponseMeta:
       description: |
-        Meta information about a genomic variant reponse.
+        Meta information about the reponse.
       type: object
       properties:
         beaconId:
@@ -949,7 +988,26 @@ components:
           $ref: '#/components/schemas/Request'
         returnedSchemas:
           $ref: '#/components/schemas/RequestedSchemas'
-          
+    InfoResponseMeta:
+      description: |
+        Meta information about the reponse.
+      type: object
+      properties:
+        beaconId:
+          description: |
+            Identifier of the beacon, as defined in `Beacon`.
+          type: string
+        apiVersion:
+          description: >-
+            Version of the API. If specified, the value must match `apiVersion`
+            in Beacon
+          type: string
+        receivedRequest:
+          $ref: '#/components/schemas/InfoRequest'
+        returnedSchemas:
+          $ref: '#/components/schemas/InfoRequestedSchemas'
+    
+    
     GenomicVariantResponse:
       description: |
         Response of a genomic variant query
@@ -1114,7 +1172,42 @@ components:
         - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/master/default_biosample_schema.yaml#/components/schemas/Biosample'
         - $ref: '#/components/schemas/AlternativeSchema'
     
-    Beacon:
+    InfoResponse:
+      description: |
+        Response of a query over biosamples.
+      type: object
+      required:
+        - meta
+        - response
+      properties:
+        meta:
+          $ref: '#/components/schemas/InfoResponseMeta'
+        response:
+          $ref: '#/components/schemas/InfoResponseContent'
+    InfoResponseContent:
+      description: |
+        Description pending
+      type: object
+      required:
+        - results
+      properties:
+        error:
+          $ref: '#/components/schemas/BeaconError'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/InfoResponseResults'
+        info:
+          type: object
+    InfoResponseResults:
+      description: |
+        Default schema for describing biosamples.
+      type: object
+      oneOf:
+        - $ref: '#/components/schemas/BeaconInfo'
+        - $ref: '#/components/schemas/AlternativeSchema'
+    
+    BeaconInfo:
       description: |
         Metadata describing a beacon instance.
       type: object
