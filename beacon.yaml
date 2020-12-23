@@ -37,6 +37,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InfoResponse'
+  /filtering_terms:
+    get:
+      description: |
+        Filtering terms available in this Beacon.
+      operationId: getFilteringTerms
+      tags:
+        - Endpoints
+      responses:
+        '200':
+          description: |
+            Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilteringTermsResponse'
   /individuals:
     post:
       description: |
@@ -1551,3 +1566,37 @@ components:
             This would be the "preferred Label" in the case of an ontology term.
           default: null
           example: "BAM format"
+
+    FilteringTermsResponse:
+      type: object
+      description: |
+        Filtering terms available in this Beacon.
+      properties:
+        beaconId:
+          description: |
+            Identifier of the beacon, as defined in `Beacon`.
+          type: string
+        apiVersion:
+          description: |
+            Version of the API implemented by this Beacon.
+          type: string
+          example: 'v2.0'
+        filteringTerms:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilteringTerm'
+    FilteringTerm:
+      type: object
+      description: |
+        To fill
+      properties:
+        id:
+          description: |
+            CURIE syntax.
+          type: string
+          example: 'NCIT:C102872'
+        label:
+          description: |
+            This would be the "preferred Label" in the case of an ontology term.
+          type: string
+          example: 'Pharyngeal squamous cell carcinoma'
