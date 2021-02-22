@@ -17,18 +17,29 @@ externalDocs:
   url: 'http://beacon-project.io/'
 paths:
   /:
-    post:
+    get:
       description: |
         Get information about the beacon
       operationId: getBeacon
       tags:
         - Endpoints
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/InfoRequest'
-        required: true
+      parameters:
+        - name: requestedSchema
+          description: 'Schema to be used to format the `result` field in the resposne. The response will use Beacon format.'
+          in: query
+          required: false
+          schema:
+            type: string
+          example: |
+            ga4gh-service-info-v1.0
+        - name: model
+          description: 'Equivalent to `/service-info`. The response will use the same format as the mentioned endpoint.'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: 
+              - 'ga4gh-service-info-v1.0'
       responses:
         '200':
           description: |
@@ -36,7 +47,58 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InfoResponse'
+                oneOf:
+                  - $ref: '#/components/schemas/InfoResponse'
+                  - $ref: 'https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-info/develop/service-info.yaml#/components/schemas/Service'
+  /info:
+    get:
+      description: |
+        Get information about the beacon
+      operationId: getBeaconInfo
+      tags:
+        - Endpoints
+      parameters:
+        - name: requestedSchema
+          description: 'Schema to be used to format the `result` field in the resposne. The response will use Beacon format.'
+          in: query
+          required: false
+          schema:
+            type: string
+          example: |
+            ga4gh-service-info-v1.0
+        - name: model
+          description: 'Equivalent to `/service-info`. The response will use the same format as the mentioned endpoint.'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: 
+              - 'ga4gh-service-info-v1.0'
+      responses:
+        '200':
+          description: |
+            Successful operation
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/InfoResponse'
+                  - $ref: 'https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-info/develop/service-info.yaml#/components/schemas/Service'
+  /service-info:
+    get:
+      description: |
+        Get information about the beacon using GA4GH ServiceInfo format
+      operationId: getBeaconServiceInfo
+      tags:
+        - Endpoints
+      responses:
+        '200':
+          description: |
+            Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/ga4gh-discovery/ga4gh-service-info/develop/service-info.yaml#/components/schemas/Service'
   /filtering_terms:
     get:
       description: |
