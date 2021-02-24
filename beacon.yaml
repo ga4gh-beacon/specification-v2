@@ -37,6 +37,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InfoResponse'
+  /datasets:
+    get:
+      description: |
+        Get information about the datasets available in this Beacon.
+      operationId: getDatasets
+      tags:
+      - Endpoints
+      responses:
+        '200':
+          description: |
+            Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InfoResponse'
   /filtering_terms:
     get:
       description: |
@@ -747,13 +762,16 @@ components:
             - NONE
     InfoRequestedSchemas:
       description: |
-        Format of the responses and version of the Beacon handling this request.
+        Format of the response.
       type: object
       properties:
         Info:
           type: string
+          example: 'beacon-info-v2.0.0-draft.2'
+        Dataset:
+          type: string
           example:
-            beacon-info-v2.0.0-draft.2
+            'beacon-dataset-v2.0.0-draft.2'
     RequestedSchemas:
       description: |
         Format of the responses and version of the Beacon handling this request.
@@ -860,7 +878,7 @@ components:
     
     InfoRequest:
       description: |
-        Search for a genomic region
+        Request parameters for information endpoints.
       type: object
       required:
         - meta
@@ -1025,7 +1043,6 @@ components:
           $ref: '#/components/schemas/InfoRequest'
         returnedSchemas:
           $ref: '#/components/schemas/InfoRequestedSchemas'
-    
     
     GenomicVariantResponse:
       description: |
@@ -1203,7 +1220,7 @@ components:
     
     InfoResponse:
       description: |
-        Response of a query over biosamples.
+        Response of a query over Beacon info. Use `InfoResponseContent` when querying the Beacon info endpoints, and `DatasetResponseContent` when querying the datasets endpoint.
       type: object
       required:
         - meta
@@ -1212,7 +1229,9 @@ components:
         meta:
           $ref: '#/components/schemas/InfoResponseMeta'
         response:
-          $ref: '#/components/schemas/InfoResponseContent'
+          oneOf:
+            - $ref: '#/components/schemas/InfoResponseContent'
+            - $ref: '#/components/schemas/DatasetResponseContent'
     InfoResponseContent:
       description: |
         Description pending
@@ -1230,11 +1249,27 @@ components:
           type: object
     InfoResponseResults:
       description: |
-        Default schema for describing biosamples.
+        Default schema for describing Beacon info.
       type: object
       oneOf:
         - $ref: '#/components/schemas/BeaconInfo'
         - $ref: '#/components/schemas/AlternativeSchema'
+    
+    DatasetResponseContent:
+      description: |
+        Description pending
+      type: object
+      required:
+        - results
+      properties:
+        error:
+          $ref: '#/components/schemas/BeaconError'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/BeaconDataset' #'#/components/schemas/DatasetResponseResults'
+        info:
+          type: object
     
     BeaconInfo:
       description: |
