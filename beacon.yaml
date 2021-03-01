@@ -890,14 +890,14 @@ components:
         Variant description using either the default or an alternative schema.
       type: object
       oneOf:
-        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/blob/draft-1/default_variant_schema.yaml#/components/schemas/VariantDetails'
+        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft-1/default_variant_schema.yaml#/components/schemas/VariantDetails'
         - $ref: '#/components/schemas/AlternativeSchema'
     VariantAnnotation:
       description: |
         Default schema for variant annotation
       type: object
       oneOf:
-        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/blob/draft-1/default_variant_annotations_schema.yaml#/components/schemas/VariantAnnotations'
+        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft-1/default_variant_annotations_schema.yaml#/components/schemas/VariantAnnotations'
         - $ref: '#/components/schemas/AlternativeSchema'
     VariantReponseResults:
       description: |
@@ -1212,7 +1212,7 @@ components:
         Default schema for describing invididuals.
       type: object
       oneOf:
-        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/blob/draft-1/default_individual_schema.yaml#/components/schemas/Individual'
+        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft-1/default_individual_schema.yaml#/components/schemas/Individual'
         - $ref: '#/components/schemas/AlternativeSchema'
 
     # BiosampleRequest:
@@ -1277,7 +1277,7 @@ components:
         Default schema for describing biosamples.
       type: object
       oneOf:
-        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/blob/draft-1/default_biosample_schema.yaml#/components/schemas/Biosample'
+        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft-1/default_biosample_schema.yaml#/components/schemas/Biosample'
         - $ref: '#/components/schemas/AlternativeSchema'
     
     InfoResponse:
