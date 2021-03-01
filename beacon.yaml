@@ -22,7 +22,7 @@ paths:
         Get information about the beacon
       operationId: getBeacon
       tags:
-        - Endpoints
+        - Informational endpoints
       parameters:
         - name: requestedSchema
           description: 'Schema to be used to format the `result` field in the resposne. The response will use Beacon format.'
@@ -56,7 +56,7 @@ paths:
         Get information about the beacon
       operationId: getBeaconInfo
       tags:
-        - Endpoints
+        - Informational endpoints
       parameters:
         - name: requestedSchema
           description: 'Schema to be used to format the `result` field in the resposne. The response will use Beacon format.'
@@ -90,7 +90,7 @@ paths:
         Get information about the beacon using GA4GH ServiceInfo format
       operationId: getBeaconServiceInfo
       tags:
-        - Endpoints
+        - Informational endpoints
       responses:
         '200':
           description: |
@@ -105,7 +105,7 @@ paths:
         Get information about the datasets available in this Beacon.
       operationId: getDatasets
       tags:
-      - Endpoints
+      - Informational endpoints
       responses:
         '200':
           description: |
@@ -114,13 +114,63 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InfoResponse'
+  /datasets/{id}/variant_interpretations:  
+    post:
+      description: |
+        Get the variants interpretations by datasetId.
+      operationId: getVariantsInterpretationsByDatasetId
+      tags:
+        - Endpoints
+      parameters:
+        - name: id
+          in: path
+          description: Dataset ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request'
+      responses:
+        '200':
+          description: |
+            Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInterpretationResponse'
+        '400':
+          description: |
+            Bad request (e.g. missing mandatory parameter)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInterpretationResponse'
+        '401':
+          description: >-
+            Unauthorised (e.g. when an unauthenticated user tries to access a
+            protected resource)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInterpretationResponse'
+        '403':
+          description: >-
+            Forbidden (e.g. the resource is protected for all users or the user
+            is authenticated but they are not granted for this resource)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInterpretationResponse'
   /filtering_terms:
     get:
       description: |
         Filtering terms available in this Beacon.
       operationId: getFilteringTerms
       tags:
-        - Endpoints
+        - Informational endpoints
       responses:
         '200':
           description: |
@@ -867,6 +917,56 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/VariantInSampleResponse'
+  /g_variants/{id}/variant_interpretations:  
+    post:
+      description: |
+        Get the variants interpretations by variantId.
+      operationId: getVariantsInterpretationsByVariantId
+      tags:
+        - Endpoints
+      parameters:
+        - name: id
+          in: path
+          description: Variant ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request'
+      responses:
+        '200':
+          description: |
+            Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInterpretationResponse'
+        '400':
+          description: |
+            Bad request (e.g. missing mandatory parameter)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInterpretationResponse'
+        '401':
+          description: >-
+            Unauthorised (e.g. when an unauthenticated user tries to access a
+            protected resource)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInterpretationResponse'
+        '403':
+          description: >-
+            Forbidden (e.g. the resource is protected for all users or the user
+            is authenticated but they are not granted for this resource)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInterpretationResponse'
   /runs:
     post:
       description: |
@@ -1296,6 +1396,49 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/VariantInSampleResponse'
+  /variants_interpretations:
+    post:
+      description: |
+        Any kind of query that wants to query variant interpretations.
+      operationId: postVariantInterpretation
+      tags:
+        - Endpoints
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request'
+      responses:
+        '200':
+          description: |
+            Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInterpretationResponse'
+        '400':
+          description: |
+            Bad request (e.g. missing mandatory parameter)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInterpretationResponse'
+        '401':
+          description: >-
+            Unauthorised (e.g. when an unauthenticated user tries to access a
+            protected resource)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInterpretationResponse'
+        '403':
+          description: >-
+            Forbidden (e.g. the resource is protected for all users or the user
+            is authenticated but they are not granted for this resource)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInterpretationResponse'
 components:
   schemas:
     Chromosome:
@@ -2110,6 +2253,59 @@ components:
       type: object
       oneOf:
         - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.2/default_variant_in_sample_schema.yaml#/components/schemas/VariantInSample'
+        - $ref: '#/components/schemas/AlternativeSchema'
+    
+    VariantInterpretationResponse:
+      description: |
+        Response of a query over variants in sample.
+      type: object
+      required:
+        - meta
+        - response
+      properties:
+        meta:
+          $ref: '#/components/schemas/ResponseMeta'
+        response:
+          $ref: '#/components/schemas/VariantInterpretationResponseContent'
+    VariantInterpretationResponseContent:
+      description: |
+        TODO
+      type: object
+      required:
+        - exists
+        - results
+      properties:
+        exists:
+          description: |
+            Indicator of whether any variant in sample was observed in any of the
+            datasets queried. This should be non-null, unless there was an
+            error, in which case `error` has to be non-null.
+          type: boolean
+        error:
+          $ref: '#/components/schemas/BeaconError'
+        numTotalResults:
+          type: integer
+          minimum: 0
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariantInterpretationResponseResults'
+        info:
+          type: object
+        resultsHandover:
+          type: array
+          items:
+            $ref: '#/components/schemas/Handover'
+        beaconHandover:
+          type: array
+          items:
+            $ref: '#/components/schemas/Handover'
+    VariantInterpretationResponseResults:
+      description: |
+        Default schema for describing runs.
+      type: object
+      oneOf:
+        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.2/default_variant_interpretation_schema.yaml#/components/schemas/VariantInterpretation'
         - $ref: '#/components/schemas/AlternativeSchema'
     
     InfoResponse:
