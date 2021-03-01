@@ -573,6 +573,56 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RunResponse'
+  # /biosamples/{id}/variants_in_sample:  
+  #   post:
+  #     description: |
+  #       Get the variants in sample in which this biosample is found.
+  #     operationId: getVariantsInSampleByBiosampleId
+  #     tags:
+  #       - Endpoints
+  #     parameters:
+  #       - name: id
+  #         in: path
+  #         description: Biosample ID
+  #         required: true
+  #         schema:
+  #           type: string
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: '#/components/schemas/Request'
+  #     responses:
+  #       '200':
+  #         description: |
+  #           Successful operation
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/VariantInSampleResponse'
+  #       '400':
+  #         description: |
+  #           Bad request (e.g. missing mandatory parameter)
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/VariantInSampleResponse'
+  #       '401':
+  #         description: >-
+  #           Unauthorised (e.g. when an unauthenticated user tries to access a
+  #           protected resource)
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/VariantInSampleResponse'
+  #       '403':
+  #         description: >-
+  #           Forbidden (e.g. the resource is protected for all users or the user
+  #           is authenticated but they are not granted for this resource)
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/VariantInSampleResponse'
   /g_variants:
     post:
       description: |
@@ -767,6 +817,56 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/IndividualResponse'
+  /g_variants/{id}/variants_in_sample:  
+    post:
+      description: |
+        Get the variants in sample in which this variant is found.
+      operationId: getVariantsInSampleByVariantId
+      tags:
+        - Endpoints
+      parameters:
+        - name: id
+          in: path
+          description: Variant ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request'
+      responses:
+        '200':
+          description: |
+            Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInSampleResponse'
+        '400':
+          description: |
+            Bad request (e.g. missing mandatory parameter)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInSampleResponse'
+        '401':
+          description: >-
+            Unauthorised (e.g. when an unauthenticated user tries to access a
+            protected resource)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInSampleResponse'
+        '403':
+          description: >-
+            Forbidden (e.g. the resource is protected for all users or the user
+            is authenticated but they are not granted for this resource)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInSampleResponse'
   /runs:
     post:
       description: |
@@ -910,6 +1010,56 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RunResponse'
+  /runs/{id}/analyses:
+    post:
+      description: |
+        Get the analyses in which this run is found.
+      operationId: postAnalysesByRunId
+      tags:
+        - Endpoints
+      parameters:
+        - name: id
+          in: path
+          description: Run ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request'
+      responses:
+        '200':
+          description: |
+            Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalysisResponse'
+        '400':
+          description: |
+            Bad request (e.g. missing mandatory parameter)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalysisResponse'
+        '401':
+          description: >-
+            Unauthorised (e.g. when an unauthenticated user tries to access a
+            protected resource)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalysisResponse'
+        '403':
+          description: >-
+            Forbidden (e.g. the resource is protected for all users or the user
+            is authenticated but they are not granted for this resource)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalysisResponse'
   /analyses:
     post:
       description: |
@@ -1053,6 +1203,99 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RunResponse'
+  /analyses/{id}/variants_in_sample:  
+    post:
+      description: |
+        Get the variants in sample in which this analysis is found.
+      operationId: getVariantsInSampleByAnalysisId
+      tags:
+        - Endpoints
+      parameters:
+        - name: id
+          in: path
+          description: Analysis ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request'
+      responses:
+        '200':
+          description: |
+            Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInSampleResponse'
+        '400':
+          description: |
+            Bad request (e.g. missing mandatory parameter)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInSampleResponse'
+        '401':
+          description: >-
+            Unauthorised (e.g. when an unauthenticated user tries to access a
+            protected resource)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInSampleResponse'
+        '403':
+          description: >-
+            Forbidden (e.g. the resource is protected for all users or the user
+            is authenticated but they are not granted for this resource)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInSampleResponse'
+  /variants_in_sample:
+    post:
+      description: |
+        Any kind of query that wants to query variants in sample.
+      operationId: postVariantsInSample
+      tags:
+        - Endpoints
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request'
+      responses:
+        '200':
+          description: |
+            Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInSampleResponse'
+        '400':
+          description: |
+            Bad request (e.g. missing mandatory parameter)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInSampleResponse'
+        '401':
+          description: >-
+            Unauthorised (e.g. when an unauthenticated user tries to access a
+            protected resource)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInSampleResponse'
+        '403':
+          description: >-
+            Forbidden (e.g. the resource is protected for all users or the user
+            is authenticated but they are not granted for this resource)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInSampleResponse'
 components:
   schemas:
     Chromosome:
@@ -1438,6 +1681,10 @@ components:
           description: |
             Id of the run to display.
           type: string
+        biosampleId:
+          description: |
+            `biosampleId` of the run to display.
+          type: string
     AnalysisFields:
       description: |
         Fields to filter by analysis.
@@ -1446,6 +1693,10 @@ components:
         id:
           description: |
             Id of the analysis to display.
+          type: string
+        runId:
+          description: |
+            `runId` of the analyses to display.
           type: string
     InteractorFields:
       description: |
@@ -1456,23 +1707,39 @@ components:
           description: |
             Id of the interactor to display.
           type: string
+        individualId:
+          description: |
+            `individualId` of the interactor(s) to display.
+          type: string
     VariantInSampleFields:
       description: |
         Fields to filter by variant in sample.
       type: object
       properties:
-        id:
+        variantId:
           description: |
-            Id of the variant in sample to display.
+            `variantId` of the variant(s) in sample to display.
+          type: string
+        analysisId:
+          description: |
+            `analysisId` of the variant(s) in sample to display.
+          type: string
+        biosampleId:
+          description: |
+            `biosampleId` of the variant(s) in sample to display.
           type: string
     VariantInterpretationFields:
       description: |
         Fields to filter by variant interpetation.
       type: object
       properties:
-        id:
+        variantId:
           description: |
-            Id of the variant interpretation to display.
+            `variantId` of the variant(s) interpretation to display.
+          type: string
+        datasetId:
+          description: |
+            `datasetId` of the variant(s) interpretation to display.
           type: string
     
     ResponseMeta:
@@ -1790,6 +2057,59 @@ components:
       type: object
       oneOf:
         - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.2/default_analysis_schema.yaml#/components/schemas/Analysis'
+        - $ref: '#/components/schemas/AlternativeSchema'
+    
+    VariantInSampleResponse:
+      description: |
+        Response of a query over variants in sample.
+      type: object
+      required:
+        - meta
+        - response
+      properties:
+        meta:
+          $ref: '#/components/schemas/ResponseMeta'
+        response:
+          $ref: '#/components/schemas/VariantInSampleResponseContent'
+    VariantInSampleResponseContent:
+      description: |
+        TODO
+      type: object
+      required:
+        - exists
+        - results
+      properties:
+        exists:
+          description: |
+            Indicator of whether any variant in sample was observed in any of the
+            datasets queried. This should be non-null, unless there was an
+            error, in which case `error` has to be non-null.
+          type: boolean
+        error:
+          $ref: '#/components/schemas/BeaconError'
+        numTotalResults:
+          type: integer
+          minimum: 0
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariantInSampleResponseResults'
+        info:
+          type: object
+        resultsHandover:
+          type: array
+          items:
+            $ref: '#/components/schemas/Handover'
+        beaconHandover:
+          type: array
+          items:
+            $ref: '#/components/schemas/Handover'
+    VariantInSampleResponseResults:
+      description: |
+        Default schema for describing runs.
+      type: object
+      oneOf:
+        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.2/default_variant_in_sample_schema.yaml#/components/schemas/VariantInSample'
         - $ref: '#/components/schemas/AlternativeSchema'
     
     InfoResponse:
