@@ -1,11 +1,11 @@
 openapi: 3.0.2
 servers: []
 info:
-  version: "2.0.0-draft.2"
+  version: "2.0.0-draft.3"
   title: GA4GH Beacon API Specification
   description: >-
     A Beacon is a web service for genetic data sharing that can be queried for 
-    information about variants, individuals or samples.
+    information about variants, individuals, biosamples, and other entities.
   contact:
     email: beacon@ga4gh.org
   license:
@@ -623,56 +623,56 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RunResponse'
-  # /biosamples/{id}/variants_in_sample:  
-  #   post:
-  #     description: |
-  #       Get the variants in sample in which this biosample is found.
-  #     operationId: getVariantsInSampleByBiosampleId
-  #     tags:
-  #       - Endpoints
-  #     parameters:
-  #       - name: id
-  #         in: path
-  #         description: Biosample ID
-  #         required: true
-  #         schema:
-  #           type: string
-  #     requestBody:
-  #       content:
-  #         application/json:
-  #           schema:
-  #             $ref: '#/components/schemas/Request'
-  #     responses:
-  #       '200':
-  #         description: |
-  #           Successful operation
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/VariantInSampleResponse'
-  #       '400':
-  #         description: |
-  #           Bad request (e.g. missing mandatory parameter)
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/VariantInSampleResponse'
-  #       '401':
-  #         description: >-
-  #           Unauthorised (e.g. when an unauthenticated user tries to access a
-  #           protected resource)
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/VariantInSampleResponse'
-  #       '403':
-  #         description: >-
-  #           Forbidden (e.g. the resource is protected for all users or the user
-  #           is authenticated but they are not granted for this resource)
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/VariantInSampleResponse'
+  /biosamples/{id}/variants_in_sample:  
+    post:
+      description: |
+        Get the variants in sample in which this biosample is found.
+      operationId: getVariantsInSampleByBiosampleId
+      tags:
+        - Endpoints
+      parameters:
+        - name: id
+          in: path
+          description: Biosample ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request'
+      responses:
+        '200':
+          description: |
+            Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInSampleResponse'
+        '400':
+          description: |
+            Bad request (e.g. missing mandatory parameter)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInSampleResponse'
+        '401':
+          description: >-
+            Unauthorised (e.g. when an unauthenticated user tries to access a
+            protected resource)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInSampleResponse'
+        '403':
+          description: >-
+            Forbidden (e.g. the resource is protected for all users or the user
+            is authenticated but they are not granted for this resource)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariantInSampleResponse'
   /g_variants:
     post:
       description: |
@@ -1694,11 +1694,11 @@ components:
       properties:
         Info:
           type: string
-          example: 'beacon-info-v2.0.0-draft.2'
+          example: 'beacon-info-v2.0.0-draft.3'
         Dataset:
           type: string
           example:
-            'beacon-dataset-v2.0.0-draft.2'
+            'beacon-dataset-v2.0.0-draft.3'
     RequestedSchemas:
       description: |
         Format of the responses and version of the Beacon handling this request.
@@ -2289,7 +2289,7 @@ components:
         Default schema for describing runs.
       type: object
       oneOf:
-        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.2/default_run_schema.yaml#/components/schemas/Run'
+        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.3/default_run_schema.yaml#/components/schemas/Run'
         - $ref: '#/components/schemas/AlternativeSchema'
     
     AnalysisResponse:
@@ -2342,7 +2342,7 @@ components:
         Default schema for describing runs.
       type: object
       oneOf:
-        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.2/default_analysis_schema.yaml#/components/schemas/Analysis'
+        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.3/default_analysis_schema.yaml#/components/schemas/Analysis'
         - $ref: '#/components/schemas/AlternativeSchema'
     
     VariantInSampleResponse:
@@ -2395,7 +2395,7 @@ components:
         Default schema for describing runs.
       type: object
       oneOf:
-        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.2/default_variant_in_sample_schema.yaml#/components/schemas/VariantInSample'
+        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.3/default_variant_in_sample_schema.yaml#/components/schemas/VariantInSample'
         - $ref: '#/components/schemas/AlternativeSchema'
     
     VariantInterpretationResponse:
@@ -2448,7 +2448,7 @@ components:
         Default schema for describing runs.
       type: object
       oneOf:
-        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.2/default_variant_interpretation_schema.yaml#/components/schemas/VariantInterpretation'
+        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.3/default_variant_interpretation_schema.yaml#/components/schemas/VariantInterpretation'
         - $ref: '#/components/schemas/AlternativeSchema'
     
     InteractorResponse:
@@ -2501,7 +2501,7 @@ components:
         Default schema for describing runs.
       type: object
       oneOf:
-        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.2/default_interactor_schema.yaml#/components/schemas/Interactor'
+        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.3/default_interactor_schema.yaml#/components/schemas/Interactor'
         - $ref: '#/components/schemas/AlternativeSchema'
     
     InfoResponse:
