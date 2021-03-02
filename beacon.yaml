@@ -1582,6 +1582,149 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/IndividualResponse'
+  /cohorts:
+    post:
+      description: |
+        Any kind of query that wants to query cohorts.
+      operationId: postCohorts
+      tags:
+        - Endpoints
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request'
+      responses:
+        '200':
+          description: |
+            Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CohortResponse'
+        '400':
+          description: |
+            Bad request (e.g. missing mandatory parameter)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CohortResponse'
+        '401':
+          description: >-
+            Unauthorised (e.g. when an unauthenticated user tries to access a
+            protected resource)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CohortResponse'
+        '403':
+          description: >-
+            Forbidden (e.g. the resource is protected for all users or the user
+            is authenticated but they are not granted for this resource)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CohortResponse'
+  /cohorts/{id}:
+    post:
+      description: |
+        Get a cohort by its `id`.
+      operationId: postCohortById
+      tags:
+        - Endpoints
+      parameters:
+        - name: id
+          in: path
+          description: Cohort ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request'
+      responses:
+        '200':
+          description: |
+            Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CohortResponse'
+        '400':
+          description: |
+            Bad request (e.g. missing mandatory parameter)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CohortResponse'
+        '401':
+          description: >-
+            Unauthorised (e.g. when an unauthenticated user tries to access a
+            protected resource)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CohortResponse'
+        '403':
+          description: >-
+            Forbidden (e.g. the resource is protected for all users or the user
+            is authenticated but they are not granted for this resource)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CohortResponse'
+  /cohorts/{id}/individuals:
+    post:
+      description: |
+        Get the individuals linked to this cohort.
+      operationId: postIndividualsByCohortId
+      tags:
+        - Endpoints
+      parameters:
+        - name: id
+          in: path
+          description: Cohort ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request'
+      responses:
+        '200':
+          description: |
+            Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndividualResponse'
+        '400':
+          description: |
+            Bad request (e.g. missing mandatory parameter)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndividualResponse'
+        '401':
+          description: >-
+            Unauthorised (e.g. when an unauthenticated user tries to access a
+            protected resource)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndividualResponse'
+        '403':
+          description: >-
+            Forbidden (e.g. the resource is protected for all users or the user
+            is authenticated but they are not granted for this resource)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndividualResponse'
 components:
   schemas:
     Chromosome:
@@ -1770,14 +1913,14 @@ components:
         Variant description using either the default or an alternative schema.
       type: object
       oneOf:
-        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft-1/default_variant_schema.yaml#/components/schemas/VariantDetails'
+        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.3/default_variant_identification_schema.yaml#/components/schemas/VariantIdentification'
         - $ref: '#/components/schemas/AlternativeSchema'
     VariantAnnotation:
       description: |
         Default schema for variant annotation
       type: object
       oneOf:
-        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft-1/default_variant_annotations_schema.yaml#/components/schemas/VariantAnnotations'
+        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.3/default_variant_annotations_schema.yaml#/components/schemas/VariantAnnotation'
         - $ref: '#/components/schemas/AlternativeSchema'
     VariantReponseResults:
       description: |
@@ -2171,7 +2314,7 @@ components:
         Default schema for describing invididuals.
       type: object
       oneOf:
-        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft-1/default_individual_schema.yaml#/components/schemas/Individual'
+        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.3/default_individual_schema.yaml#/components/schemas/Individual'
         - $ref: '#/components/schemas/AlternativeSchema'
 
     # BiosampleRequest:
@@ -2236,7 +2379,7 @@ components:
         Default schema for describing biosamples.
       type: object
       oneOf:
-        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft-1/default_biosample_schema.yaml#/components/schemas/Biosample'
+        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.3/default_biosample_schema.yaml#/components/schemas/Biosample'
         - $ref: '#/components/schemas/AlternativeSchema'
     
     RunResponse:
@@ -2504,6 +2647,59 @@ components:
         - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.3/default_interactor_schema.yaml#/components/schemas/Interactor'
         - $ref: '#/components/schemas/AlternativeSchema'
     
+    CohortResponse:
+      description: |
+        Response of a query over cohorts.
+      type: object
+      required:
+        - meta
+        - response
+      properties:
+        meta:
+          $ref: '#/components/schemas/ResponseMeta'
+        response:
+          $ref: '#/components/schemas/CohortResponseContent'
+    CohortResponseContent:
+      description: |
+        TODO
+      type: object
+      required:
+        - exists
+        - results
+      properties:
+        exists:
+          description: |
+            Indicator of whether any cohort was observed in any of the
+            datasets queried. This should be non-null, unless there was an
+            error, in which case `error` has to be non-null.
+          type: boolean
+        error:
+          $ref: '#/components/schemas/BeaconError'
+        numTotalResults:
+          type: integer
+          minimum: 0
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/CohortResponseResults'
+        info:
+          type: object
+        resultsHandover:
+          type: array
+          items:
+            $ref: '#/components/schemas/Handover'
+        beaconHandover:
+          type: array
+          items:
+            $ref: '#/components/schemas/Handover'
+    CohortResponseResults:
+      description: |
+        Default schema for describing runs.
+      type: object
+      oneOf:
+        - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.3/default_cohort_schema.yaml#/components/schemas/Cohort'
+        - $ref: '#/components/schemas/AlternativeSchema'
+       
     InfoResponse:
       description: |
         Response of a query over Beacon info. Use `InfoResponseContent` when querying the Beacon info endpoints, and `DatasetResponseContent` when querying the datasets endpoint.
