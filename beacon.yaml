@@ -191,7 +191,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Request'
-        required: true
+        required: false
       responses:
         '200':
           description: |
@@ -242,7 +242,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Request'
-        required: true
+        required: false
       responses:
         '200':
           description: |
@@ -293,7 +293,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Request'
-        required: true
+        required: false
       responses:
         '200':
           description: |
@@ -344,7 +344,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Request'
-        required: true
+        required: false
       responses:
         '200':
           description: |
@@ -438,7 +438,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Request'
-        required: true
+        required: false
       responses:
         '200':
           description: |
@@ -489,7 +489,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Request'
-        required: true
+        required: false
       responses:
         '200':
           description: |
@@ -540,7 +540,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Request'
-        required: true
+        required: false
       responses:
         '200':
           description: |
@@ -591,7 +591,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Request'
-        required: true
+        required: false
       responses:
         '200':
           description: |
@@ -735,7 +735,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Request'
-        required: true
+        required: false
       responses:
         '200':
           description: |
