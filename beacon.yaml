@@ -328,7 +328,7 @@ paths:
   /individuals/{id}/g_variants:
     post:
       description: |
-        Get variants that have been stored for  this individual.
+        Get variants that have been stored for this individual.
       operationId: postVariantsByIndividualId
       tags:
         - Endpoints
@@ -376,6 +376,56 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenomicVariantResponse'
+  /individuals/{id}/cohorts:
+    post:
+      description: |
+        Get cohort(s) of this individual.
+      operationId: postCohortsByIndividual
+      tags:
+        - Endpoints
+      parameters:
+        - name: id
+          in: path
+          description: Individual ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request'
+      responses:
+        '200':
+          description: |
+            Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CohortResponse'
+        '400':
+          description: |
+            Bad request (e.g. missing mandatory parameter)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CohortResponse'
+        '401':
+          description: >-
+            Unauthorised (e.g. when an unauthenticated user tries to access a
+            protected resource)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CohortResponse'
+        '403':
+          description: >-
+            Forbidden (e.g. the resource is protected for all users or the user
+            is authenticated but they are not granted for this resource)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CohortResponse'
   /biosamples:
     post:
       description: |
@@ -1862,19 +1912,22 @@ components:
           example: ga4gh-schemablocks-biosample-v0.1
         Run:
           type: string
-          example: beacon-run-draft-2
+          example: beacon-run-draft-3
         Analysis:
           type: string
           example: beacon-analysis-draft-2
         VariantInSample:
           type: string
-          example: beacon-variant-in-sample-draft-2
+          example: beacon-variant-in-sample-draft-3
         VariantInterpretation:
           type: string
           example: beacon-variant-interpretation-draft-2
         Interactor:
           type: string
           example: beacon-interactor-draft-2
+        Cohort:
+          type: string
+          example: beacon-cohort-draft-3
     
     InfoRequestMeta:
       description: |
@@ -2003,6 +2056,8 @@ components:
           $ref: '#/components/schemas/VariantInSampleFields'
         variant_interpretation:
           $ref: '#/components/schemas/VariantInterpretationFields'
+        cohort:
+          $ref: '#/components/schemas/CohortFields'
         datasets:
           $ref: '#/components/schemas/RequestDatasets'
         filters:
@@ -2169,6 +2224,19 @@ components:
         datasetId:
           description: |
             `datasetId` of the variant(s) interpretation to display.
+          type: string
+    CohortFields:
+      description: |
+        Fields to filter by cohort.
+      type: object
+      properties:
+        id:
+          description: |
+            `id` of the cohort to display.
+          type: string
+        individualId:
+          description: |
+            `individualId` of the cohorts to display.
           type: string
     
     ResponseMeta:
