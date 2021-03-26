@@ -1620,34 +1620,32 @@ components:
       type: string
       example: GRCh38
     ReferenceBases:
-      description: |
+      description: >
         Reference bases for this variant (starting from `start`).
-        Accepted values: [ACGTN]*. N is a wildcard, that denotes the
-        position of any base, and can be used as a standalone base of any
-        type or within a partially known sequence. For example a sequence
-        where the first and last bases are known, but the middle portion can
-        exhibit countless variations of [ACGT], or the bases are unknown:
-        ANNT the Ns can take take any form of [ACGT], which makes both ACCT
-        and ATGT (or any other combination) viable sequences.
+        * Accepted values: [ACGTN]*.
+        * N is a wildcard, that denotes the position of any base, and can be
+        used as a standalone base of any type or within a partially known
+        sequence. As example, a query of `ANNT` the Ns can take take any form of
+        [ACGT] and will match `ANNT`, `ACNT`, `ACCT`, `ACGT` ... and so forth.
+        * an *empty value* is used in the case of insertions with the maximally
+        trimmed, inserted sequence being indicated in `AlternateBases`
       type: string
       pattern: '^([ACGTN]*)$'
     AlternateBases:
       description: |
-        The bases that appear instead of the reference bases. Accepted
-        values: [ACGTN]*. N is a wildcard, that denotes the position of any
-        base, and can be used as a standalone base of any type or within a
-        partially known sequence. For example a sequence where the first and
-        last bases are known, but the middle portion can exhibit countless
-        variations of [ACGT], or the bases are unknown: ANNT the Ns can take
-        take any form of [ACGT], which makes both ACCT and ATGT (or any
-        other combination) viable sequences.
-
-        Categorical variant queries, e.g. such *not* being represented through
-        sequence & position,  make use of the `variantType` parameter.
-
-        Optional: either `alternateBases` or `variantType` is required.
+        Alternate bases for this variant (starting from `start`).
+        * Accepted values: [ACGTN]*.
+        * N is a wildcard, that denotes the position of any base, and can be
+        used as a standalone base of any type or within a partially known
+        sequence. As example, a query of `ANNT` the Ns can take take any form of
+        [ACGT] and will match `ANNT`, `ACNT`, `ACCT`, `ACGT` ... and so forth.
+        * an *empty value* is used in the case of deletions with the maximally
+        trimmed, deleted sequence being indicated in `ReferenceBases`
+        * Categorical variant queries, e.g. such *not* being represented through
+        sequence & position, make use of the `variantType` parameter.
+        * either `alternateBases` or `variantType` is required.
       type: string
-      pattern: '^([ACGTN]+)$'
+      pattern: '^([ACGTN]*)$'
     Filters:
       description: |
         Ontology based filters. CURIE syntax is encouraged to be used.
