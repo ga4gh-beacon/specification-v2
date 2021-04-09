@@ -1362,7 +1362,7 @@ components:
         - $ref: '#/components/schemas/AlternativeSchema'
     VariantReponseResults:
       description: |
-        Description pending
+        TBD
       properties:
         variant:
           $ref: '#/components/schemas/Variant'
@@ -1422,7 +1422,7 @@ components:
           $ref: '#/components/schemas/RequestQuery'
     RequestQuery:
       description: |
-        Description pending
+        TBD
       type: object
       properties:
         individual:
@@ -1688,7 +1688,7 @@ components:
 
     GenomicVariantResponseContent:
       description: |
-        Description pending
+        TBD
       type: object
       required:
         - exists
@@ -1722,7 +1722,7 @@ components:
 
     # IndividualRequest:
     #   description: |
-    #     Description pending
+    #     TBD
     #   type: object
     #   required:
     #     - meta
@@ -1746,7 +1746,7 @@ components:
           $ref: '#/components/schemas/IndividualResponseContent'
     IndividualResponseContent:
       description: |
-        Description pending
+        TBD
       type: object
       required:
         - exists
@@ -1784,7 +1784,7 @@ components:
 
     # BiosampleRequest:
     #   description: |
-    #     Description pending
+    #     TBD
     #   type: object
     #   required:
     #     - meta
@@ -1808,7 +1808,7 @@ components:
           $ref: '#/components/schemas/BiosampleResponseContent'
     BiosampleResponseContent:
       description: |
-        Description pending
+        TBD
       type: object
       required:
         - exists
@@ -1861,7 +1861,7 @@ components:
           $ref: '#/components/schemas/RunResponseContent'
     RunResponseContent:
       description: |
-        Description pending
+        TBD
       type: object
       required:
         - exists
@@ -1914,7 +1914,7 @@ components:
           $ref: '#/components/schemas/AnalysisResponseContent'
     AnalysisResponseContent:
       description: |
-        TODO
+        TBD
       type: object
       required:
         - exists
@@ -1967,7 +1967,7 @@ components:
           $ref: '#/components/schemas/VariantInSampleResponseContent'
     VariantInSampleResponseContent:
       description: |
-        TODO
+        TBD
       type: object
       required:
         - exists
@@ -2020,7 +2020,7 @@ components:
           $ref: '#/components/schemas/VariantInterpretationResponseContent'
     VariantInterpretationResponseContent:
       description: |
-        TODO
+        TBD
       type: object
       required:
         - exists
@@ -2073,7 +2073,7 @@ components:
           $ref: '#/components/schemas/InteractorResponseContent'
     InteractorResponseContent:
       description: |
-        TODO
+        TBD
       type: object
       required:
         - exists
@@ -2125,7 +2125,7 @@ components:
           $ref: '#/components/schemas/CohortResponseContent'
     CohortResponseContent:
       description: |
-        TODO
+        TBD
       type: object
       required:
         - exists
@@ -2186,7 +2186,7 @@ components:
             - $ref: '#/components/schemas/FilteringTermResponseContent'
     InfoResponseContent:
       description: |
-        Description pending
+        TBD
       type: object
       required:
         - results
@@ -2209,7 +2209,7 @@ components:
 
     DatasetResponseContent:
       description: |
-        Description pending
+        TBD
       type: object
       required:
         - results
