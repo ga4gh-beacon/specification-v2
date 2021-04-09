@@ -133,7 +133,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/VariantInterpretationRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -170,7 +170,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/IndividualRequest'
         required: false
       responses:
         '200':
@@ -199,7 +199,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/IndividualRequest'
         required: false
       responses:
         '200':
@@ -228,7 +228,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/IndividualRequest'
         required: false
       responses:
         '200':
@@ -258,7 +258,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/IndividualRequest'
         required: false
       responses:
         '200':
@@ -287,7 +287,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/IndividualRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -315,7 +315,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/IndividualRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -337,7 +337,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/BiosampleRequest'
         required: false
       responses:
         '200':
@@ -366,7 +366,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/BiosampleRequest'
         required: false
       responses:
         '200':
@@ -396,7 +396,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/BiosampleRequest'
         required: false
       responses:
         '200':
@@ -426,7 +426,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/BiosampleRequest'
         required: false
       responses:
         '200':
@@ -455,7 +455,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/BiosampleRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -484,7 +484,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/BiosampleRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -506,7 +506,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/GenomicVariantRequest'
         required: false
       responses:
         '200':
@@ -535,7 +535,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/GenomicVariantRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -563,7 +563,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/GenomicVariantRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -592,7 +592,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/GenomicVariantRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -621,7 +621,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/GenomicVariantRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -650,7 +650,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/GenomicVariantRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -671,7 +671,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/RunRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -699,7 +699,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/RunRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -727,7 +727,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/RunRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -755,7 +755,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/RunRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -776,7 +776,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/AnalysisRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -804,7 +804,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/AnalysisRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -832,7 +832,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/AnalysisRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -861,7 +861,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/AnalysisRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -883,7 +883,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/VariantInSampleRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -905,7 +905,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/VariantInterpretationRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -926,7 +926,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/InteractorRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -954,7 +954,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/InteractorRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -983,7 +983,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/InteractorRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -1004,7 +1004,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/CohortRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -1032,7 +1032,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/CohortRequest'
       responses:
         '200':
           $ref: '#/components/responses/Success'
@@ -1060,7 +1060,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: '#/components/schemas/CohortRequest'
       responses:
         '200':
           description: |
@@ -1408,18 +1408,7 @@ components:
       properties:
         meta:
           $ref: '#/components/schemas/InfoRequestMeta'
-    Request:
-      description: |
-        Search for a genomic region
-      type: object
-      required:
-        - meta
-        - query
-      properties:
-        meta:
-          $ref: '#/components/schemas/RequestMeta'
-        query:
-          $ref: '#/components/schemas/RequestQuery'
+
     RequestQuery:
       description: |
         TBD
@@ -1451,6 +1440,7 @@ components:
           $ref: '#/components/schemas/CustomFilters'
         pagination:
           $ref: '#/components/schemas/Pagination'
+  
     GenomicVariantFields:
       description: |
         All the required fields to query any kind of variant (e.g. SNP, DUP,
@@ -1635,25 +1625,7 @@ components:
           description: |
             `individualId` of the cohorts to display.
           type: string
-    
-    ResponseMeta:
-      description: |
-        Meta information about the reponse.
-      type: object
-      properties:
-        beaconId:
-          description: |
-            Identifier of the beacon, as defined in `Beacon`.
-          type: string
-        apiVersion:
-          description: >-
-            Version of the API. If specified, the value must match `apiVersion`
-            in Beacon
-          type: string
-        receivedRequest:
-          $ref: '#/components/schemas/Request'
-        returnedSchemas:
-          $ref: '#/components/schemas/RequestedSchemas'
+
     InfoResponseMeta:
       description: |
         Meta information about the response.
@@ -1673,6 +1645,23 @@ components:
         returnedSchemas:
           $ref: '#/components/schemas/InfoRequestedSchemas'
 
+    GenomicVariantRequest:
+      description: |
+        TBD
+      type: object
+      required:
+        - meta
+        - query
+      properties:
+        meta:
+          $ref: '#/components/schemas/RequestMeta'
+        query:
+          $ref: '#/components/schemas/GenomicVariantRequestQuery'
+    GenomicVariantRequestQuery:
+      allOf:
+      - description: |
+          TBD
+      - $ref: '#/components/schemas/RequestQuery'
     GenomicVariantResponse:
       description: |
         Response of a genomic variant query
@@ -1682,10 +1671,27 @@ components:
         - response
       properties:
         meta:
-          $ref: '#/components/schemas/ResponseMeta'
+          $ref: '#/components/schemas/GenomicVariantResponseMeta'
         response:
           $ref: '#/components/schemas/GenomicVariantResponseContent'
-
+    GenomicVariantResponseMeta:
+      description: |
+        Meta information about the reponse.
+      type: object
+      properties:
+        beaconId:
+          description: |
+            Identifier of the beacon, as defined in `Beacon`.
+          type: string
+        apiVersion:
+          description: |
+            Version of the API. If specified, the value must match `apiVersion`
+            in Beacon
+          type: string
+        receivedRequest:
+          $ref: '#/components/schemas/GenomicVariantRequest'
+        returnedSchemas:
+          $ref: '#/components/schemas/RequestedSchemas'
     GenomicVariantResponseContent:
       description: |
         TBD
@@ -1720,18 +1726,23 @@ components:
           items:
             $ref: '#/components/schemas/Handover'
 
-    # IndividualRequest:
-    #   description: |
-    #     TBD
-    #   type: object
-    #   required:
-    #     - meta
-    #     - query
-    #   properties:
-    #     meta:
-    #       $ref: '#/components/schemas/RequestMeta'
-    #     query:
-    #       $ref: '#/components/schemas/RequestQuery'
+    IndividualRequest:
+      description: |
+        TBD
+      type: object
+      required:
+        - meta
+        - query
+      properties:
+        meta:
+          $ref: '#/components/schemas/RequestMeta'
+        query:
+          $ref: '#/components/schemas/IndividualRequestQuery'
+    IndividualRequestQuery:
+      allOf:
+      - description: |
+          TBD
+      - $ref: '#/components/schemas/RequestQuery'
     IndividualResponse:
       description: |
         Response of a query over individuals.
@@ -1741,9 +1752,27 @@ components:
         - response
       properties:
         meta:
-          $ref: '#/components/schemas/ResponseMeta'
+          $ref: '#/components/schemas/IndividualResponseMeta'
         response:
           $ref: '#/components/schemas/IndividualResponseContent'
+    IndividualResponseMeta:
+      description: |
+        Meta information about the reponse.
+      type: object
+      properties:
+        beaconId:
+          description: |
+            Identifier of the beacon, as defined in `Beacon`.
+          type: string
+        apiVersion:
+          description: |
+            Version of the API. If specified, the value must match `apiVersion`
+            in Beacon
+          type: string
+        receivedRequest:
+          $ref: '#/components/schemas/IndividualRequest'
+        returnedSchemas:
+          $ref: '#/components/schemas/RequestedSchemas'
     IndividualResponseContent:
       description: |
         TBD
@@ -1782,18 +1811,23 @@ components:
         - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.3/default_individual_schema.yaml#/components/schemas/Individual'
         - $ref: '#/components/schemas/AlternativeSchema'
 
-    # BiosampleRequest:
-    #   description: |
-    #     TBD
-    #   type: object
-    #   required:
-    #     - meta
-    #     - query
-    #   properties:
-    #     meta:
-    #       $ref: '#/components/schemas/RequestMeta'
-    #     query:
-    #       $ref: '#/components/schemas/RequestQuery'
+    BiosampleRequest:
+      description: |
+        TBD
+      type: object
+      required:
+        - meta
+        - query
+      properties:
+        meta:
+          $ref: '#/components/schemas/RequestMeta'
+        query:
+          $ref: '#/components/schemas/BiosampleRequestQuery'
+    BiosampleRequestQuery:
+      allOf:
+      - description: |
+          TBD
+      - $ref: '#/components/schemas/RequestQuery'
     BiosampleResponse:
       description: |
         Response of a query over biosamples.
@@ -1803,9 +1837,27 @@ components:
         - response
       properties:
         meta:
-          $ref: '#/components/schemas/ResponseMeta'
+          $ref: '#/components/schemas/BiosampleResponseMeta'
         response:
           $ref: '#/components/schemas/BiosampleResponseContent'
+    BiosampleResponseMeta:
+      description: |
+        Meta information about the response.
+      type: object
+      properties:
+        beaconId:
+          description: |
+            Identifier of the beacon, as defined in `Beacon`.
+          type: string
+        apiVersion:
+          description: |
+            Version of the API. If specified, the value must match `apiVersion`
+            in Beacon.
+          type: string
+        receivedRequest:
+          $ref: '#/components/schemas/BiosampleRequest'
+        returnedSchemas:
+          $ref: '#/components/schemas/RequestedSchemas'
     BiosampleResponseContent:
       description: |
         TBD
@@ -1847,6 +1899,23 @@ components:
         - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.3/default_biosample_schema.yaml#/components/schemas/Biosample'
         - $ref: '#/components/schemas/AlternativeSchema'
 
+    RunRequest:
+      description: |
+        TBD
+      type: object
+      required:
+        - meta
+        - query
+      properties:
+        meta:
+          $ref: '#/components/schemas/RequestMeta'
+        query:
+          $ref: '#/components/schemas/RunRequestQuery'
+    RunRequestQuery:
+      allOf:
+      - description: |
+          TBD
+      - $ref: '#/components/schemas/RequestQuery'
     RunResponse:
       description: |
         Response of a query over runs.
@@ -1856,9 +1925,27 @@ components:
         - response
       properties:
         meta:
-          $ref: '#/components/schemas/ResponseMeta'
+          $ref: '#/components/schemas/RunResponseMeta'
         response:
           $ref: '#/components/schemas/RunResponseContent'
+    RunResponseMeta:
+      description: |
+        Meta information about the response.
+      type: object
+      properties:
+        beaconId:
+          description: |
+            Identifier of the beacon, as defined in `Beacon`.
+          type: string
+        apiVersion:
+          description: |
+            Version of the API. If specified, the value must match `apiVersion`
+            in Beacon.
+          type: string
+        receivedRequest:
+          $ref: '#/components/schemas/RunRequest'
+        returnedSchemas:
+          $ref: '#/components/schemas/RequestedSchemas'
     RunResponseContent:
       description: |
         TBD
@@ -1900,6 +1987,23 @@ components:
         - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.3/default_run_schema.yaml#/components/schemas/Run'
         - $ref: '#/components/schemas/AlternativeSchema'
 
+    AnalysisRequest:
+      description: |
+        TBD
+      type: object
+      required:
+        - meta
+        - query
+      properties:
+        meta:
+          $ref: '#/components/schemas/RequestMeta'
+        query:
+          $ref: '#/components/schemas/AnalysisRequestQuery'
+    AnalysisRequestQuery:
+      allOf:
+      - description: |
+          TBD
+      - $ref: '#/components/schemas/RequestQuery'
     AnalysisResponse:
       description: |
         Response of a query over analyses.
@@ -1909,9 +2013,27 @@ components:
         - response
       properties:
         meta:
-          $ref: '#/components/schemas/ResponseMeta'
+          $ref: '#/components/schemas/AnalysisResponseMeta'
         response:
           $ref: '#/components/schemas/AnalysisResponseContent'
+    AnalysisResponseMeta:
+      description: |
+        Meta information about the response.
+      type: object
+      properties:
+        beaconId:
+          description: |
+            Identifier of the beacon, as defined in `Beacon`.
+          type: string
+        apiVersion:
+          description: |
+            Version of the API. If specified, the value must match `apiVersion`
+            in Beacon.
+          type: string
+        receivedRequest:
+          $ref: '#/components/schemas/AnalysisRequest'
+        returnedSchemas:
+          $ref: '#/components/schemas/RequestedSchemas'
     AnalysisResponseContent:
       description: |
         TBD
@@ -1953,6 +2075,23 @@ components:
         - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.3/default_analysis_schema.yaml#/components/schemas/Analysis'
         - $ref: '#/components/schemas/AlternativeSchema'
 
+    VariantInSampleRequest:
+      description: |
+        TBD
+      type: object
+      required:
+        - meta
+        - query
+      properties:
+        meta:
+          $ref: '#/components/schemas/RequestMeta'
+        query:
+          $ref: '#/components/schemas/VariantInSampleRequestQuery'
+    VariantInSampleRequestQuery:
+      allOf:
+      - description: |
+          TBD
+      - $ref: '#/components/schemas/RequestQuery'
     VariantInSampleResponse:
       description: |
         Response of a query over variants in sample.
@@ -1962,9 +2101,27 @@ components:
         - response
       properties:
         meta:
-          $ref: '#/components/schemas/ResponseMeta'
+          $ref: '#/components/schemas/VariantInSampleResponseMeta'
         response:
           $ref: '#/components/schemas/VariantInSampleResponseContent'
+    VariantInSampleResponseMeta:
+      description: |
+        Meta information about the response.
+      type: object
+      properties:
+        beaconId:
+          description: |
+            Identifier of the beacon, as defined in `Beacon`.
+          type: string
+        apiVersion:
+          description: |
+            Version of the API. If specified, the value must match `apiVersion`
+            in Beacon.
+          type: string
+        receivedRequest:
+          $ref: '#/components/schemas/VariantInSampleRequest'
+        returnedSchemas:
+          $ref: '#/components/schemas/RequestedSchemas'
     VariantInSampleResponseContent:
       description: |
         TBD
@@ -2006,6 +2163,23 @@ components:
         - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.3/default_variant_in_sample_schema.yaml#/components/schemas/VariantInSample'
         - $ref: '#/components/schemas/AlternativeSchema'
 
+    VariantInterpretationRequest:
+      description: |
+        TBD
+      type: object
+      required:
+        - meta
+        - query
+      properties:
+        meta:
+          $ref: '#/components/schemas/RequestMeta'
+        query:
+          $ref: '#/components/schemas/VariantInterpretationRequestQuery'
+    VariantInterpretationRequestQuery:
+      allOf:
+      - description: |
+          TBD
+      - $ref: '#/components/schemas/RequestQuery'
     VariantInterpretationResponse:
       description: |
         Response of a query over variants in sample.
@@ -2015,9 +2189,27 @@ components:
         - response
       properties:
         meta:
-          $ref: '#/components/schemas/ResponseMeta'
+          $ref: '#/components/schemas/VariantInterpretationResponseMeta'
         response:
           $ref: '#/components/schemas/VariantInterpretationResponseContent'
+    VariantInterpretationResponseMeta:
+      description: |
+        Meta information about the response.
+      type: object
+      properties:
+        beaconId:
+          description: |
+            Identifier of the beacon, as defined in `Beacon`.
+          type: string
+        apiVersion:
+          description: |
+            Version of the API. If specified, the value must match `apiVersion`
+            in Beacon.
+          type: string
+        receivedRequest:
+          $ref: '#/components/schemas/VariantInterpretationRequest'
+        returnedSchemas:
+          $ref: '#/components/schemas/RequestedSchemas'
     VariantInterpretationResponseContent:
       description: |
         TBD
@@ -2059,6 +2251,23 @@ components:
         - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.3/default_variant_interpretation_schema.yaml#/components/schemas/VariantInterpretation'
         - $ref: '#/components/schemas/AlternativeSchema'
 
+    InteractorRequest:
+      description: |
+        TBD
+      type: object
+      required:
+        - meta
+        - query
+      properties:
+        meta:
+          $ref: '#/components/schemas/RequestMeta'
+        query:
+          $ref: '#/components/schemas/InteractorRequestQuery'
+    InteractorRequestQuery:
+      allOf:
+      - description: |
+          TBD
+      - $ref: '#/components/schemas/RequestQuery'
     InteractorResponse:
       description: |
         Response of a query over variants in sample.
@@ -2068,9 +2277,27 @@ components:
         - response
       properties:
         meta:
-          $ref: '#/components/schemas/ResponseMeta'
+          $ref: '#/components/schemas/InteractorResponseMeta'
         response:
           $ref: '#/components/schemas/InteractorResponseContent'
+    InteractorResponseMeta:
+      description: |
+        Meta information about the response.
+      type: object
+      properties:
+        beaconId:
+          description: |
+            Identifier of the beacon, as defined in `Beacon`.
+          type: string
+        apiVersion:
+          description: |
+            Version of the API. If specified, the value must match `apiVersion`
+            in Beacon.
+          type: string
+        receivedRequest:
+          $ref: '#/components/schemas/InteractorRequest'
+        returnedSchemas:
+          $ref: '#/components/schemas/RequestedSchemas'
     InteractorResponseContent:
       description: |
         TBD
@@ -2111,6 +2338,24 @@ components:
       oneOf:
         - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.3/default_interactor_schema.yaml#/components/schemas/Interactor'
         - $ref: '#/components/schemas/AlternativeSchema'
+    
+    CohortRequest:
+      description: |
+        TBD
+      type: object
+      required:
+        - meta
+        - query
+      properties:
+        meta:
+          $ref: '#/components/schemas/RequestMeta'
+        query:
+          $ref: '#/components/schemas/CohortRequestQuery'
+    CohortRequestQuery:
+      allOf:
+      - description: |
+          TBD
+      - $ref: '#/components/schemas/RequestQuery'
     CohortResponse:
       description: |
         Response of a query over cohorts.
@@ -2120,9 +2365,27 @@ components:
         - response
       properties:
         meta:
-          $ref: '#/components/schemas/ResponseMeta'
+          $ref: '#/components/schemas/CohortResponseMeta'
         response:
           $ref: '#/components/schemas/CohortResponseContent'
+    CohortResponseMeta:
+      description: |
+        Meta information about the response.
+      type: object
+      properties:
+        beaconId:
+          description: |
+            Identifier of the beacon, as defined in `Beacon`.
+          type: string
+        apiVersion:
+          description: |
+            Version of the API. If specified, the value must match `apiVersion`
+            in Beacon.
+          type: string
+        receivedRequest:
+          $ref: '#/components/schemas/CohortRequest'
+        returnedSchemas:
+          $ref: '#/components/schemas/RequestedSchemas'
     CohortResponseContent:
       description: |
         TBD
