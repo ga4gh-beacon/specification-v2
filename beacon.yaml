@@ -157,7 +157,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FilteringTermsResponse'
+                $ref: '#/components/schemas/InfoResponse'
   /individuals:
     post:
       description: |
@@ -1274,6 +1274,10 @@ components:
           type: string
           example:
             'beacon-dataset-v2.0.0-draft.3'
+        FilterTerm:
+          type: string
+          example:
+            'beacon-filtering-term-v2.0.0-draft.3'
     RequestedSchemas:
       description: |
         Format of the responses and version of the Beacon handling this request.
@@ -1652,7 +1656,7 @@ components:
           $ref: '#/components/schemas/RequestedSchemas'
     InfoResponseMeta:
       description: |
-        Meta information about the reponse.
+        Meta information about the response.
       type: object
       properties:
         beaconId:
@@ -2162,7 +2166,12 @@ components:
        
     InfoResponse:
       description: |
-        Response of a query over Beacon info. Use `InfoResponseContent` when querying the Beacon info endpoints, and `DatasetResponseContent` when querying the datasets endpoint.
+        Response of a query over Beacon info. 
+
+        Use `InfoResponseContent` when querying the Beacon info endpoints, 
+        `DatasetResponseContent` when querying the datasets endpoint, and 
+        `FilteringTermResponseContent` when querying the filtering terms 
+        endpoint.
       type: object
       required:
         - meta
@@ -2174,6 +2183,7 @@ components:
           oneOf:
             - $ref: '#/components/schemas/InfoResponseContent'
             - $ref: '#/components/schemas/DatasetResponseContent'
+            - $ref: '#/components/schemas/FilteringTermResponseContent'
     InfoResponseContent:
       description: |
         Description pending
@@ -2206,10 +2216,13 @@ components:
       properties:
         error:
           $ref: '#/components/schemas/BeaconError'
+        numTotalResults:
+          type: integer
+          minimum: 0
         results:
           type: array
           items:
-            $ref: '#/components/schemas/BeaconDataset' #'#/components/schemas/DatasetResponseResults'
+            $ref: '#/components/schemas/BeaconDataset' 
         info:
           type: object
 
@@ -2558,28 +2571,24 @@ components:
           default: null
           example: "BAM format"
 
-    FilteringTermsResponse:
+    FilteringTermResponseContent:
       type: object
       description: |
         Filtering terms available in this Beacon.
       required:
-        - beaconId
-        - apiVersion
-        - filteringTerms
+        - results
       properties:
-        beaconId:
-          description: |
-            Identifier of the beacon, as defined in `Beacon`.
-          type: string
-        apiVersion:
-          description: |
-            Version of the API implemented by this Beacon.
-          type: string
-          example: 'v2.0'
-        filteringTerms:
+        error:
+          $ref: '#/components/schemas/BeaconError'
+        numTotalResults:
+          type: integer
+          minimum: 0
+        results:
           type: array
           items:
             $ref: '#/components/schemas/FilteringTerm'
+        info:
+          type: object
     FilteringTerm:
       type: object
       description: |
