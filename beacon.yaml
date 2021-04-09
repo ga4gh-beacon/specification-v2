@@ -1063,35 +1063,13 @@ paths:
               $ref: '#/components/schemas/Request'
       responses:
         '200':
-          description: |
-            Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/IndividualResponse'
+          $ref: '#/components/responses/Success'
         '400':
-          description: |
-            Bad request (e.g. missing mandatory parameter)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/IndividualResponse'
+          $ref: '#/components/responses/BadRequest'
         '401':
-          description: >-
-            Unauthorised (e.g. when an unauthenticated user tries to access a
-            protected resource)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/IndividualResponse'
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          description: >-
-            Forbidden (e.g. the resource is protected for all users or the user
-            is authenticated but they are not granted for this resource)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/IndividualResponse'
+          $ref: '#/components/responses/Forbidden'
 components:
   responses:
     Success:
