@@ -1511,28 +1511,6 @@ components:
             Either `alternateBases` or `variantType` is required, with the
             exception of range queries (single `start` and `end` parameters).
           type: string
-        variantMinLength:
-          description: >
-            Minimum length in bases of a genomic variant. This is an optional
-            parameter without prescribed use. While a length is commonly available
-            for structural variants such as copy number variations, it is
-            recommended that length based queries should also be supported for
-            variants with indicated referenceBases and alternateBases, to enable
-            length-specific wildcard queries.
-          type: integer
-            format: int64
-            minimum: 0
-        variantMaxLength:
-          description: >
-            Maximum length in bases of a genomic variant. This is an optional
-            parameter without prescribed use. While a length is commonly available
-            for structural variants such as copy number variations, it is
-            recommended that length based queries should also be supported for
-            variants with indicated referenceBases and alternateBases, to enable
-            length-specific wildcard queries.
-          type: integer
-            format: int64
-            minimum: 1
         mateName:
           $ref: '#/components/schemas/Chromosome'
     IndividualFields:
