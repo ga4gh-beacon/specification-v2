@@ -114,7 +114,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InfoResponse'
-  /datasets/{id}/variant_interpretations:
+  /datasets/{id}:
+    get:
+      description: |
+        Get information about the specified dataset.
+      operationId: getDataset
+      tags:
+      - Informational endpoints
+      parameters:
+        - name: id
+          in: path
+          description: Dataset ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: |
+            Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InfoResponse'
+  /datasets/{id}/variant_interpretations:  
     post:
       description: |
         Get the variants interpretations by datasetId.
@@ -167,7 +189,7 @@ paths:
   /filtering_terms:
     get:
       description: |
-        Filtering terms available in this Beacon.
+        Get information about the filtering terms available in this Beacon.
       operationId: getFilteringTerms
       tags:
         - Informational endpoints
@@ -179,6 +201,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FilteringTermsResponse'
+  /datasets/{id}/filtering_terms:
+    get:
+      description: |
+        Get information about the filtering terms available in a dataset.
+      operationId: getDatasetFilteringTerms
+      tags:
+        - Informational endpoints
+      parameters:
+        - name: id
+          in: path
+          description: Dataset ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: |
+            Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilteringTermsResponse'
+
   /individuals:
     post:
       description: |
@@ -1841,18 +1886,76 @@ components:
       pattern: '^([ACGTN]*)$'
     Filters:
       description: |
-        Ontology based filters. CURIE syntax is encouraged to be used.
+        Rules for selecting records based upon the field values those records contain. Filters are seperated by the logical AND operator.
       type: array
       items:
-        type: string
-      example: 'BTO:0000199'
-    CustomFilters:
+       oneOf:
+        - $ref: '#/components/schemas/OntologyFilter'
+        - $ref: '#/components/schemas/AlphanumericFilter'
+        - $ref: '#/components/schemas/CustomFilter'
+    OntologyFilter:
+      type: object
       description: |
-        Custom filters defined by this Beacon.
-      type: array
-      items:
-        type: string
-      example: 'mydict.aterm:avalue,mydict.aterm2:avalue2'
+        Filter results to include records that contain a specific ontology term.
+      properties: 
+        id:
+          type: string
+          description: |
+            Term ID to be queried, using CURIE syntax where possible.
+          example: 'HP:0002664'
+        includeDescendantTerms:
+          type: boolean
+          default: true
+          description: |
+            Define if the Beacon should implement the ontology hierarchy, thus query the descendant terms of `id`.
+        similarity:
+          type: string
+          enum: 
+            - 'exact'
+            - 'high'
+            - 'medium'
+            - 'low'
+          default: 'exact'
+          description: |
+            Allow the Beacon to return results which do not match the filter exactly, but do match to a certain degree of similarity. The Beacon defines the semantic similarity model implemented and how to apply the thresholds of 'high', 'medium' and 'low' similarity.
+    AlphanumericFilter:
+      description: |
+        Filter results based on operators and values applied to alphanumeric fields.
+      type: object
+      properties:
+        id:
+          type: string
+          description: |
+            Field identfier to be queried.
+          example: 'age'
+        operator:
+          type: string
+          enum:
+            - '='
+            - '<'
+            - '>'
+            - '!'
+            - '>='
+            - '<='
+          description: |
+            Defines how the value relates to the field `id`.
+          default: '=' 
+          example: '>'
+        value:
+          type: string
+          description: |
+            Alphanumeric search term to be used within the query which can contain wildcard characters (%) to denote any number of unknown characters.  Values can be assocatied with units if applicable.
+          example: 'P70Y' # age syntax as ISO 8601
+    CustomFilter:
+      type: object
+      description: |
+        Filter results to include records that contain a custom term defined by this Beacon.
+      properties: 
+        id:
+          type: string
+          description: |
+            Custom filter terms should contain a unique identifier.
+          example: 'demographic.ethnicity:asian'
 
     RequestDatasets:
       description: >-
@@ -1939,6 +2042,23 @@ components:
             format the response.
           type: string
           example: 'v2.0'
+    FilteringTermsRequestMeta:
+      description: |
+        Requested schemas and versions to be used in the response.
+      type: object
+      properties:
+        requestedSchemas:
+          type: object
+        apiVersion:
+          description: |
+            Schemas & versions default for this Beacon version will be used to 
+            format the response.
+          type: string
+          example: '2.0.0-draft.3'
+        datasetIds:
+          type: array
+          items:
+            type: string
     RequestMeta:
       description: |
         Requested schemas and versions to be used in the response.
@@ -2020,6 +2140,15 @@ components:
       properties:
         meta:
           $ref: '#/components/schemas/InfoRequestMeta'
+    FilteringTermsRequest:
+      description: |
+        Request parameters for information endpoints.
+      type: object
+      required:
+        - meta
+      properties:
+        meta:
+          $ref: '#/components/schemas/FilteringTermsRequestMeta'
     Request:
       description: |
         Search for a genomic region
@@ -2059,8 +2188,6 @@ components:
           $ref: '#/components/schemas/RequestDatasets'
         filters:
          $ref: '#/components/schemas/Filters'
-        customFilters:
-          $ref: '#/components/schemas/CustomFilters'
         pagination:
           $ref: '#/components/schemas/Pagination'
     GenomicVariantFields:
@@ -2284,7 +2411,24 @@ components:
           $ref: '#/components/schemas/InfoRequest'
         returnedSchemas:
           $ref: '#/components/schemas/InfoRequestedSchemas'
-
+    FilteringTermsResponseMeta:
+      description: |
+        Meta information about the reponse.
+      type: object
+      properties:
+        beaconId:
+          description: |
+            Identifier of the beacon, as defined in `Beacon`.
+          type: string
+        apiVersion:
+          description: >-
+            Version of the API. If specified, the value must match `apiVersion`
+            in Beacon
+          type: string
+        receivedRequest:
+          $ref: '#/components/schemas/FilteringTermsRequest'
+        returnedSchemas:
+          type: object
     GenomicVariantResponse:
       description: |
         Response of a genomic variant query
@@ -2723,6 +2867,7 @@ components:
       oneOf:
         - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.3/default_interactor_schema.yaml#/components/schemas/Interactor'
         - $ref: '#/components/schemas/AlternativeSchema'
+    
     CohortResponse:
       description: |
         Response of a query over cohorts.
@@ -3175,24 +3320,27 @@ components:
           example: "BAM format"
 
     FilteringTermsResponse:
-      type: object
       description: |
-        Filtering terms available in this Beacon.
+        Response of a query over Beacon info. Use `InfoResponseContent` when querying the Beacon info endpoints, and `DatasetResponseContent` when querying the datasets endpoint.
+      type: object
       required:
-        - beaconId
-        - apiVersion
-        - filteringTerms
+        - meta
+        - response
       properties:
-        beaconId:
-          description: |
-            Identifier of the beacon, as defined in `Beacon`.
-          type: string
-        apiVersion:
-          description: |
-            Version of the API implemented by this Beacon.
-          type: string
-          example: 'v2.0'
-        filteringTerms:
+        meta:
+          $ref: '#/components/schemas/FilteringTermsResponseMeta'
+        response:
+            $ref: '#/components/schemas/FilteringTermsResponseContent'
+    FilteringTermsResponseContent:
+      type: object
+      required:
+        - results
+      properties:
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/OntologyResource'
+        filterTerms:
           type: array
           items:
             $ref: '#/components/schemas/FilteringTerm'
@@ -3200,16 +3348,50 @@ components:
       type: object
       description: |
         Entities can be filtered using this term.
-      required:
-        - id
       properties:
+        type:
+          type: string
+          description: |
+            Either "numeric", "alphanumeric" or ontology/terminology full name.
+          example: 'Human Phenotype Ontology'
         id:
           description: |
-            CURIE syntax.
+            The field id in the case of numeric or alphanumeric fields, or the term id in the case of ontology or custom terms. CURIE syntax in the case of an ontology term.
           type: string
-          example: 'NCIT:C102872'
+          example: 'HP:0008773'
         label:
           description: |
             This would be the "preferred Label" in the case of an ontology term.
           type: string
-          example: 'Pharyngeal squamous cell carcinoma'
+          example: 'Aplasia/Hypoplasia of the middle ear'
+    OntologyResource:
+      type: object
+      description:
+        implementation of phenopackets resource object to describe ontology resources, full documentation found https://phenopackets-schema.readthedocs.io/en/latest/resource.html
+      required:
+        - id
+      properties:
+        id:
+          description: OBO ID representing the resource
+          type: string
+          example: hp
+        name:
+          description: The name of the ontology referred to by the id element
+          type: string
+          example: Human Phenotype Ontology
+        url:
+          description: Uniform Resource Locator of the resource
+          type: string
+          example: http://purl.obolibrary.org/obo/hp.owl
+        version:
+          description: The version of the resource or ontology used to make the annotation
+          type: string
+          example: 17-06-2019
+        nameSpacePrefix:
+          description: The prefix used in the CURIE of an OntologyClass
+          type: string
+          example: HP
+        iriPrefix:
+          description: The full Internationalized Resource Identifier (IRI) prefix
+          type: string
+          example: http://purl.obolibrary.org/obo/HP_
