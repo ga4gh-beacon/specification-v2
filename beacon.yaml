@@ -1520,8 +1520,8 @@ components:
             variants with indicated referenceBases and alternateBases, to enable
             length-specific wildcard queries.
           type: integer
-            format: int64
-            minimum: 0
+          format: int64
+          minimum: 0
         variantMaxLength:
           description: >
             Maximum length in bases of a genomic variant. This is an optional
@@ -1531,8 +1531,8 @@ components:
             variants with indicated referenceBases and alternateBases, to enable
             length-specific wildcard queries.
           type: integer
-            format: int64
-            minimum: 1
+          format: int64
+          minimum: 1
         mateName:
           $ref: '#/components/schemas/Chromosome'
     IndividualFields:
