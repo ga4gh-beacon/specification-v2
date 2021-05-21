@@ -1686,13 +1686,59 @@ components:
         response:
           $ref: '#/components/schemas/GenomicVariantResponseContent'
 
+    ResultSet:
+      description: |
+        TBD
+      type: object
+      required:
+        - id
+        - type
+        - exists
+      properties:
+        id:
+          description: |
+            TBD
+          type: string
+          example: |
+            datasetA
+        type:
+          description: |
+            TBD
+          type: string
+          default: 'dataset'
+        exists:
+          description: |
+            TBD
+          type: boolean
+        resultsCount:
+          description: |
+            TBD
+          type: integer
+        resultsHandovers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Handover'
+        info:
+          type: object
+
+    VariantResultSet:
+      allOf:
+      - description: |
+          TBD
+      - $ref: '#/components/schemas/ResultSet'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/VariantReponseResults'
+
     GenomicVariantResponseContent:
       description: |
         TBD
       type: object
       required:
         - exists
-        - results
       properties:
         exists:
           description: |
@@ -1705,33 +1751,15 @@ components:
         numTotalResults:
           type: integer
           minimum: 0
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/VariantReponseResults'
+        resultSet:
+          $ref: '#/components/schemas/VariantResultSet'
         info:
           type: object
-        resultsHandover:
-          type: array
-          items:
-            $ref: '#/components/schemas/Handover'
         beaconHandover:
           type: array
           items:
             $ref: '#/components/schemas/Handover'
 
-    # IndividualRequest:
-    #   description: |
-    #     TBD
-    #   type: object
-    #   required:
-    #     - meta
-    #     - query
-    #   properties:
-    #     meta:
-    #       $ref: '#/components/schemas/RequestMeta'
-    #     query:
-    #       $ref: '#/components/schemas/RequestQuery'
     IndividualResponse:
       description: |
         Response of a query over individuals.
@@ -1744,14 +1772,25 @@ components:
           $ref: '#/components/schemas/ResponseMeta'
         response:
           $ref: '#/components/schemas/IndividualResponseContent'
+    
+    IndividualResultSet:
+      allOf:
+      - description: |
+          TBD
+      - $ref: '#/components/schemas/ResultSet'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/IndividualResponseResults'
+    
     IndividualResponseContent:
       description: |
         TBD
       type: object
       required:
         - exists
-        - numTotalResults
-        - results
       properties:
         exists:
           description: |
@@ -1764,14 +1803,10 @@ components:
         numTotalResults:
           type: integer
           minimum: 0
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/IndividualResponseResults'
+        resultSet:
+          $ref: '#/components/schemas/IndividualResultSet'
         info:
           type: object
-        resultsHandover:
-          $ref: '#/components/schemas/Handover'
         beaconHandover:
           $ref: '#/components/schemas/Handover'
     IndividualResponseResults:
@@ -1782,18 +1817,6 @@ components:
         - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.3/default_individual_schema.yaml#/components/schemas/Individual'
         - $ref: '#/components/schemas/AlternativeSchema'
 
-    # BiosampleRequest:
-    #   description: |
-    #     TBD
-    #   type: object
-    #   required:
-    #     - meta
-    #     - query
-    #   properties:
-    #     meta:
-    #       $ref: '#/components/schemas/RequestMeta'
-    #     query:
-    #       $ref: '#/components/schemas/RequestQuery'
     BiosampleResponse:
       description: |
         Response of a query over biosamples.
@@ -1806,13 +1829,25 @@ components:
           $ref: '#/components/schemas/ResponseMeta'
         response:
           $ref: '#/components/schemas/BiosampleResponseContent'
+    
+    BiosampleResultSet:
+      allOf:
+      - description: |
+          TBD
+      - $ref: '#/components/schemas/ResultSet'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/BiosampleResponseResults'    
+    
     BiosampleResponseContent:
       description: |
         TBD
       type: object
       required:
         - exists
-        - results
       properties:
         exists:
           description: |
@@ -1825,16 +1860,10 @@ components:
         numTotalResults:
           type: integer
           minimum: 0
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/BiosampleResponseResults'
+        resultSet:
+          $ref: '#/components/schemas/BiosampleResultSet'
         info:
           type: object
-        resultsHandover:
-          type: array
-          items:
-            $ref: '#/components/schemas/Handover'
         beaconHandover:
           type: array
           items:
@@ -1859,13 +1888,25 @@ components:
           $ref: '#/components/schemas/ResponseMeta'
         response:
           $ref: '#/components/schemas/RunResponseContent'
+    
+    RunResultSet:
+      allOf:
+      - description: |
+          TBD
+      - $ref: '#/components/schemas/ResultSet'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/RunResponseResults'    
+    
     RunResponseContent:
       description: |
         TBD
       type: object
       required:
         - exists
-        - results
       properties:
         exists:
           description: |
@@ -1878,16 +1919,10 @@ components:
         numTotalResults:
           type: integer
           minimum: 0
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/RunResponseResults'
+        resultSet:
+          $ref: '#/components/schemas/RunResultSet'
         info:
           type: object
-        resultsHandover:
-          type: array
-          items:
-            $ref: '#/components/schemas/Handover'
         beaconHandover:
           type: array
           items:
@@ -1912,13 +1947,25 @@ components:
           $ref: '#/components/schemas/ResponseMeta'
         response:
           $ref: '#/components/schemas/AnalysisResponseContent'
+    
+    AnalysisResultSet:
+      allOf:
+      - description: |
+          TBD
+      - $ref: '#/components/schemas/ResultSet'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/AnalysisResponseResults' 
+    
     AnalysisResponseContent:
       description: |
         TBD
       type: object
       required:
         - exists
-        - results
       properties:
         exists:
           description: |
@@ -1931,16 +1978,10 @@ components:
         numTotalResults:
           type: integer
           minimum: 0
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/AnalysisResponseResults'
+        resultSet:
+          $ref: '#/components/schemas/AnalysisResultSet'
         info:
           type: object
-        resultsHandover:
-          type: array
-          items:
-            $ref: '#/components/schemas/Handover'
         beaconHandover:
           type: array
           items:
@@ -1965,13 +2006,25 @@ components:
           $ref: '#/components/schemas/ResponseMeta'
         response:
           $ref: '#/components/schemas/VariantInSampleResponseContent'
+    
+    VariantInSampleResultSet:
+      allOf:
+      - description: |
+          TBD
+      - $ref: '#/components/schemas/ResultSet'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/VariantInSampleResponseResults' 
+    
     VariantInSampleResponseContent:
       description: |
         TBD
       type: object
       required:
         - exists
-        - results
       properties:
         exists:
           description: |
@@ -1984,16 +2037,10 @@ components:
         numTotalResults:
           type: integer
           minimum: 0
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/VariantInSampleResponseResults'
+        resultSet:
+          $ref: '#/components/schemas/VariantInSampleResultSet'
         info:
           type: object
-        resultsHandover:
-          type: array
-          items:
-            $ref: '#/components/schemas/Handover'
         beaconHandover:
           type: array
           items:
@@ -2018,13 +2065,25 @@ components:
           $ref: '#/components/schemas/ResponseMeta'
         response:
           $ref: '#/components/schemas/VariantInterpretationResponseContent'
+    
+    VariantInterpretationResultSet:
+      allOf:
+      - description: |
+          TBD
+      - $ref: '#/components/schemas/ResultSet'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/VariantInterpretationResponseResults' 
+    
     VariantInterpretationResponseContent:
       description: |
         TBD
       type: object
       required:
         - exists
-        - results
       properties:
         exists:
           description: |
@@ -2037,16 +2096,10 @@ components:
         numTotalResults:
           type: integer
           minimum: 0
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/VariantInterpretationResponseResults'
+        resultSet:
+          $ref: '#/components/schemas/VariantInterpretationResultSet'
         info:
           type: object
-        resultsHandover:
-          type: array
-          items:
-            $ref: '#/components/schemas/Handover'
         beaconHandover:
           type: array
           items:
@@ -2071,13 +2124,25 @@ components:
           $ref: '#/components/schemas/ResponseMeta'
         response:
           $ref: '#/components/schemas/InteractorResponseContent'
+    
+    InteractorResultSet:
+      allOf:
+      - description: |
+          TBD
+      - $ref: '#/components/schemas/ResultSet'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/InteractorResponseResults' 
+    
     InteractorResponseContent:
       description: |
         TBD
       type: object
       required:
         - exists
-        - results
       properties:
         exists:
           description: |
@@ -2090,16 +2155,10 @@ components:
         numTotalResults:
           type: integer
           minimum: 0
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/InteractorResponseResults'
+        resultSet:
+          $ref: '#/components/schemas/InteractorResultSet'
         info:
           type: object
-        resultsHandover:
-          type: array
-          items:
-            $ref: '#/components/schemas/Handover'
         beaconHandover:
           type: array
           items:
@@ -2111,6 +2170,7 @@ components:
       anyOf:
         - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.3/default_interactor_schema.yaml#/components/schemas/Interactor'
         - $ref: '#/components/schemas/AlternativeSchema'
+    
     CohortResponse:
       description: |
         Response of a query over cohorts.
@@ -2123,13 +2183,25 @@ components:
           $ref: '#/components/schemas/ResponseMeta'
         response:
           $ref: '#/components/schemas/CohortResponseContent'
+    
+    CohortResultSet:
+      allOf:
+      - description: |
+          TBD
+      - $ref: '#/components/schemas/ResultSet'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/CohortResponseResults' 
+    
     CohortResponseContent:
       description: |
         TBD
       type: object
       required:
         - exists
-        - results
       properties:
         exists:
           description: |
@@ -2142,16 +2214,10 @@ components:
         numTotalResults:
           type: integer
           minimum: 0
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/CohortResponseResults'
+        resultSet:
+          $ref: '#/components/schemas/CohortResultSet'
         info:
           type: object
-        resultsHandover:
-          type: array
-          items:
-            $ref: '#/components/schemas/Handover'
         beaconHandover:
           type: array
           items:
