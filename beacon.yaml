@@ -1751,8 +1751,10 @@ components:
         numTotalResults:
           type: integer
           minimum: 0
-        resultSet:
-          $ref: '#/components/schemas/VariantResultSet'
+        resultSets:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariantResultSet'
         info:
           type: object
         beaconHandover:
@@ -1803,8 +1805,10 @@ components:
         numTotalResults:
           type: integer
           minimum: 0
-        resultSet:
-          $ref: '#/components/schemas/IndividualResultSet'
+        resultSets:
+          type: array
+          items:
+            $ref: '#/components/schemas/IndividualResultSet'
         info:
           type: object
         beaconHandover:
@@ -1860,8 +1864,10 @@ components:
         numTotalResults:
           type: integer
           minimum: 0
-        resultSet:
-          $ref: '#/components/schemas/BiosampleResultSet'
+        resultSets:
+          type: array
+          items:
+            $ref: '#/components/schemas/BiosampleResultSet'
         info:
           type: object
         beaconHandover:
@@ -1919,8 +1925,10 @@ components:
         numTotalResults:
           type: integer
           minimum: 0
-        resultSet:
-          $ref: '#/components/schemas/RunResultSet'
+        resultSets:
+          type: array
+          items:
+            $ref: '#/components/schemas/RunResultSet'
         info:
           type: object
         beaconHandover:
@@ -1978,8 +1986,10 @@ components:
         numTotalResults:
           type: integer
           minimum: 0
-        resultSet:
-          $ref: '#/components/schemas/AnalysisResultSet'
+        resultSets:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnalysisResultSet'
         info:
           type: object
         beaconHandover:
@@ -2037,8 +2047,10 @@ components:
         numTotalResults:
           type: integer
           minimum: 0
-        resultSet:
-          $ref: '#/components/schemas/VariantInSampleResultSet'
+        resultSets:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariantInSampleResultSet'
         info:
           type: object
         beaconHandover:
@@ -2096,8 +2108,10 @@ components:
         numTotalResults:
           type: integer
           minimum: 0
-        resultSet:
-          $ref: '#/components/schemas/VariantInterpretationResultSet'
+        resultSets:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariantInterpretationResultSet'
         info:
           type: object
         beaconHandover:
@@ -2155,8 +2169,10 @@ components:
         numTotalResults:
           type: integer
           minimum: 0
-        resultSet:
-          $ref: '#/components/schemas/InteractorResultSet'
+        resultSets:
+          type: array
+          items:
+            $ref: '#/components/schemas/InteractorResultSet'
         info:
           type: object
         beaconHandover:
@@ -2214,8 +2230,10 @@ components:
         numTotalResults:
           type: integer
           minimum: 0
-        resultSet:
-          $ref: '#/components/schemas/CohortResultSet'
+        resultSets:
+          type: array
+          items:
+            $ref: '#/components/schemas/CohortResultSet'
         info:
           type: object
         beaconHandover:
