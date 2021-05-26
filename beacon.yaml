@@ -3331,9 +3331,7 @@ components:
         response:
             $ref: '#/components/schemas/FilteringTermsResponseContent'
     FilteringTermsResponseContent:
-      type: object
-      required:
-        - results
+      type: object 
       properties:
         resources:
           type: array
