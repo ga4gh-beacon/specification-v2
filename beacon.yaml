@@ -135,7 +135,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InfoResponse'
+                $ref: '#/components/schemas/DatasetResponse'
   /datasets/{id}/variant_interpretations:  
     post:
       description: |
@@ -3321,8 +3321,7 @@ components:
 
     FilteringTermsResponse:
       description: |
-        Response of a query over Beacon info. Use `InfoResponseContent` when querying the Beacon info endpoints, and `DatasetResponseContent` when querying the datasets endpoint.
-      type: object
+        Filtering terms available in this Beacon.
       required:
         - meta
         - response
