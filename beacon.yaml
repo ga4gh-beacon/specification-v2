@@ -1338,7 +1338,7 @@ components:
       anyOf:
         - $ref: 'https://raw.githubusercontent.com/ga4gh-beacon/specification-v2-default-schemas/draft.3/default_variant_annotations_schema.yaml#/components/schemas/VariantAnnotation'
         - $ref: '#/components/schemas/AlternativeSchema'
-    VariantReponseResults:
+    VariantResponseResults:
       description: |
         TBD
       properties:
@@ -1638,7 +1638,7 @@ components:
     
     ResponseMeta:
       description: |
-        Meta information about the reponse.
+        Meta information about the response.
       type: object
       properties:
         beaconId:
@@ -1731,7 +1731,7 @@ components:
           results:
             type: array
             items:
-              $ref: '#/components/schemas/VariantReponseResults'
+              $ref: '#/components/schemas/VariantResponseResults'
 
     GenomicVariantResponseContent:
       description: |
