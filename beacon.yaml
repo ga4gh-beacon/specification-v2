@@ -1252,7 +1252,7 @@ components:
           type: string
           example:
             'beacon-dataset-v2.0.0-draft.3'
-        filterTerm:
+        filteringTerm:
           type: string
           example:
             'beacon-filtering-term-v2.0.0-draft.3'
