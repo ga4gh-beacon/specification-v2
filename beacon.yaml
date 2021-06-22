@@ -135,7 +135,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DatasetResponse'
+                $ref: '#/components/schemas/DatasetResponseContent'
   /datasets/{id}/variant_interpretations:  
     post:
       description: |
@@ -1251,7 +1251,7 @@ components:
         Rules for selecting records based upon the field values those records contain. Filters are seperated by the logical AND operator.
       type: array
       items:
-       oneOf:
+       anyOf:
         - $ref: '#/components/schemas/OntologyFilter'
         - $ref: '#/components/schemas/AlphanumericFilter'
         - $ref: '#/components/schemas/CustomFilter'
@@ -1261,6 +1261,7 @@ components:
         Filter results to include records that contain a specific ontology term.
       required:
         - id
+        - includeDescendantTerms
       properties: 
         id:
           type: string
@@ -2828,7 +2829,10 @@ components:
           items:
             $ref: '#/components/schemas/OntologyResource'
         filterTerms:
-
+          type: array
+          items:
+            $ref: '#/components/schemas/FilteringTerm'
+    
     FilteringTermResponseContent:
       type: object
       description: |
@@ -2873,9 +2877,8 @@ components:
           example: 'Aplasia/Hypoplasia of the middle ear'
     OntologyResource:
       type: object
-      description:
-        implementation of phenopackets resource object to describe ontology resources, full documentation found https://phenopackets-schema.readthedocs.io/en/latest/resource.html
-          example: 'Pharyngeal squamous cell carcinoma'
+      description: implementation of phenopackets resource object to describe ontology resources, full documentation found https://phenopackets-schema.readthedocs.io/en/latest/resource.html
+      example: 'Pharyngeal squamous cell carcinoma'
 
     OntologyTerm:
       type: object
