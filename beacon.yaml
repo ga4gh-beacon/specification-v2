@@ -2877,11 +2877,8 @@ components:
           example: 'Aplasia/Hypoplasia of the middle ear'
     OntologyResource:
       type: object
-      description: implementation of phenopackets resource object to describe ontology resources, full documentation found https://phenopackets-schema.readthedocs.io/en/latest/resource.html
-      example: 'Pharyngeal squamous cell carcinoma'
-
-    OntologyTerm:
-      type: object
+      description:
+        implementation of phenopackets resource object to describe ontology resources, full documentation found https://phenopackets-schema.readthedocs.io/en/latest/resource.html
       required:
         - id
       properties:
@@ -2909,6 +2906,14 @@ components:
           description: The full Internationalized Resource Identifier (IRI) prefix
           type: string
           example: http://purl.obolibrary.org/obo/HP_
+
+    OntologyTerm:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
         label:
           type: string
     DUODataUse:
